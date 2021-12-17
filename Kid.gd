@@ -45,4 +45,5 @@ func _physics_process(delta):
 			print(is_on_floor())
 			jump = true
 	
+	# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
 	move_and_slide(Vector2(hspeed,vspeed) / delta, Vector2.UP)
