@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Kid.tscn" type="PackedScene" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 128, 8 )
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 336, 192 )
+
+[node name="Kid" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 56 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 0, 80 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+position = Vector2( 0, 80 )
+scale = Vector2( 4, 0.25 )
+texture = ExtResource( 1 )
