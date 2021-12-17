@@ -1,25 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://bAllTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Kid.tscn" type="PackedScene" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 128, 8 )
-
 [node name="Node2D" type="Node2D"]
-position = Vector2( 336, 192 )
+position = Vector2( 193, 146 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 2
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 131069, 0, 65536, 196610, 0, 65536, 393214, 0, 65536, 393215, 0, 65536, 327680, 0, 65536, 327681, 0, 65536, 327682, 0, 65536, 327683, 0, 65536, 327684, 0, 65536, 458747, 0, 65536 )
 
 [node name="Kid" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, 56 )
-scale = Vector2( 0.5, 0.5 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 0, 80 )
-shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="StaticBody2D"]
-position = Vector2( 0, 80 )
-scale = Vector2( 4, 0.25 )
-texture = ExtResource( 1 )

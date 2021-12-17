@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/musGuyRock.mp3-5d4a8f5e2cfe99f45d17a17bc18f4740.mp3str"
+
+[deps]
+
+source_file="res://audio/musGuyRock.mp3"
+dest_files=[ "res://.import/musGuyRock.mp3-5d4a8f5e2cfe99f45d17a17bc18f4740.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

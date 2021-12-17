@@ -1,25 +1,141 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Kid.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=2]
+[ext_resource path="res://sprites/sprPlayerIdle_1.png" type="Texture" id=3]
+[ext_resource path="res://sprites/sprPlayerIdle_2.png" type="Texture" id=4]
+[ext_resource path="res://sprites/sprPlayerIdle_3.png" type="Texture" id=5]
+[ext_resource path="res://sprites/sprPlayerRunning_2.png" type="Texture" id=6]
+[ext_resource path="res://sprites/sprPlayerRunning_1.png" type="Texture" id=7]
+[ext_resource path="res://sprites/sprPlayerRunning_3.png" type="Texture" id=8]
+[ext_resource path="res://sprites/sprPlayerRunning_0.png" type="Texture" id=9]
+[ext_resource path="res://sprites/sprPlayerJump_1.png" type="Texture" id=10]
+[ext_resource path="res://sprites/sprPlayerJump_0.png" type="Texture" id=11]
+[ext_resource path="res://sprites/sprPlayerFall_0.png" type="Texture" id=12]
+[ext_resource path="res://sprites/sprPlayerFall_1.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 10.5 )
 
+[sub_resource type="SegmentShape2D" id=2]
+a = Vector2( 5.5, 10.9 )
+b = Vector2( -5.5, 10.9 )
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "fall"
+length = 0.08
+step = 0.04
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ), ExtResource( 13 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "jump"
+length = 0.08
+step = 0.04
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 10 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "run"
+length = 0.16
+step = 0.04
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04, 0.08, 0.12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ]
+}
+
 [node name="Kid" type="KinematicBody2D"]
+collision_mask = 2
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true
+"_edit_horizontal_guides_": [ 9.0 ]
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0.5, -0.5 )
-scale = Vector2( 0.171875, 0.328125 )
+position = Vector2( -17.5, -21.5 )
 texture = ExtResource( 2 )
+centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.5, -0.5 )
+visible = false
 shape = SubResource( 1 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2( 0.1, 0.1 )
+[node name="FloorDetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+__meta__ = {
+"_editor_description_": " The kid hovers 0.4 pixels above the ground, so is_on_floor() does not work."
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorDetectArea"]
+visible = false
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/fall = SubResource( 6 )
+anims/idle = SubResource( 4 )
+anims/jump = SubResource( 7 )
+anims/run = SubResource( 5 )
+
+[connection signal="body_entered" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_entered"]
+[connection signal="body_exited" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_exited"]

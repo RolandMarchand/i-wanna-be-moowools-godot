@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/musMegaman.mp3-e6259d59344ce284276c7e22bb64b877.mp3str"
+
+[deps]
+
+source_file="res://audio/musMegaman.mp3"
+dest_files=[ "res://.import/musMegaman.mp3-e6259d59344ce284276c7e22bb64b877.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
