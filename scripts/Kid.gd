@@ -18,11 +18,12 @@ var jump := false
 var djump := false
 var dead := false
 var xdir := 0.0
-var old_xdir := 1
+var xscale := 1
 var hspeed := 0.0
 var vspeed := 0.0
 var anim: String
 var bullet_array: Array = []
+var blood_array: Array = []
 
 var snd_jump: AudioStream = preload("res://audio/sndJump.wav")
 var snd_djump: AudioStream = preload("res://audio/sndDJump.wav")
@@ -38,10 +39,12 @@ onready var floor_detect: Area2D = $FloorDetectArea
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 onready var col_shape: CollisionShape2D = $CollisionShape2D
 
+func _ready():
+	_flip(xscale)
+
 func _unhandled_key_input(event):
 	if Input.is_action_just_pressed("shoot") and bullet_array.size() < MAX_BULLET:
 		_shoot()
-
 
 func _physics_process(delta):
 	xdir = Input.get_action_strength("ui_right") \
@@ -49,9 +52,9 @@ func _physics_process(delta):
 	hspeed = xdir * WALK_SPEED
 
 	if xdir != 0:
-		old_xdir = xdir
+		xscale = xdir
 
-	_flip(xdir)
+	_flip(xscale)
 
 	if Input.is_action_pressed("jump"):
 		if Input.is_action_just_pressed("jump"):
@@ -129,7 +132,7 @@ func _shoot():
 	var bullet = _bullet.instance()
 
 	get_parent().add_child(bullet)
-	bullet.dir = old_xdir
+	bullet.dir = xscale
 	bullet.global_position = self.global_position
 
 	bullet_array.append(bullet)
@@ -163,4 +166,3 @@ func _on_FloorDetectArea_body_exited(_body) -> void:
 
 func _on_SpikeHitbox_body_entered(body):
 	_death()
-

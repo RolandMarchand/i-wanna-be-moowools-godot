@@ -1,13 +1,22 @@
 extends Node2D
 
+var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
+
 func _ready():
 	for kid in get_tree().get_nodes_in_group("kid"):
 		print(kid)
 		kid.connect("death", self, "_on_Kid_death")
+		
+		if Save.pos:
+			kid.global_position = Save.pos
+		if Save.xscale:
+			kid.xscale = Save.xscale
 
 func _on_Kid_death():
 	$GameOver/MarginContainer.show()
-	$DeathMusic.play()
+	
+	$Music.stream = mus_death
+	$Music.play()
 
 func _unhandled_key_input(event):
 	if Input.is_action_just_pressed("reset"):

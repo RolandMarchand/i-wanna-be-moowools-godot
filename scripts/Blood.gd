@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 var _hspeed: float
 var _vspeed: float
@@ -24,7 +24,7 @@ func _physics_process(delta):
 	_vspeed += _grav
 
 	if not _stuck:
-		global_position += Vector2(_hspeed, _vspeed)
+		move_and_slide(Vector2(_hspeed, _vspeed) / delta)
 	else:
 		set_physics_process(false)
 
@@ -41,8 +41,8 @@ func _set_speed() -> void:
 func _set_grav():
 	_grav = 0.1 + randf() * 0.2
 
-func _on_Blood_body_entered(_body) -> void:
+func _on_Hitbox_body_entered(body):
 	_coll = true
 
-func _on_Blood_body_exited(body):
+func _on_Hitbox_body_exited(body):
 	_coll = false
