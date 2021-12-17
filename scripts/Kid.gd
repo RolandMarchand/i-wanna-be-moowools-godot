@@ -91,6 +91,13 @@ func _flip(xscale: int) -> void:
 			sprite.flip_h = true
 			sprite.offset = Vector2(3,0)
 
+## Laggy for expected 800 particles
+##
+## Godot could generate them when the scene loads and then hide them,
+## when the player dies, the position of the explosion is set
+## and the explosion is called
+##
+## Or create a system that's not node based
 func _explode() -> void:
 	for i in range(BLOOD_CNT):
 		var blood = _blood.instance()
