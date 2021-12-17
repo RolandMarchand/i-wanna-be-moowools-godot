@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://Kid.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Kid.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=2]
 [ext_resource path="res://sprites/sprPlayerIdle_1.png" type="Texture" id=3]
 [ext_resource path="res://sprites/sprPlayerIdle_2.png" type="Texture" id=4]
@@ -107,6 +107,7 @@ tracks/0/keys = {
 collision_mask = 2
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_horizontal_guides_": [ 9.0 ]
 }
 
@@ -116,7 +117,6 @@ texture = ExtResource( 2 )
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="FloorDetectArea" type="Area2D" parent="."]
@@ -136,6 +136,12 @@ anims/fall = SubResource( 6 )
 anims/idle = SubResource( 4 )
 anims/jump = SubResource( 7 )
 anims/run = SubResource( 5 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.3, 0.3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="body_entered" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_entered"]
 [connection signal="body_exited" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_exited"]

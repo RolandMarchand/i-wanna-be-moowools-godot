@@ -7,6 +7,8 @@ const JUMP_DEACCEL := 0.45
 const MAX_FALL_SPEED := 9.4
 const VALIGN := 0.4
 
+const BLOOD_CNT := 200
+
 # The kid hovers 0.4 pixels above the ground, so is_on_floor() does not work
 var is_on_floor := false
 var jump := false
@@ -17,19 +19,25 @@ var hspeed := 0.0
 var vspeed := 0.0
 var anim: String
 
+var snd_jump1: AudioStream = preload("res://audio/sndJump.wav")
+var snd_djump1: AudioStream = preload("res://audio/sndDJump.wav")
+var snd_shoot: AudioStream = preload("res://audio/sndShoot.wav")
+var snd_death: AudioStream = preload("res://audio/sndDeath.wav")
+
+var _blood: PackedScene = preload("res://scenes/Blood.tscn")
+
+onready var sound: AudioStreamPlayer = $AudioStreamPlayer
 onready var sprite: Sprite = $Sprite
 onready var floor_detect: Area2D = $FloorDetectArea
 onready var anim_player: AnimationPlayer = $AnimationPlayer
+onready var col_shape: CollisionShape2D = $CollisionShape2D
 
 func _physics_process(delta):
+
 	xdir = Input.get_action_strength("ui_right") \
 			 - Input.get_action_strength("ui_left")
 	hspeed = xdir * WALK_SPEED
-	match xdir:
-		-1.0:
-			sprite.flip_h = true
-		1.0:
-			sprite.flip_h = false
+	_flip(xdir)
 
 	if Input.is_action_pressed("ui_up"):
 		if Input.is_action_just_pressed("ui_up"):
@@ -72,9 +80,25 @@ func _physics_process(delta):
 	move_and_slide(Vector2(hspeed,vspeed) / delta, Vector2.UP)
 	anim_player.play(anim)
 
+## Flips the character sprite simulating a change in scale.
+## Godot has problems with continuously setting the scale to -1
+func _flip(xscale: int) -> void:
+	match xscale:
+		1:
+			sprite.flip_h = false
+			sprite.offset = Vector2(0,0)
+		-1:
+			sprite.flip_h = true
+			sprite.offset = Vector2(3,0)
 
-func _on_FloorDetectArea_body_entered(_body):
+func _explode() -> void:
+	for i in range(BLOOD_CNT):
+		var blood = _blood.instance()
+		get_parent().add_child(blood)
+		blood.global_position = self.global_position
+
+func _on_FloorDetectArea_body_entered(_body) -> void:
 	is_on_floor = true
 
-func _on_FloorDetectArea_body_exited(_body):
+func _on_FloorDetectArea_body_exited(_body) -> void:
 	is_on_floor = false
