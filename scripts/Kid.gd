@@ -42,7 +42,7 @@ onready var col_shape: CollisionShape2D = $CollisionShape2D
 func _ready():
 	_flip(xscale)
 
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	if Input.is_action_just_pressed("shoot") and bullet_array.size() < MAX_BULLET:
 		_shoot()
 
@@ -52,7 +52,7 @@ func _physics_process(delta):
 	hspeed = xdir * WALK_SPEED
 
 	if xdir != 0:
-		xscale = xdir
+		xscale = int(xdir)
 
 	_flip(xscale)
 
@@ -103,6 +103,7 @@ func _physics_process(delta):
 
 ## Flips the character sprite simulating a change in scale.
 ## Godot has problems with continuously setting the scale to -1
+# warning-ignore:shadowed_variable
 func _flip(xscale: int) -> void:
 	match xscale:
 		1:
@@ -122,13 +123,13 @@ func _flip(xscale: int) -> void:
 ##
 ## Also shoots them all at once
 func _explode() -> void:
+	# warning-ignore:unused_variable
 	for i in range(BLOOD_CNT):
 		var blood = _blood.instance()
 		get_parent().call_deferred("add_child", blood)
 		blood.set_deferred("global_position", self.global_position)
 
 func _shoot():
-	print(bullet_array.size())
 	var bullet = _bullet.instance()
 
 	get_parent().add_child(bullet)
@@ -164,5 +165,5 @@ func _on_FloorDetectArea_body_entered(_body) -> void:
 func _on_FloorDetectArea_body_exited(_body) -> void:
 	is_on_floor = false
 
-func _on_SpikeHitbox_body_entered(body):
+func _on_SpikeHitbox_body_entered(_body):
 	_death()

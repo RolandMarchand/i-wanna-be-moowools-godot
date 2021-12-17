@@ -24,6 +24,7 @@ func _physics_process(delta):
 	_vspeed += _grav
 
 	if not _stuck:
+	# warning-ignore:return_value_discarded
 		move_and_slide(Vector2(_hspeed, _vspeed) / delta)
 	else:
 		set_physics_process(false)
@@ -41,8 +42,8 @@ func _set_speed() -> void:
 func _set_grav():
 	_grav = 0.1 + randf() * 0.2
 
-func _on_Hitbox_body_entered(body):
+func _on_Hitbox_body_entered(_body):
 	_coll = true
 
-func _on_Hitbox_body_exited(body):
+func _on_Hitbox_body_exited(_body):
 	_coll = false

@@ -4,7 +4,6 @@ var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
 
 func _ready():
 	for kid in get_tree().get_nodes_in_group("kid"):
-		print(kid)
 		kid.connect("death", self, "_on_Kid_death")
 		
 		if Save.pos:
@@ -18,10 +17,11 @@ func _on_Kid_death():
 	$Music.stream = mus_death
 	$Music.play()
 
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	if Input.is_action_just_pressed("reset"):
+	# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()
 
 
-func _on_Warp_body_entered(body):
+func _on_Warp_body_entered(_body):
 	get_tree().quit(0)

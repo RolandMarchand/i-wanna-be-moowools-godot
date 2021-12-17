@@ -17,13 +17,14 @@ func _physics_process(delta):
 		"Vertical":
 			vel = Vector2(0, speed * dir) / delta
 	
+	# warning-ignore:return_value_discarded
 	move_and_slide(vel)
 	
 	if kid and kid.is_on_floor:
-		print("lmao")
+	# warning-ignore:return_value_discarded
 		kid.move_and_slide(vel)
 
-func _on_Hitbox_body_entered(body):
+func _on_Hitbox_body_entered(_body):
 	dir *= -1
 
 
@@ -31,5 +32,5 @@ func _on_PlayerHitbox_body_entered(body):
 	kid = body
 
 
-func _on_PlayerHitbox_body_exited(body):
+func _on_PlayerHitbox_body_exited(_body):
 	kid = null
