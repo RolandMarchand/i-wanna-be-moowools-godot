@@ -119,6 +119,15 @@ centered = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="SpikeHitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeHitbox"]
+shape = SubResource( 1 )
+
 [node name="FloorDetectArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
@@ -130,6 +139,9 @@ __meta__ = {
 visible = false
 shape = SubResource( 2 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2( 0.3, 0.3 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
 anims/fall = SubResource( 6 )
@@ -137,11 +149,8 @@ anims/idle = SubResource( 4 )
 anims/jump = SubResource( 7 )
 anims/run = SubResource( 5 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 0.3, 0.3 )
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
+[connection signal="body_entered" from="SpikeHitbox" to="." method="_on_SpikeHitbox_body_entered"]
 [connection signal="body_entered" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_entered"]
 [connection signal="body_exited" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_exited"]
