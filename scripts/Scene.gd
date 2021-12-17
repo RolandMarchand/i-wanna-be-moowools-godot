@@ -14,12 +14,15 @@ func _ready():
 func _on_Kid_death():
 	$GameOver/MarginContainer.show()
 	
-	$Music.stream = mus_death
-	$Music.play()
+	Music.audio_player.stop()
+	$DeathMusic.play()
 
 func _unhandled_key_input(_event):
 	if Input.is_action_just_pressed("reset"):
 	# warning-ignore:return_value_discarded
+		if not Music.audio_player.playing:
+			Music.audio_player.play()
+			
 		get_tree().reload_current_scene()
 
 

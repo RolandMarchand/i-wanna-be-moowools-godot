@@ -3,10 +3,10 @@
 [ext_resource path="res://res/Spikes.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Kid.tscn" type="PackedScene" id=3]
-[ext_resource path="res://audio/musGuyRock.mp3" type="AudioStream" id=4]
 [ext_resource path="res://res/bAllTiles.tres" type="TileSet" id=5]
 [ext_resource path="res://scenes/Platform.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sprites/sprGameOver_0.png" type="Texture" id=7]
+[ext_resource path="res://audio/musOnDeath.mp3" type="AudioStream" id=8]
 [ext_resource path="res://scripts/Scene.gd" type="Script" id=9]
 [ext_resource path="res://sprites/sprWarp_0.png" type="Texture" id=10]
 [ext_resource path="res://res/back.tres" type="TileSet" id=11]
@@ -82,9 +82,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-autoplay = true
+[node name="DeathMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 
 [node name="SaveButton" parent="." instance=ExtResource( 2 )]
 position = Vector2( 48, 80 )
