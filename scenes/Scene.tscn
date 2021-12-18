@@ -39,7 +39,7 @@ tile_data = PoolIntArray( 65549, 3, 0, 131091, 0, 0, 131092, 0, 0, 131093, 0, 0,
 [node name="Warp" parent="." instance=ExtResource( 4 )]
 
 [node name="Kid" parent="." groups=["kid"] instance=ExtResource( 3 )]
-position = Vector2( 82, 149 )
+position = Vector2( 365, 263 )
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 
@@ -83,3 +83,5 @@ position = Vector2( 625, 72 )
 
 [node name="Platform2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 499, 456 )
+
+[connection signal="body_entered" from="Warp" to="." method="_on_Warp_body_entered"]
