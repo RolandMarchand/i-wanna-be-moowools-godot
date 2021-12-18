@@ -45,8 +45,8 @@ func _physics_process(delta) -> void:
 	
 	# Snaps kid
 	if kid and kid.is_on_floor:
-	# warning-ignore:return_value_discarded
-		kid.move_and_slide(vel)
+		# warning-ignore:return_value_discarded
+		kid.move_and_slide(vel / delta)
 
 func _set_vel() -> Vector2:
 	var vel: Vector2
