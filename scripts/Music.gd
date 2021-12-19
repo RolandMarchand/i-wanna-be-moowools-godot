@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# 
+#
 # Copyright (c) 2021 moowool195@gmail.com.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -13,7 +13,7 @@
 # 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,12 +28,27 @@
 
 extends Node
 
-var audio_player := AudioStreamPlayer.new()
+var _audio_player := AudioStreamPlayer.new()
+var _last_pos: float = 0.0
+var _mus_rock: AudioStream = preload("res://audio/musGuyRock.mp3")
 
-var mus_rock: AudioStream = preload("res://audio/musGuyRock.mp3")
+func is_playing() -> bool:
+	return _audio_player.playing
+
+## Plays the music back to the starting position
+func play() -> void:
+	_audio_player.play()
+
+## Pauses the music or resumes it to its paused position
+func toggle() -> void:
+	if _audio_player.playing:
+		_last_pos = _audio_player.get_playback_position()
+		_audio_player.stop()
+	else:
+		_audio_player.play(_last_pos)
 
 func _ready() -> void:
-	add_child(audio_player)
-	
-	audio_player.stream = mus_rock
-	audio_player.play()
+	add_child(_audio_player)
+
+	_audio_player.stream = _mus_rock
+	_audio_player.play()

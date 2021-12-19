@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# 
+#
 # Copyright (c) 2021 moowool195@gmail.com.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -13,7 +13,7 @@
 # 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -31,9 +31,14 @@ extends Node2D
 var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
 
 func _ready() -> void:
+	_connect_kid()
+	OS.set_window_title("I Don't Wanna Be Game Maker! (deaths: "
+			+ str(Save.deaths) + ")")
+
+func _connect_kid() -> void:
 	for kid in get_tree().get_nodes_in_group("kid"):
 		kid.connect("death", self, "_on_Kid_death")
-		
+
 		# Load save
 		if Save.pos:
 			kid.global_position = Save.pos
@@ -42,17 +47,9 @@ func _ready() -> void:
 
 func _on_Kid_death() -> void:
 	$GameOver/MarginContainer.show()
-	
-	Music.audio_player.stop()
-	$DeathMusic.play()
 
-func _unhandled_key_input(_event) -> void:
-	if Input.is_action_just_pressed("reset"):
-	# warning-ignore:return_value_discarded
-		if not Music.audio_player.playing:
-			Music.audio_player.play()
-			
-		get_tree().reload_current_scene()
+	Music.toggle()
+	$DeathMusic.play()
 
 
 func _on_Warp_body_entered(_body) -> void:
