@@ -39,6 +39,8 @@ onready var vsync: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/V
 onready var ok: Button = $Menu/PanelContainer/VBoxContainer/HBoxContainer5/Ok
 onready var back_ts: Button = $Menu/PanelContainer/VBoxContainer/HBoxContainer5/Back2Title
 
+onready var sound_test: AudioStreamPlayer = $Menu/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer/Test
+
 func _ready():
 	# warning-ignore:return_value_discarded
 	Shortcuts.connect("paused", self, "set_menu_visible")
@@ -57,6 +59,9 @@ func _refresh_settings() -> void:
 	fs.pressed = OS.is_window_fullscreen()
 	vsync.pressed = OS.is_vsync_enabled()
 	quiet_bg.pressed = Music.is_quiet()
+	sound.value = AudioServer.get_bus_volume_db(1)
+	print(sound.min_value, sound.max_value, sound.value, AudioServer.get_bus_volume_db(1))
+	music.value = AudioServer.get_bus_volume_db(2)
 	
 
 func _on_Ok_pressed():
@@ -78,3 +83,13 @@ func _on_QuietBG_pressed():
 
 func _on_Fullscreen_pressed():
 	OS.set_window_fullscreen(fs.is_pressed())
+
+func _on_Sound_value_changed(value):
+	AudioServer.set_bus_volume_db(1, value)
+	
+	# Don't test the sound when the menu appears
+	if not Input.is_action_just_pressed("pause"):
+		sound_test.play()
+
+func _on_Music_value_changed(value):
+	AudioServer.set_bus_volume_db(2, value)
