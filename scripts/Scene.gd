@@ -49,6 +49,7 @@ func _connect_kid() -> void:
 
 func _on_Kid_death() -> void:
 	ui.game_over()
+	Music.stop()
 
 func _on_Warp_body_entered(_body) -> void:
 	get_tree().quit(0)

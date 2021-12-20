@@ -38,7 +38,8 @@ const MAX_FALL_SPEED := 9.4
 const VALIGN := 0.4
 const MAX_BULLET := 3
 
-const BLOOD_CNT := 200
+const BLOOD_CNT := 40
+const BLOOD_CYCLE := 20
 
 # The kid hovers 0.4 pixels above the ground, so is_on_floor() does not work
 var is_on_floor := false
@@ -51,9 +52,10 @@ var _hspeed := 0.0
 var _vspeed := 0.0
 var _anim: String
 var _bullet_array: Array = []
+var _blood_cycles := 0
 
 var _bullet: PackedScene = preload("res://scenes/Bullet.tscn")
-var _blood: PackedScene = preload("res://scenes/Blood.tscn")
+#var _blood: PackedScene = preload("res://scenes/Blood.tscn")
 
 onready var _snd_jump: AudioStreamPlayer = $Sounds/Jump
 onready var _snd_djump: AudioStreamPlayer = $Sounds/DJump
@@ -72,16 +74,24 @@ func _unhandled_key_input(_event) -> void:
 		_shoot()
 
 func _physics_process(delta) -> void:
-	_set_h_mov()
-	_set_jump()
-	_set_v_mov()
+	if not dead:
+		_set_h_mov()
+		_set_jump()
+		_set_v_mov()
 
-	# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
-	# warning-ignore:return_value_discarded
-	move_and_slide(Vector2(_hspeed,_vspeed) / delta, Vector2.UP)
+		# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
+		# warning-ignore:return_value_discarded
+		move_and_slide(Vector2(_hspeed,_vspeed) / delta, Vector2.UP)
 
-	# Animation
-	_anim_player.play(_anim)
+		# Animation
+		_anim_player.play(_anim)
+
+	elif _blood_cycles < BLOOD_CYCLE:
+		_explode()
+	else:
+		# Can't move or shoot
+		set_process_unhandled_key_input(false)
+		set_physics_process(false)
 
 ## Sets the jumping movement
 ## Plays jumping sounds
@@ -164,11 +174,14 @@ func _flip(xscale: int) -> void:
 ##
 ## Also shoots them all at once
 func _explode() -> void:
+	var parent: Node = get_parent()
+	_blood_cycles += 1
+
 	# warning-ignore:unused_variable
 	for i in range(BLOOD_CNT):
-		var blood = _blood.instance()
-		get_parent().call_deferred("add_child", blood)
-		blood.set_deferred("global_position", self.global_position)
+		var blood = preload("res://scenes/Blood.tscn").instance()
+		parent.call_deferred("add_child", blood)
+		blood.global_position = self.global_position
 
 func _shoot() -> void:
 	var bullet = _bullet.instance()
@@ -187,15 +200,10 @@ func _remove_bullet(_body) -> void:
 
 func _death() -> void:
 	dead = true # Useless for now
-	_explode()
 	_snd_death.play()
 	_sprite.hide()
 	_mus_death.play()
 	emit_signal("death")
-
-	# Can't move or shoot
-	set_process_unhandled_key_input(false)
-	set_physics_process(false)
 
 func _on_FloorDetectArea_body_entered(_body) -> void:
 	is_on_floor = true

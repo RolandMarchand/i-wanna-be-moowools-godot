@@ -42,7 +42,7 @@ func _unhandled_key_input(_event):
 	# Toggles pause
 	if Input.is_action_just_pressed("pause"):
 		var is_paused: bool = get_tree().is_paused()
-		
+
 		get_tree().set_pause(not is_paused)
 		emit_signal("paused", not is_paused)
 
@@ -68,10 +68,11 @@ func _reset() -> void:
 		Save.deaths += 1
 
 		if not Music.is_playing():
-			Music.toggle()
+			Music.play()
 
 	# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()
+		get_tree().set_pause(false)
 
 		OS.set_window_title("I Don't Wanna Be Game Maker! (deaths: "
 				+ str(Save.deaths) + ")")

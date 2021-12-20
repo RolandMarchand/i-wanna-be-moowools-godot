@@ -34,10 +34,11 @@ var _stuck := false
 var _grav: float
 var _coll: bool = false
 
-var _blood0 = preload("res://sprites/sprBlood_0.png")
-var _blood1 = preload("res://sprites/sprBlood_1.png")
-var _blood2 = preload("res://sprites/sprBlood_2.png")
-var _blood_array: Array = [_blood0, _blood1, _blood2]
+var _blood_array: Array = [
+		preload("res://sprites/sprBlood_0.png"),
+		preload("res://sprites/sprBlood_1.png"),
+		preload("res://sprites/sprBlood_2.png"),
+		]
 
 onready var sprite: Sprite = $Sprite
 
@@ -46,15 +47,15 @@ func _ready() -> void:
 	_set_grav()
 
 	# Chooses random blood texture
-	var blood = randi() % _blood_array.size()
-	sprite.texture = _blood_array[blood]
+	sprite.texture = _blood_array[floor(randf() * 3)]
 
-func _physics_process(delta) -> void:
+func _physics_process(_delta) -> void:
 	_vspeed += _grav
 
 	if not _stuck:
 		# warning-ignore:return_value_discarded
-		move_and_slide(Vector2(_hspeed, _vspeed) / delta)
+		if move_and_collide(Vector2(_hspeed, _vspeed)):
+			_stuck = true
 	else:
 		set_physics_process(false)
 
@@ -73,6 +74,9 @@ func _set_grav() -> void:
 
 func _on_Hitbox_body_entered(_body) -> void:
 	_coll = true
+
+	if randf() > 0.5:
+		_stuck = true
 
 func _on_Hitbox_body_exited(_body) -> void:
 	_coll = false

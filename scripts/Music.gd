@@ -29,7 +29,7 @@
 extends Node
 
 var _audio_player := AudioStreamPlayer.new()
-var _last_pos: float = 0.0
+var _last_pos := 0.0
 var _mus_rock: AudioStream = preload("res://audio/musGuyRock.mp3")
 var _quiet: bool = false setget set_quiet, is_quiet
 
@@ -38,28 +38,28 @@ func _ready() -> void:
 
 	_audio_player.stream = _mus_rock
 	_audio_player.play()
-	
+
 	_audio_player.bus = "Music"
-	
+
 	pause_mode = PAUSE_MODE_PROCESS
 
 func is_playing() -> bool:
 	return _audio_player.playing
 
-## Plays the music back to the starting position
-func play() -> void:
-	_audio_player.play()
+## Plays the music back, starts from where it left off by default
+func play(restart: bool = false) -> void:
+	if restart:
+		_audio_player.play()
+	else:
+		_audio_player.play(_last_pos)
 
-## Pauses the music or resumes it to its paused position
-func toggle() -> void:
+## Stops the music and records the last position
+func stop() -> void:
 	if _audio_player.playing:
 		_last_pos = _audio_player.get_playback_position()
 		_audio_player.stop()
-	else:
-		_audio_player.play(_last_pos)
-		
-		
-	pause_mode = PAUSE_MODE_PROCESS
+
+
 
 func set_quiet(quiet: bool) -> void:
 	_quiet = quiet
