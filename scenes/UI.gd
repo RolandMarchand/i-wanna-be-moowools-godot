@@ -26,52 +26,55 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-extends Node
+extends CanvasLayer
 
-signal paused
+onready var go: MarginContainer = $GameOver
+onready var menu: MarginContainer = $Menu
 
-# There probably is a more efficient way of doing this
-var bg_img: RID = preload("res://sprites/bg_black.png").get_rid()
+onready var sound: HSlider = $Menu/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound
+onready var music: HSlider = $Menu/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music
+onready var fs: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/Fullscreen
+onready var quiet_bg: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/QuietBG
+onready var vsync: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/VSync
+onready var ok: Button = $Menu/PanelContainer/VBoxContainer/HBoxContainer5/Ok
+onready var back_ts: Button = $Menu/PanelContainer/VBoxContainer/HBoxContainer5/Back2Title
 
 func _ready():
-	pause_mode = PAUSE_MODE_PROCESS
-	VisualServer.black_bars_set_images(bg_img, bg_img, bg_img, bg_img)
-
-func _unhandled_key_input(_event):
-
-	# Toggles pause
-	if Input.is_action_just_pressed("pause"):
-		var is_paused: bool = get_tree().is_paused()
-		
-		get_tree().set_pause(not is_paused)
-		emit_signal("paused", not is_paused)
-
-	if Input.is_action_just_pressed("reset"):
-		_reset()
-
-	if Input.is_action_just_pressed("quit"):
-		get_tree().quit(0)
-
-	if Input.is_action_just_pressed("fullscreen"):
-		OS.set_window_fullscreen(not OS.is_window_fullscreen())
-
-	# Implement boss skip
-	if Input.is_action_just_pressed("skip"):
-		pass
-
-	# Implement going back to title screen
-	if Input.is_action_just_pressed("title_screen"):
-		pass
-
-## Reset the scene, restarts music, increments the death counter
-func _reset() -> void:
-		Save.deaths += 1
-
-		if not Music.is_playing():
-			Music.toggle()
-
 	# warning-ignore:return_value_discarded
-		get_tree().reload_current_scene()
+	Shortcuts.connect("paused", self, "set_menu_visible")
 
-		OS.set_window_title("I Don't Wanna Be Game Maker! (deaths: "
-				+ str(Save.deaths) + ")")
+func game_over() -> void:
+	go.show() # Is hidden when scene is reloaded on reset
+
+func set_menu_visible(visible: bool) -> void:
+	if visible:
+		_refresh_settings()
+	
+	menu.set_visible(visible)
+	
+
+func _refresh_settings() -> void:
+	fs.pressed = OS.is_window_fullscreen()
+	vsync.pressed = OS.is_vsync_enabled()
+	quiet_bg.pressed = Music.is_quiet()
+	
+
+func _on_Ok_pressed():
+	menu.hide()
+	get_tree().set_pause(false)
+
+## Title screen to be implemented
+func _on_Back2Title_pressed():
+	pass # Replace with function body.
+
+
+func _on_VSync_pressed():
+	OS.set_use_vsync(vsync.is_pressed())
+
+
+func _on_QuietBG_pressed():
+	Music.set_quiet(quiet_bg.is_pressed())
+
+
+func _on_Fullscreen_pressed():
+	OS.set_window_fullscreen(fs.is_pressed())

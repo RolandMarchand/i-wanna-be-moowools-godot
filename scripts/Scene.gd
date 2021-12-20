@@ -30,6 +30,8 @@ extends Node2D
 
 var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
 
+onready var ui: CanvasLayer = $UI
+
 func _ready() -> void:
 	_connect_kid()
 	OS.set_window_title("I Don't Wanna Be Game Maker! (deaths: "
@@ -46,7 +48,7 @@ func _connect_kid() -> void:
 			kid.xscale = Save.xscale
 
 func _on_Kid_death() -> void:
-	$GameOver/MarginContainer.show()
+	ui.game_over()
 
 	Music.toggle()
 	$DeathMusic.play()
@@ -54,3 +56,5 @@ func _on_Kid_death() -> void:
 
 func _on_Warp_body_entered(_body) -> void:
 	get_tree().quit(0)
+
+

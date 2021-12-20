@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/Kid.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=2]
@@ -13,6 +13,10 @@
 [ext_resource path="res://sprites/sprPlayerJump_0.png" type="Texture" id=11]
 [ext_resource path="res://sprites/sprPlayerFall_0.png" type="Texture" id=12]
 [ext_resource path="res://sprites/sprPlayerFall_1.png" type="Texture" id=13]
+[ext_resource path="res://audio/sndJump.wav" type="AudioStream" id=14]
+[ext_resource path="res://audio/sndDeath.wav" type="AudioStream" id=15]
+[ext_resource path="res://audio/sndDJump.wav" type="AudioStream" id=16]
+[ext_resource path="res://audio/sndShoot.wav" type="AudioStream" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 10.5 )
@@ -149,7 +153,23 @@ anims/idle = SubResource( 4 )
 anims/jump = SubResource( 7 )
 anims/run = SubResource( 5 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 14 )
+bus = "Sound"
+
+[node name="DJump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 16 )
+bus = "Sound"
+
+[node name="Death" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 15 )
+bus = "Sound"
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 17 )
+bus = "Sound"
 
 [connection signal="body_entered" from="SpikeHitbox" to="." method="_on_SpikeHitbox_body_entered"]
 [connection signal="body_entered" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_entered"]

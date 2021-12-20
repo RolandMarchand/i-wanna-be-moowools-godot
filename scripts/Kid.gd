@@ -52,15 +52,14 @@ var _vspeed := 0.0
 var _anim: String
 var _bullet_array: Array = []
 
-var _snd_jump: AudioStream = preload("res://audio/sndJump.wav")
-var _snd_djump: AudioStream = preload("res://audio/sndDJump.wav")
-var _snd_shoot: AudioStream = preload("res://audio/sndShoot.wav")
-var _snd_death: AudioStream = preload("res://audio/sndDeath.wav")
-
 var _bullet: PackedScene = preload("res://scenes/Bullet.tscn")
 var _blood: PackedScene = preload("res://scenes/Blood.tscn")
 
-onready var _audio: AudioStreamPlayer = $AudioStreamPlayer
+onready var _snd_jump: AudioStreamPlayer = $Sounds/Jump
+onready var _snd_djump: AudioStreamPlayer = $Sounds/DJump
+onready var _snd_death: AudioStreamPlayer = $Sounds/Death
+onready var _snd_shoot: AudioStreamPlayer = $Sounds/Shoot
+
 onready var _sprite: Sprite = $Sprite
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
@@ -92,12 +91,12 @@ func _set_jump() -> void:
 				_jump = true
 				_vspeed = JUMP_SPEED
 
-				_sound_play(_snd_jump)
+				_snd_jump.play()
 			elif _djump:
 				_djump = false
 				_vspeed = DJUMP_SPEED
 
-				_sound_play(_snd_djump)
+				_snd_djump.play()
 
 	elif Input.is_action_just_released("jump") and _jump and _vspeed < 0:
 		_vspeed *= JUMP_DEACCEL
@@ -180,19 +179,15 @@ func _shoot() -> void:
 	_bullet_array.append(bullet)
 	bullet.connect("hit", self, "_remove_bullet")
 
-	_sound_play(_snd_shoot)
+	_snd_shoot.play()
 
 func _remove_bullet(_body) -> void:
 	_bullet_array.pop_front()
 
-func _sound_play(sound: AudioStream) -> void:
-	_audio.stream = sound
-	_audio.play()
-
 func _death() -> void:
 	dead = true # Useless for now
-	_explode()
-	_sound_play(_snd_death)
+	#_explode()
+	_snd_death.play()
 	_sprite.hide()
 	emit_signal("death")
 
