@@ -186,7 +186,7 @@ func _remove_bullet(_body) -> void:
 
 func _death() -> void:
 	dead = true # Useless for now
-	#_explode()
+	_explode()
 	_snd_death.play()
 	_sprite.hide()
 	emit_signal("death")
