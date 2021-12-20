@@ -59,6 +59,7 @@ onready var _snd_jump: AudioStreamPlayer = $Sounds/Jump
 onready var _snd_djump: AudioStreamPlayer = $Sounds/DJump
 onready var _snd_death: AudioStreamPlayer = $Sounds/Death
 onready var _snd_shoot: AudioStreamPlayer = $Sounds/Shoot
+onready var _mus_death: AudioStreamPlayer = $Sounds/DeathMus
 
 onready var _sprite: Sprite = $Sprite
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
@@ -189,6 +190,7 @@ func _death() -> void:
 	_explode()
 	_snd_death.play()
 	_sprite.hide()
+	_mus_death.play()
 	emit_signal("death")
 
 	# Can't move or shoot

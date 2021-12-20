@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/Kid.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://audio/sndDeath.wav" type="AudioStream" id=15]
 [ext_resource path="res://audio/sndDJump.wav" type="AudioStream" id=16]
 [ext_resource path="res://audio/sndShoot.wav" type="AudioStream" id=17]
+[ext_resource path="res://audio/musOnDeath.mp3" type="AudioStream" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 10.5 )
@@ -170,6 +171,10 @@ bus = "Sound"
 [node name="Shoot" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 17 )
 bus = "Sound"
+
+[node name="DeathMus" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 18 )
+bus = "Music"
 
 [connection signal="body_entered" from="SpikeHitbox" to="." method="_on_SpikeHitbox_body_entered"]
 [connection signal="body_entered" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_entered"]
