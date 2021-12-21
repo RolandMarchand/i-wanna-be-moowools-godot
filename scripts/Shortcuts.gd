@@ -40,7 +40,6 @@ func _ready():
 	VisualServer.black_bars_set_images(bg_img, bg_img, bg_img, bg_img)
 
 func _unhandled_key_input(_event):
-
 	# Toggles pause
 	if Input.is_action_just_pressed("pause"):
 		var pause := not get_tree().is_paused()

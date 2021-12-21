@@ -39,10 +39,11 @@ const VALIGN := 0.4
 const MAX_BULLET := 3
 
 const BLOOD_CNT := 40
-const BLOOD_CYCLE := 20
+const MAX_BLOOD_CYCLES := 20
 
-# The kid hovers 0.4 pixels above the ground, so is_on_floor() does not work
-var is_on_floor := false
+# The kid hovers 0.4 pixels above the ground, so on_floor() does not work
+var on_floor := false
+var _platform: KinematicBody2D
 var dead := false # Useless for now
 var xscale := 1
 var _jump := false
@@ -76,8 +77,10 @@ func _unhandled_key_input(_event) -> void:
 func _physics_process(delta) -> void:
 	if not dead:
 		_set_h_mov()
+		_on_platform(delta)
 		_set_jump()
 		_set_v_mov()
+
 
 		# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
 		# warning-ignore:return_value_discarded
@@ -86,19 +89,38 @@ func _physics_process(delta) -> void:
 		# Animation
 		_anim_player.play(_anim)
 
-	elif _blood_cycles < BLOOD_CYCLE:
+	# Blood
+	elif _blood_cycles < MAX_BLOOD_CYCLES:
 		_explode()
+		_blood_cycles += 1
 	else:
 		# Can't move or shoot
 		set_process_unhandled_key_input(false)
 		set_physics_process(false)
+
+func _on_platform(delta) -> void:
+	if not _platform:
+		return
+
+	move_and_slide(Vector2(_platform.velocity.x, 0) / delta)
+
+	# This logic does not exactly work, the character istoo low for one
+	# frame after having jumped on the platform
+	# To fix this, I added a StaticBody2D to the platforms
+	# It does not mess with the physics at all
+	if global_position.y + 1.5 - _vspeed / 2 <= _platform.global_position.y - 8:
+		global_position.y = _platform.global_position.y - 18
+		if _vspeed >= 0:
+			_jump = false
+		_vspeed = 0
+
 
 ## Sets the jumping movement
 ## Plays jumping sounds
 func _set_jump() -> void:
 	if Input.is_action_pressed("jump"):
 		if Input.is_action_just_pressed("jump"):
-			if not _jump:
+			if not _jump or _platform:
 				_jump = true
 				_vspeed = JUMP_SPEED
 
@@ -136,7 +158,7 @@ func _set_v_mov() -> void:
 		else:
 			_anim = "fall"
 
-		if is_on_floor and _vspeed >= 0:
+		if on_floor and _vspeed >= 0:
 			_jump = false
 		elif is_on_ceiling():
 			_vspeed = 0.01 # Not exact physics logic, but it works
@@ -144,7 +166,7 @@ func _set_v_mov() -> void:
 	if not _jump:
 		_vspeed = 0
 		_djump = true
-		if not is_on_floor:
+		if not on_floor:
 			_jump = true
 
 		if _hspeed != 0:
@@ -175,7 +197,6 @@ func _flip(xscale: int) -> void:
 ## Also shoots them all at once
 func _explode() -> void:
 	var parent: Node = get_parent()
-	_blood_cycles += 1
 
 	# warning-ignore:unused_variable
 	for i in range(BLOOD_CNT):
@@ -199,17 +220,32 @@ func _remove_bullet(_body) -> void:
 	_bullet_array.pop_front()
 
 func _death() -> void:
-	dead = true # Useless for now
+	dead = true
 	_snd_death.play()
 	_sprite.hide()
 	_mus_death.play()
 	emit_signal("death")
 
-func _on_FloorDetectArea_body_entered(_body) -> void:
-	is_on_floor = true
+func _on_Floor_body_entered(_body) -> void:
+	on_floor = true
 
-func _on_FloorDetectArea_body_exited(_body) -> void:
-	is_on_floor = false
+func _on_Floor_body_exited(_body) -> void:
+	on_floor = false
 
-func _on_SpikeHitbox_body_entered(_body) -> void:
-	_death()
+func _on_Spike_body_entered(body: Node) -> void:
+	if body.is_in_group("spikes"):
+		_death()
+	elif body.is_in_group("platforms"):
+		_platform = body
+
+func _on_Spike_body_exited(body: Node) -> void:
+	if body.is_in_group("platforms"):
+		_platform = null
+
+
+func _on_Platform_body_entered(body):
+	_platform = body
+
+
+func _on_Platform_body_exited(_body):
+	_platform = null

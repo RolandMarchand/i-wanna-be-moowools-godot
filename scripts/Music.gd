@@ -36,7 +36,7 @@ const QUIET_MULT := 3
 var _audio_player := AudioStreamPlayer.new()
 var _last_pos := 0.0
 var _mus_rock: AudioStream = preload("res://audio/musGuyRock.mp3")
-var _quiet: bool = false setget set_quiet, is_quiet
+var _quiet: bool = true setget set_quiet, is_quiet
 # Takes a decibel value
 # Set in UI.gd
 # Used for quiet bg

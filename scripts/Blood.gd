@@ -72,11 +72,13 @@ func _set_speed() -> void:
 func _set_grav() -> void:
 	_grav = 0.1 + randf() * 0.2
 
-func _on_Hitbox_body_entered(_body) -> void:
-	_coll = true
+func _on_Hitbox_body_entered(body: Node) -> void:
+	# Little hack against bug found in _on_platform in Kid.gd
+	if not body.get_parent().is_in_group("platforms"):
+		_coll = true
 
-	if randf() > 0.5:
-		_stuck = true
+		if randf() > 0.5:
+			_stuck = true
 
 func _on_Hitbox_body_exited(_body) -> void:
 	_coll = false
