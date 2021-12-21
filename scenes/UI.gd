@@ -35,6 +35,7 @@ onready var _master: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer
 onready var _sound: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound
 onready var _music: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music
 onready var _fs: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen
+onready var _change_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen/ChangeBG
 onready var _quiet_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/QuietBG
 onready var _vsync: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/VSync
 onready var _ok: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Ok
@@ -71,6 +72,8 @@ func _refresh_settings() -> void:
 	_master.value = db2linear(AudioServer.get_bus_volume_db(0))
 	_sound.value = db2linear(AudioServer.get_bus_volume_db(1))
 	_music.value = db2linear(AudioServer.get_bus_volume_db(2))
+	_change_bg.disabled = not OS.is_window_fullscreen()
+
 
 func _test_audio() -> void:
 	# Audio musn't be tested roguely
@@ -128,3 +131,7 @@ func _on_Vsync_toggled(button_pressed: bool) -> void:
 
 func _on_QuietBG_toggled(button_pressed) -> void:
 	Music.set_quiet(button_pressed)
+
+
+func _on_ChangeBG_pressed():
+	BlackBars.next_bg_img()

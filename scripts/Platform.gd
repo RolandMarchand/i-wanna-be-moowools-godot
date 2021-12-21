@@ -26,6 +26,9 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+# Bug:
+# Vertical platforms aren't yet implemented
+
 extends KinematicBody2D
 
 const BASE_SPEED := 2.0

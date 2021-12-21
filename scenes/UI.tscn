@@ -175,6 +175,21 @@ size_flags_horizontal = 4
 toggle_mode = true
 text = "Fullscreen"
 
+[node name="ChangeBG" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 2.0
+margin_top = -14.0
+margin_right = 34.0
+margin_bottom = 14.0
+disabled = true
+text = "BG"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="VSync" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 60.0
 margin_top = 32.0
@@ -240,6 +255,7 @@ __meta__ = {
 [connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound" to="." method="_on_Sound_value_changed"]
 [connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music" to="." method="_on_Music_value_changed"]
 [connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen" to="." method="_on_Fullscreen_toggled"]
+[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen/ChangeBG" to="." method="_on_ChangeBG_pressed"]
 [connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/VSync" to="." method="_on_Vsync_toggled"]
 [connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/QuietBG" to="." method="_on_QuietBG_toggled"]
 [connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Ok" to="." method="_on_Ok_pressed"]

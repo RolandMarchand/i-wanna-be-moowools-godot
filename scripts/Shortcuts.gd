@@ -32,12 +32,9 @@ signal reset
 signal paused
 signal fullscreen
 
-# There probably is a more efficient way of doing this
-var bg_img: RID = preload("res://sprites/bg_black.png").get_rid()
-
 func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
-	VisualServer.black_bars_set_images(bg_img, bg_img, bg_img, bg_img)
+
 
 func _unhandled_key_input(_event):
 	# Toggles pause
