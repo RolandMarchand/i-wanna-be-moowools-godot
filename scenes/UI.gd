@@ -31,30 +31,38 @@ extends CanvasLayer
 onready var _go: MarginContainer = $GameOver
 onready var _menu: MarginContainer = $Menu
 
-onready var _master: HSlider = $Menu/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer3/Master
-onready var _sound: HSlider = $Menu/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound
-onready var _music: HSlider = $Menu/PanelContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music
-onready var _fs: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/Fullscreen
-onready var _quiet_bg: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/QuietBG
-onready var _vsync: CheckBox = $Menu/PanelContainer/VBoxContainer/VBoxContainer/VSync
-onready var _ok: Button = $Menu/PanelContainer/VBoxContainer/HBoxContainer5/Ok
-onready var _back_ts: Button = $Menu/PanelContainer/VBoxContainer/HBoxContainer5/Back2Title
+onready var _master: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer3/Master
+onready var _sound: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound
+onready var _music: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music
+onready var _fs: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen
+onready var _quiet_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/QuietBG
+onready var _vsync: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/VSync
+onready var _ok: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Ok
+onready var _back_ts: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Back2Title
+onready var _hide: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Hide
+onready var _show: Button = $Show
 
-onready var _sound_test: AudioStreamPlayer = $Menu/PanelContainer/VBoxContainer/HBoxContainer/Test
+onready var _sound_test: AudioStreamPlayer = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/Test
 
-func _ready():
+func _ready() -> void:
 	# warning-ignore:return_value_discarded
-	Shortcuts.connect("paused", self, "set_menu_visible")
+	Shortcuts.connect("paused", self, "_set_menu_visible")
+	# warning-ignore:return_value_discarded
+	Shortcuts.connect("fullscreen", self, "_refresh_settings")
+
+	Music.connect("vol_changed", self, "_refresh_settings")
+
+	_refresh_settings()
 
 func game_over() -> void:
 	_go.show() # Is hidden when scene is reloaded on reset
 
-func set_menu_visible(visible: bool) -> void:
+func _set_menu_visible(visible: bool) -> void:
 	if visible:
 		_refresh_settings()
 
 	_menu.set_visible(visible)
-
+	_show.set_visible(false)
 
 func _refresh_settings() -> void:
 	_fs.pressed = OS.is_window_fullscreen()
@@ -64,11 +72,16 @@ func _refresh_settings() -> void:
 	_sound.value = db2linear(AudioServer.get_bus_volume_db(1))
 	_music.value = db2linear(AudioServer.get_bus_volume_db(2))
 
-func _test_audio():
-	if not Input.is_action_just_pressed("pause"):
+func _test_audio() -> void:
+	# Audio musn't be tested roguely
+	if Input.is_mouse_button_pressed(BUTTON_LEFT) or \
+		Input.is_mouse_button_pressed(BUTTON_RIGHT) or \
+		Input.is_mouse_button_pressed(BUTTON_WHEEL_UP) or \
+		Input.is_mouse_button_pressed(BUTTON_WHEEL_DOWN):
+
 		_sound_test.play()
 
-func _on_Ok_pressed():
+func _on_Ok_pressed() -> void:
 	_menu.hide()
 	get_tree().set_pause(false)
 
@@ -77,29 +90,41 @@ func _on_Back2Title_pressed():
 	pass # Replace with function body.
 
 
-func _on_VSync_pressed():
-	OS.set_use_vsync(_vsync.is_pressed())
-
-
-func _on_QuietBG_pressed():
-	Music.set_quiet(_quiet_bg.is_pressed())
-
-
-func _on_Fullscreen_pressed():
-	OS.set_window_fullscreen(_fs.is_pressed())
-
-func _on_Sound_value_changed(value):
+func _on_Sound_value_changed(value) -> void:
 	AudioServer.set_bus_volume_db(1, linear2db(value))
 
-	# Don't test the sound when the menu appears
 	_test_audio()
 
-func _on_Music_value_changed(value):
+func _on_Music_value_changed(value) -> void:
 	AudioServer.set_bus_volume_db(2, linear2db(value))
 
-
-func _on_Master_value_changed(value):
-	AudioServer.set_bus_volume_db(0, linear2db(value))
-
-	# Don't test the sound when the menu appears
 	_test_audio()
+
+
+func _on_Master_value_changed(value) -> void:
+	AudioServer.set_bus_volume_db(0, linear2db(value))
+	# Used to set quiet bg
+	# Notifications are broken and signals don't exist :(
+	Music.original_volume = linear2db(value)
+
+	_test_audio()
+
+func _on_Button_pressed() -> void:
+	_show.hide()
+	_menu.show()
+
+func _on_Hide_pressed() -> void:
+	_menu.hide()
+	_show.show()
+
+
+func _on_Fullscreen_toggled(button_pressed: bool) -> void:
+	OS.set_window_fullscreen(button_pressed)
+
+
+func _on_Vsync_toggled(button_pressed: bool) -> void:
+	OS.set_use_vsync(button_pressed)
+
+
+func _on_QuietBG_toggled(button_pressed) -> void:
+	Music.set_quiet(button_pressed)

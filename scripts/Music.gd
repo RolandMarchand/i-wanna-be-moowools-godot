@@ -26,12 +26,21 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+# Description:
+# Singleton managing audio buses and constantly playing music
+
 extends Node
+
+const QUIET_MULT := 3
 
 var _audio_player := AudioStreamPlayer.new()
 var _last_pos := 0.0
 var _mus_rock: AudioStream = preload("res://audio/musGuyRock.mp3")
 var _quiet: bool = false setget set_quiet, is_quiet
+# Takes a decibel value
+# Set in UI.gd
+# Used for quiet bg
+var original_volume: float
 
 func _ready() -> void:
 	add_child(_audio_player)
@@ -42,6 +51,19 @@ func _ready() -> void:
 	_audio_player.bus = "Music"
 
 	pause_mode = PAUSE_MODE_PROCESS
+
+signal vol_changed
+
+func _physics_process(_delta) -> void:
+	# Sets the audio quiet when window isn' focused
+	# Hacky, I know, but notifications don't work
+	if _quiet:
+		if OS.is_window_focused():
+			AudioServer.set_bus_volume_db(0, original_volume)
+		else:
+			var new_vol = db2linear(original_volume) / QUIET_MULT
+			AudioServer.set_bus_volume_db(0, linear2db(new_vol))
+
 
 func is_playing() -> bool:
 	return _audio_player.playing

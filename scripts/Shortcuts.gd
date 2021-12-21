@@ -28,7 +28,9 @@
 
 extends Node
 
+signal reset
 signal paused
+signal fullscreen
 
 # There probably is a more efficient way of doing this
 var bg_img: RID = preload("res://sprites/bg_black.png").get_rid()
@@ -41,19 +43,22 @@ func _unhandled_key_input(_event):
 
 	# Toggles pause
 	if Input.is_action_just_pressed("pause"):
-		var is_paused: bool = get_tree().is_paused()
+		var pause := not get_tree().is_paused()
 
-		get_tree().set_pause(not is_paused)
-		emit_signal("paused", not is_paused)
+		get_tree().set_pause(pause)
+		emit_signal("paused", pause)
 
 	if Input.is_action_just_pressed("reset"):
-		_reset()
+		if not get_tree().is_paused():
+			_reset()
+			emit_signal("reset")
 
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit(0)
 
 	if Input.is_action_just_pressed("fullscreen"):
 		OS.set_window_fullscreen(not OS.is_window_fullscreen())
+		emit_signal("fullscreen")
 
 	# Implement boss skip
 	if Input.is_action_just_pressed("skip"):
