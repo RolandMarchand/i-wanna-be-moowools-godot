@@ -43,14 +43,13 @@ const MAX_BLOOD_CYCLES := 20
 
 # The kid hovers 0.4 pixels above the ground, so on_floor() does not work
 var on_floor := false
-var _platform: KinematicBody2D
 var dead := false # Useless for now
 var xscale := 1
 var _jump := false
 var _djump := false
 var _xdir := 0.0
 var _hspeed := 0.0
-var _vspeed := 0.0
+var vspeed := 0.0
 var _anim: String
 var _bullet_array: Array = []
 var _blood_cycles := 0
@@ -77,14 +76,13 @@ func _unhandled_key_input(_event) -> void:
 func _physics_process(delta) -> void:
 	if not dead:
 		_set_h_mov()
-		_on_platform(delta)
 		_set_jump()
 		_set_v_mov()
 
 
 		# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
 		# warning-ignore:return_value_discarded
-		move_and_slide(Vector2(_hspeed,_vspeed) / delta, Vector2.UP)
+		move_and_slide(Vector2(_hspeed,vspeed) / delta, Vector2.UP)
 
 		# Animation
 		_anim_player.play(_anim)
@@ -98,41 +96,25 @@ func _physics_process(delta) -> void:
 		set_process_unhandled_key_input(false)
 		set_physics_process(false)
 
-func _on_platform(delta) -> void:
-	if not _platform:
-		return
-
-	move_and_slide(Vector2(_platform.velocity.x, 0) / delta)
-
-	# This logic does not exactly work, the character istoo low for one
-	# frame after having jumped on the platform
-	# To fix this, I added a StaticBody2D to the platforms
-	# It does not mess with the physics at all
-	if global_position.y + 1.5 - _vspeed / 2 <= _platform.global_position.y - 8:
-		global_position.y = _platform.global_position.y - 18
-		if _vspeed >= 0:
-			_jump = false
-		_vspeed = 0
-
 
 ## Sets the jumping movement
 ## Plays jumping sounds
 func _set_jump() -> void:
 	if Input.is_action_pressed("jump"):
 		if Input.is_action_just_pressed("jump"):
-			if not _jump or _platform:
+			if not _jump:
 				_jump = true
-				_vspeed = JUMP_SPEED
+				vspeed = JUMP_SPEED
 
 				_snd_jump.play()
 			elif _djump:
 				_djump = false
-				_vspeed = DJUMP_SPEED
+				vspeed = DJUMP_SPEED
 
 				_snd_djump.play()
 
-	elif Input.is_action_just_released("jump") and _jump and _vspeed < 0:
-		_vspeed *= JUMP_DEACCEL
+	elif Input.is_action_just_released("jump") and _jump and vspeed < 0:
+		vspeed *= JUMP_DEACCEL
 
 ## Sets _hspeed, which gets used in _physics_process
 ## Also sets xscale, and flips the player accordingly
@@ -147,24 +129,23 @@ func _set_h_mov() -> void:
 		xscale = int(_xdir)
 	_flip(xscale)
 
-## Sets _vspeed, which gets used in _physics_process
+## Sets vspeed, which gets used in _physics_process
 ## Sets _anim, which gets used in _physics_process
 func _set_v_mov() -> void:
 	if _jump:
-		_vspeed = min(MAX_FALL_SPEED, _vspeed + VALIGN)
+		vspeed = min(MAX_FALL_SPEED, vspeed + VALIGN)
 
-		if _vspeed < 0:
+		if vspeed < 0:
 			_anim = "jump"
 		else:
 			_anim = "fall"
 
-		if on_floor and _vspeed >= 0:
+		if on_floor and vspeed >= 0:
 			_jump = false
 		elif is_on_ceiling():
-			_vspeed = 0.01 # Not exact physics logic, but it works
-
-	if not _jump:
-		_vspeed = 0
+			vspeed = 0.01 # Not exact physics logic, but it works
+	else:
+		vspeed = 0
 		_djump = true
 		if not on_floor:
 			_jump = true
@@ -230,22 +211,10 @@ func _on_Floor_body_entered(_body) -> void:
 	on_floor = true
 
 func _on_Floor_body_exited(_body) -> void:
-	on_floor = false
+	# To prevent but where platform would leave Floor and render the kid
+	if $Floor.get_overlapping_bodies().empty():
+		on_floor = false
 
 func _on_Spike_body_entered(body: Node) -> void:
 	if body.is_in_group("spikes"):
 		_death()
-	elif body.is_in_group("platforms"):
-		_platform = body
-
-func _on_Spike_body_exited(body: Node) -> void:
-	if body.is_in_group("platforms"):
-		_platform = null
-
-
-func _on_Platform_body_entered(body):
-	_platform = body
-
-
-func _on_Platform_body_exited(_body):
-	_platform = null

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/Kid.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=2]
@@ -22,12 +22,8 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 10.5 )
 
-[sub_resource type="SegmentShape2D" id=2]
-a = Vector2( 5.5, 10.9 )
-b = Vector2( -5.5, 10.9 )
-
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 5.5, 11 )
+extents = Vector2( 5.5, 0.2 )
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -143,14 +139,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-shape = SubResource( 2 )
-
-[node name="Platform" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
-position = Vector2( 0, 0.5 )
+position = Vector2( 0, 10.7 )
 shape = SubResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -186,8 +175,5 @@ stream = ExtResource( 18 )
 bus = "Music"
 
 [connection signal="body_entered" from="Spike" to="." method="_on_Spike_body_entered"]
-[connection signal="body_exited" from="Spike" to="." method="_on_Spike_body_exited"]
 [connection signal="body_entered" from="Floor" to="." method="_on_Floor_body_entered"]
 [connection signal="body_exited" from="Floor" to="." method="_on_Floor_body_exited"]
-[connection signal="body_entered" from="Platform" to="." method="_on_Platform_body_entered"]
-[connection signal="body_exited" from="Platform" to="." method="_on_Platform_body_exited"]

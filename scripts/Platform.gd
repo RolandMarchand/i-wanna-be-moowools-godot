@@ -38,6 +38,7 @@ export(String, "Horizontal", "Vertical") var direction = "Horizontal"
 
 var _dir := 1
 var velocity: Vector2
+var _player: KinematicBody2D
 
 func _physics_process(delta) -> void:
 	_set_vel()
@@ -45,7 +46,10 @@ func _physics_process(delta) -> void:
 	# move_and_slide multiplies by delta, we don't want that
 	# warning-ignore:return_value_discarded
 	move_and_slide(velocity / delta)
-	#print_debug(velocity)
+
+	if _player:
+		_player.move_and_slide(velocity / delta)
+
 
 func _set_vel() -> void:
 	# Warning! Vertical platforms not supported yet!
@@ -58,3 +62,15 @@ func _set_vel() -> void:
 ## Platform switches side
 func _on_Hitbox_body_entered(_body) -> void:
 	_dir *= -1
+
+
+func _on_Player_body_entered(p: KinematicBody2D):
+	_player = p
+
+	# Snap
+	_player.vspeed = 0
+	_player.position.y = position.y - 10.5 - 8
+
+
+func _on_Player_body_exited(_body):
+	_player = null
