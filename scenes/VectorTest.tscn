@@ -1,0 +1,263 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://res/crt_material.tres" type="Material" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://res/Menu.tres" type="Theme" id=4]
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -20.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Wobble"
+length = 4.0
+loop = true
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( -2, -2, 1 ),
+"update": 0,
+"values": [ -10.0, 10.0, -10.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Flicker"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 0 ),
+"update": 0,
+"values": [ Vector2( -24, 104 ), Vector2( -72, 952 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -24, 104 ) ]
+}
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+background_canvas_max_layer = 1
+glow_enabled = true
+glow_intensity = 1.51
+glow_strength = 1.58
+glow_hdr_threshold = 0.0
+glow_high_quality = true
+adjustment_enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Icon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 376, 240 )
+scale = Vector2( 6.25, 6.25 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Godot" type="Node2D" parent="."]
+position = Vector2( 400, 168 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Outline" type="Line2D" parent="Godot"]
+position = Vector2( -376, -253 )
+points = PoolVector2Array( 371, 125, 387, 125, 402, 99, 427, 104, 447, 115, 448, 146, 469, 161, 488, 151, 500, 150, 522, 178, 521, 188, 508, 213, 508, 321, 493, 348, 468, 366, 431, 376, 388, 382, 379, 382 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Outline2" type="Line2D" parent="Godot"]
+position = Vector2( 382, -253 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+points = PoolVector2Array( 371, 125, 387, 125, 402, 99, 427, 104, 447, 115, 448, 146, 469, 161, 488, 151, 500, 150, 522, 178, 521, 188, 508, 213, 508, 321, 493, 348, 468, 366, 431, 376, 388, 382, 379, 382 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Outline3" type="Line2D" parent="Godot"]
+position = Vector2( 382, -253 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+points = PoolVector2Array( 508, 297, 463, 298, 460, 325, 410, 327, 409, 305, 356, 305, 354, 327, 304, 325, 301, 299, 250, 298 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Outline4" type="Line2D" parent="Godot"]
+position = Vector2( 382, -253 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+points = PoolVector2Array( 382, 238, 382, 267 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Outline5" type="Line2D" parent="Godot"]
+position = Vector2( 381, -254 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+points = PoolVector2Array( 462, 225, 468, 233, 470, 246, 467, 258, 460, 265, 448, 269, 435, 265, 428, 258, 425, 246, 427, 233, 434, 225, 449, 221, 462, 225 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Outline6" type="Line2D" parent="Godot"]
+position = Vector2( 515, -254 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+points = PoolVector2Array( 462, 225, 468, 233, 470, 246, 467, 258, 460, 265, 448, 269, 435, 265, 428, 258, 425, 246, 427, 233, 434, 225, 449, 221, 462, 225 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Shader" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="ColorRect" type="ColorRect" parent="Shader"]
+material = ExtResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Gui" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Label" type="Label" parent="Gui"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -358.954
+margin_top = -19.6046
+margin_right = 366.046
+margin_bottom = 33.3954
+rect_rotation = -20.0
+rect_pivot_offset = Vector2( 362, 26 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 4 )
+text = "I Don't Wanna Be Game Maker"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Gui/Label"]
+autoplay = "Wobble"
+anims/RESET = SubResource( 3 )
+anims/Wobble = SubResource( 4 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Gui"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 4 )
+custom_constants/margin_top = 304
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Gui/MarginContainer"]
+margin_top = 304.0
+margin_right = 800.0
+margin_bottom = 608.0
+alignment = 1
+
+[node name="NewGame" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+margin_top = 62.0
+margin_right = 800.0
+margin_bottom = 104.0
+size_flags_vertical = 0
+text = "NEW GAME"
+
+[node name="Options" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 800.0
+margin_bottom = 150.0
+size_flags_vertical = 0
+text = "OPTIONS"
+
+[node name="LoadGame" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+margin_top = 154.0
+margin_right = 800.0
+margin_bottom = 196.0
+size_flags_vertical = 0
+text = "LOAD GAME"
+
+[node name="Quit" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+margin_top = 200.0
+margin_right = 800.0
+margin_bottom = 242.0
+size_flags_vertical = 0
+text = "QUIT"
+
+[node name="Polygon2D" type="Polygon2D" parent="Gui"]
+position = Vector2( -24, 104 )
+color = Color( 0.0509804, 0.101961, 0.101961, 1 )
+polygon = PoolVector2Array( -128, -280, 960, -88, 1024, -152, -64, -344 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Gui/Polygon2D"]
+autoplay = "Flicker"
+anims/Flicker = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
