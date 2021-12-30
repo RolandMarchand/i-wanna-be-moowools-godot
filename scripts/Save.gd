@@ -50,6 +50,7 @@ func save_settings() -> void:
 	config.set_value("volume", "sound", AudioServer.get_bus_volume_db(1))
 	config.set_value("volume", "music", AudioServer.get_bus_volume_db(2))
 
+	# warning-ignore:return_value_discarded
 	config.save("user://settings.cfg")
 
 func save_game(save: String) -> void:
@@ -61,12 +62,15 @@ func save_game(save: String) -> void:
 	config.set_value(save, "position", pos)
 	config.set_value(save, "xscale", xscale)
 
+	# warning-ignore:return_value_discarded
 	config.save("user://saves.cfg")
 
 func load_game(save: String) -> void:
 	_verify_save(save)
 
 	var config := ConfigFile.new()
+	# warning-ignore:return_value_discarded
+	config.load("user://saves.cfg")
 
 	deaths = config.get_value(save, "deaths", 0)
 	pos = config.get_value(save, "position")
@@ -75,6 +79,7 @@ func load_game(save: String) -> void:
 
 func load_settings() -> void:
 	var config := ConfigFile.new()
+	# warning-ignore:return_value_discarded
 	config.load("user://settings.cfg")
 
 	OS.set_window_fullscreen(config.get_value("settings", "fullscreen", DEFAULT_FS))

@@ -38,9 +38,9 @@ onready var _fs: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBox
 onready var _change_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen/ChangeBG
 onready var _quiet_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/QuietBG
 onready var _vsync: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/VSync
-onready var _ok: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Ok
-onready var _back_ts: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Back2Title
-onready var _hide: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Hide
+onready var _ok: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2/Ok
+onready var _back_ts: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2/Back2Title
+onready var _hide: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer/Hide
 onready var _show: Button = $Show
 
 onready var _sound_test: AudioStreamPlayer = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/Test
