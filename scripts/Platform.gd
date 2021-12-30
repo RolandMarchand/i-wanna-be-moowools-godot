@@ -67,12 +67,6 @@ func _gen_path() -> void:
 	for point in $Trajectory.get_children():
 		_path.append(point.global_position)
 
-	# Loops back
-#	var p = _path.duplicate()
-#	p.invert()
-#	p.pop_front()
-#	_path.append_array(p)
-
 
 func _on_Tween_tween_completed(_object, _key):
 	_next_tween()
