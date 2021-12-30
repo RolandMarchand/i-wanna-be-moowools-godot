@@ -59,11 +59,10 @@ func game_over() -> void:
 	_go.show() # Is hidden when scene is reloaded on reset
 
 func _set_menu_visible(visible: bool) -> void:
-	if visible:
-		_refresh_settings()
-
 	_menu.set_visible(visible)
 	_show.set_visible(false)
+
+	_refresh_settings()
 
 func _refresh_settings() -> void:
 	_fs.pressed = OS.is_window_fullscreen()
@@ -84,13 +83,18 @@ func _test_audio() -> void:
 
 		_sound_test.play()
 
+	_refresh_settings()
+
 func _on_Ok_pressed() -> void:
 	_menu.hide()
 	get_tree().set_pause(false)
 
+	_refresh_settings()
+
 ## Title screen to be implemented
 func _on_Back2Title_pressed():
-	pass # Replace with function body.
+
+	_refresh_settings()
 
 
 func _on_Sound_value_changed(value) -> void:
@@ -98,10 +102,14 @@ func _on_Sound_value_changed(value) -> void:
 
 	_test_audio()
 
+	_refresh_settings()
+
 func _on_Music_value_changed(value) -> void:
 	AudioServer.set_bus_volume_db(2, linear2db(value))
 
 	_test_audio()
+
+	_refresh_settings()
 
 
 func _on_Master_value_changed(value) -> void:
@@ -112,26 +120,40 @@ func _on_Master_value_changed(value) -> void:
 
 	_test_audio()
 
+	_refresh_settings()
+
 func _on_Button_pressed() -> void:
 	_show.hide()
 	_menu.show()
+
+	_refresh_settings()
 
 func _on_Hide_pressed() -> void:
 	_menu.hide()
 	_show.show()
 
+	_refresh_settings()
+
 
 func _on_Fullscreen_toggled(button_pressed: bool) -> void:
 	OS.set_window_fullscreen(button_pressed)
+
+	_refresh_settings()
 
 
 func _on_Vsync_toggled(button_pressed: bool) -> void:
 	OS.set_use_vsync(button_pressed)
 
+	_refresh_settings()
+
 
 func _on_QuietBG_toggled(button_pressed) -> void:
 	Music.set_quiet(button_pressed)
 
+	_refresh_settings()
+
 
 func _on_ChangeBG_pressed():
 	BlackBars.next_bg_img()
+
+	_refresh_settings()
