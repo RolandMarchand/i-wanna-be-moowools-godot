@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# 
+#
 # Copyright (c) 2021 moowool195@gmail.com.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -13,7 +13,7 @@
 # 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,8 +32,9 @@ onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 func _on_SaveButton_body_entered(_body) -> void:
 	anim_player.play("saved")
-	
+
 	var kid: KinematicBody2D = get_tree().get_nodes_in_group("kid")[0]
-	
-	Save.pos = kid.global_position
-	Save.xscale = kid.xscale
+
+	if not kid.dead:
+		Save.pos = kid.global_position
+		Save.xscale = kid.xscale
