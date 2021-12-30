@@ -90,8 +90,8 @@ func _physics_process(delta) -> void:
 	elif _blood_cycles < MAX_BLOOD_CYCLES:
 		_explode()
 		_blood_cycles += 1
+	# Can't move or shoot
 	else:
-		# Can't move or shoot
 		set_process_unhandled_key_input(false)
 		set_physics_process(false)
 
@@ -172,10 +172,11 @@ func _explode() -> void:
 	var parent: Node = get_parent()
 
 	# warning-ignore:unused_variable
+	var blood = preload("res://scenes/Blood.tscn")
 	for i in range(BLOOD_CNT):
-		var blood = preload("res://scenes/Blood.tscn").instance()
-		parent.call_deferred("add_child", blood)
-		blood.global_position = self.global_position
+		var b = blood.instance()
+		parent.call_deferred("add_child", b)
+		b.global_position = self.global_position
 
 func _shoot() -> void:
 	var bullet = _bullet.instance()
