@@ -51,8 +51,6 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	Shortcuts.connect("fullscreen", self, "_refresh_settings")
 
-	Music.connect("vol_changed", self, "_refresh_settings")
-
 	_refresh_settings()
 
 func game_over() -> void:

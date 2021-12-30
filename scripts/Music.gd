@@ -52,8 +52,6 @@ func _ready() -> void:
 
 	pause_mode = PAUSE_MODE_PROCESS
 
-signal vol_changed
-
 func _physics_process(_delta) -> void:
 	# Sets the audio quiet when window isn' focused
 	# Hacky, I know, but notifications don't work

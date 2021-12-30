@@ -171,6 +171,7 @@ func _explode() -> void:
 
 	var blood = preload("res://scenes/Blood.tscn")
 
+	# warning-ignore:unused_variable
 	for i in range(BLOOD_CNT):
 		var b = blood.instance()
 		parent.call_deferred("add_child", b)
