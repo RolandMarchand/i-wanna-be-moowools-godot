@@ -78,10 +78,10 @@ func _physics_process(delta) -> void:
 		_set_jump()
 		_set_v_mov()
 
-
 		# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
 		# warning-ignore:return_value_discarded
 		move_and_slide(Vector2(_hspeed,vspeed) / delta, Vector2.UP)
+		#move_and_slide_with_snap(Vector2(_hspeed,vspeed) / delta, _snap, Vector2.UP)
 
 		# Animation
 		_anim_player.play(_anim)
@@ -111,8 +111,6 @@ func _set_jump() -> void:
 				vspeed = DJUMP_SPEED
 
 				_snd_djump.play()
-
-			_snap = Vector2.ZERO
 
 	elif Input.is_action_just_released("jump") and _jump and vspeed < 0:
 		vspeed *= JUMP_DEACCEL
@@ -171,8 +169,8 @@ func _flip(xscale: int) -> void:
 func _explode() -> void:
 	var parent: Node = get_parent()
 
-	# warning-ignore:unused_variable
 	var blood = preload("res://scenes/Blood.tscn")
+
 	for i in range(BLOOD_CNT):
 		var b = blood.instance()
 		parent.call_deferred("add_child", b)
@@ -202,6 +200,15 @@ func _death() -> void:
 
 func is_on_floor() -> bool:
 	return not $Floor.get_overlapping_bodies().empty()
+
+func is_on_platform() -> bool:
+	var p := false
+
+	for body in $Floor.get_overlapping_bodies():
+		if body.get_parent().is_in_group("platforms"):
+			p = true
+
+	return p
 
 func _on_Spike_body_entered(body: Node) -> void:
 	if body.is_in_group("spikes"):

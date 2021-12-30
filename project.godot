@@ -117,6 +117,7 @@ skip={
 2d_physics/layer_3="spikes"
 2d_physics/layer_4="bullet"
 2d_physics/layer_5="platforms"
+2d_physics/layer_6="platform snap"
 
 [physics]
 

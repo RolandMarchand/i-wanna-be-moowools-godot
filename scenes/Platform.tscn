@@ -3,48 +3,67 @@
 [ext_resource path="res://scripts/Platform.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprMovingPlatform_0.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 17, 9 )
-
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 1 )
 
-[sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 16, 5 )
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 16, 8 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 16, 1 )
 
 [node name="Platform" type="KinematicBody2D" groups=["platforms"]]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 0
+motion/sync_to_physics = true
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
-[node name="Walls" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 2
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_process_mode = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-shape = SubResource( 10 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -7 )
-shape = SubResource( 16 )
+shape = SubResource( 3 )
 one_way_collision = true
 
-[node name="Player" type="Area2D" parent="."]
+[node name="Tween" type="Tween" parent="."]
+repeat = true
+playback_process_mode = 0
+playback/repeat = true
+
+[node name="Trajectory" type="Node2D" parent="."]
+
+[node name="1" type="Position2D" parent="Trajectory"]
+position = Vector2( -24, 16 )
+
+[node name="2" type="Position2D" parent="Trajectory"]
+position = Vector2( 24, -16 )
+
+[node name="3" type="Position2D" parent="Trajectory"]
+position = Vector2( -24, 16 )
+
+[node name="Drag" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 0, -4 )
-shape = SubResource( 17 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drag"]
+shape = SubResource( 5 )
 
-[node name="SuppressWarning" type="CollisionShape2D" parent="."]
+[node name="Snap" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 32
 
-[connection signal="body_entered" from="Walls" to="." method="_on_Hitbox_body_entered"]
-[connection signal="body_entered" from="Player" to="." method="_on_Player_body_entered"]
-[connection signal="body_exited" from="Player" to="." method="_on_Player_body_exited"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Snap"]
+position = Vector2( 0, -7 )
+shape = SubResource( 6 )
+
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
+[connection signal="area_entered" from="Snap" to="." method="_on_Snap_area_entered"]

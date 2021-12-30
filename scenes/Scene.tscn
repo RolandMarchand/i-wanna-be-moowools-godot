@@ -46,10 +46,28 @@ position = Vector2( 48, 80 )
 position = Vector2( 688, 528 )
 
 [node name="Platform" parent="." instance=ExtResource( 6 )]
-position = Vector2( 626, 72 )
+position = Vector2( 624, 72 )
+
+[node name="1" parent="Platform/Trajectory" index="0"]
+position = Vector2( 0, 0 )
+
+[node name="2" parent="Platform/Trajectory" index="1"]
+position = Vector2( 128, 0 )
+
+[node name="3" parent="Platform/Trajectory" index="2"]
+position = Vector2( 0, 0 )
 
 [node name="Platform2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 499, 456 )
+position = Vector2( 496, 456 )
+
+[node name="1" parent="Platform2/Trajectory" index="0"]
+position = Vector2( 0, 0 )
+
+[node name="2" parent="Platform2/Trajectory" index="1"]
+position = Vector2( 256, 0 )
+
+[node name="3" parent="Platform2/Trajectory" index="2"]
+position = Vector2( 0, 0 )
 
 [node name="Kid" parent="." groups=["kid"] instance=ExtResource( 3 )]
 position = Vector2( 80, 144 )
@@ -57,3 +75,6 @@ position = Vector2( 80, 144 )
 [node name="UI" parent="." instance=ExtResource( 7 )]
 
 [connection signal="body_entered" from="Warp" to="." method="_on_Warp_body_entered"]
+
+[editable path="Platform"]
+[editable path="Platform2"]
