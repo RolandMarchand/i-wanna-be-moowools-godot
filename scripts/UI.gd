@@ -28,28 +28,32 @@
 
 extends CanvasLayer
 
+
+
 onready var _go: MarginContainer = $GameOver
 onready var _menu: MarginContainer = $Menu
 
-onready var _master: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer3/Master
-onready var _sound: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound
-onready var _music: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music
-onready var _fs: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen
-onready var _change_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen/ChangeBG
-onready var _quiet_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/QuietBG
-onready var _vsync: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/VSync
+onready var _master: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer3/Master
+onready var _sound: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/Sound
+onready var _music: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2/Music
+onready var _fs: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen
+onready var _change_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen/ChangeBG
+onready var _quiet_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/QuietBG
+onready var _vsync: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/VSync
 onready var _ok: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Ok
 onready var _back_ts: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Back2Title
 onready var _hide: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Hide
 onready var _show: Button = $Show
 
-onready var _sound_test: AudioStreamPlayer = $Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/Test
+onready var _sound_test: AudioStreamPlayer = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/Test
 
 func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	Shortcuts.connect("paused", self, "_set_menu_visible")
 	# warning-ignore:return_value_discarded
 	Shortcuts.connect("fullscreen", self, "_refresh_settings")
+
+	Save.load_settings()
 
 	_refresh_settings()
 
@@ -71,6 +75,7 @@ func _refresh_settings() -> void:
 	_music.value = db2linear(AudioServer.get_bus_volume_db(2))
 	_change_bg.disabled = not OS.is_window_fullscreen()
 
+	Save.save_settings()
 
 func _test_audio() -> void:
 	# Audio musn't be tested roguely
@@ -153,5 +158,11 @@ func _on_QuietBG_toggled(button_pressed) -> void:
 
 func _on_ChangeBG_pressed():
 	BlackBars.next_bg_img()
+
+	_refresh_settings()
+
+
+func _on_Default_pressed() -> void:
+	Save.default_settings()
 
 	_refresh_settings()

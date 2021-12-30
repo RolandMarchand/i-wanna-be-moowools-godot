@@ -77,26 +77,26 @@ __meta__ = {
 margin_left = 40.0
 margin_top = 54.0
 margin_right = 360.0
-margin_bottom = 314.0
+margin_bottom = 318.0
 custom_constants/separation = 0
 
-[node name="HBoxContainer" type="VBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
 margin_right = 320.0
 margin_bottom = 104.0
 custom_constants/separation = 4
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2"]
 margin_right = 320.0
 margin_bottom = 32.0
 
-[node name="Master" type="HSlider" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer3"]
+[node name="Master" type="HSlider" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer3"]
 margin_right = 256.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 
-[node name="Label" type="Label" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer3"]
 margin_left = 260.0
 margin_right = 320.0
 margin_bottom = 32.0
@@ -105,19 +105,19 @@ text = "Master"
 align = 1
 valign = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2"]
 margin_top = 36.0
 margin_right = 320.0
 margin_bottom = 68.0
 
-[node name="Sound" type="HSlider" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Sound" type="HSlider" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer"]
 margin_right = 256.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 
-[node name="Label" type="Label" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 260.0
 margin_right = 320.0
 margin_bottom = 32.0
@@ -127,19 +127,19 @@ text = "Sound"
 align = 1
 valign = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2"]
 margin_top = 72.0
 margin_right = 320.0
 margin_bottom = 104.0
 
-[node name="Music" type="HSlider" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="Music" type="HSlider" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2"]
 margin_right = 256.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.1
 
-[node name="Label" type="Label" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2"]
 margin_left = 260.0
 margin_right = 320.0
 margin_bottom = 32.0
@@ -149,24 +149,24 @@ text = "Music"
 align = 1
 valign = 1
 
-[node name="Test" type="AudioStreamPlayer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Test" type="AudioStreamPlayer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2"]
 stream = ExtResource( 3 )
 bus = "Sound"
 
 [node name="HSeparator" type="HSeparator" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
 margin_top = 104.0
 margin_right = 320.0
-margin_bottom = 122.0
+margin_bottom = 108.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer2" type="VBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
-margin_top = 122.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
+margin_top = 108.0
 margin_right = 320.0
-margin_bottom = 214.0
+margin_bottom = 200.0
 alignment = 1
 
-[node name="Fullscreen" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Fullscreen" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer"]
 margin_left = 60.0
 margin_right = 260.0
 margin_bottom = 28.0
@@ -175,7 +175,7 @@ size_flags_horizontal = 4
 toggle_mode = true
 text = "Fullscreen"
 
-[node name="ChangeBG" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen"]
+[node name="ChangeBG" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -190,7 +190,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSync" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="VSync" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer"]
 margin_left = 60.0
 margin_top = 32.0
 margin_right = 260.0
@@ -200,7 +200,7 @@ size_flags_horizontal = 4
 toggle_mode = true
 text = "VSync"
 
-[node name="QuietBG" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="QuietBG" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer"]
 margin_left = 60.0
 margin_top = 64.0
 margin_right = 260.0
@@ -211,35 +211,49 @@ toggle_mode = true
 text = "Quiet bg."
 
 [node name="HSeparator2" type="HSeparator" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
-margin_top = 214.0
+margin_top = 200.0
 margin_right = 320.0
-margin_bottom = 232.0
+margin_bottom = 204.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer"]
-margin_top = 232.0
+margin_top = 204.0
 margin_right = 320.0
-margin_bottom = 260.0
+margin_bottom = 264.0
 
-[node name="Ok" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5"]
-margin_right = 133.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5"]
+margin_right = 242.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+
+[node name="Ok" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2"]
+margin_right = 242.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "OK"
 
-[node name="Back2Title" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5"]
-margin_left = 137.0
-margin_right = 270.0
-margin_bottom = 28.0
-size_flags_horizontal = 3
+[node name="Back2Title" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2"]
+margin_top = 32.0
+margin_right = 242.0
+margin_bottom = 60.0
 text = "Title screen"
 
-[node name="Hide" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5"]
-margin_left = 274.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5"]
+margin_left = 246.0
 margin_right = 320.0
+margin_bottom = 60.0
+
+[node name="Hide" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer"]
+margin_right = 74.0
 margin_bottom = 28.0
 text = "Hide"
+
+[node name="Default" type="Button" parent="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer"]
+margin_top = 32.0
+margin_right = 74.0
+margin_bottom = 60.0
+text = "Default"
 
 [node name="Show" type="Button" parent="."]
 visible = false
@@ -251,14 +265,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer3/Master" to="." method="_on_Master_value_changed"]
-[connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer/Sound" to="." method="_on_Sound_value_changed"]
-[connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/Music" to="." method="_on_Music_value_changed"]
-[connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen" to="." method="_on_Fullscreen_toggled"]
-[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/Fullscreen/ChangeBG" to="." method="_on_ChangeBG_pressed"]
-[connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/VSync" to="." method="_on_Vsync_toggled"]
-[connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer2/QuietBG" to="." method="_on_QuietBG_toggled"]
-[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Ok" to="." method="_on_Ok_pressed"]
-[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Back2Title" to="." method="_on_Back2Title_pressed"]
-[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/Hide" to="." method="_on_Hide_pressed"]
+[connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer3/Master" to="." method="_on_Master_value_changed"]
+[connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/Sound" to="." method="_on_Sound_value_changed"]
+[connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2/Music" to="." method="_on_Music_value_changed"]
+[connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_toggled"]
+[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen/ChangeBG" to="." method="_on_ChangeBG_pressed"]
+[connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/VSync" to="." method="_on_Vsync_toggled"]
+[connection signal="toggled" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/QuietBG" to="." method="_on_QuietBG_toggled"]
+[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2/Back2Title" to="." method="_on_Back2Title_pressed"]
+[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer/Hide" to="." method="_on_Hide_pressed"]
+[connection signal="pressed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer/Default" to="." method="_on_Default_pressed"]
 [connection signal="pressed" from="Show" to="." method="_on_Button_pressed"]

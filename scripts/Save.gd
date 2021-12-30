@@ -28,6 +28,77 @@
 
 extends Node
 
+const DEFAULT_MASTER_VOL := -4.0
+const DEFAULT_SOUND_VOL := -8.0
+const DEFAULT_MUSIC_VOL := -8.0
+const DEFAULT_FS := false
+const DEFAULT_VSYNC := true
+const DEFAULT_QUIET_BG := true
+
 var deaths: int = 0
 var pos: Vector2
 var xscale: int
+
+func save_settings() -> void:
+	var config := ConfigFile.new()
+
+	config.set_value("settings", "fullscreen", OS.is_window_fullscreen())
+	config.set_value("settings", "vsync", OS.is_vsync_enabled())
+	config.set_value("settings", "quiet_bg", Music.is_quiet())
+
+	config.set_value("volume", "master", AudioServer.get_bus_volume_db(0))
+	config.set_value("volume", "sound", AudioServer.get_bus_volume_db(1))
+	config.set_value("volume", "music", AudioServer.get_bus_volume_db(2))
+
+	config.save("user://settings.cfg")
+
+func save_game(save: String) -> void:
+	_verify_save(save)
+
+	var config := ConfigFile.new()
+
+	config.set_value(save, "deaths", deaths)
+	config.set_value(save, "position", pos)
+	config.set_value(save, "xscale", xscale)
+
+	config.save("user://saves.cfg")
+
+func load_game(save: String) -> void:
+	_verify_save(save)
+
+	var config := ConfigFile.new()
+
+	deaths = config.get_value(save, "deaths", 0)
+	pos = config.get_value(save, "position")
+	xscale = config.get_value(save, "xscale")
+
+
+func load_settings() -> void:
+	var config := ConfigFile.new()
+	config.load("user://settings.cfg")
+
+	OS.set_window_fullscreen(config.get_value("settings", "fullscreen", DEFAULT_FS))
+	OS.set_use_vsync(config.get_value("settings", "vsync", DEFAULT_VSYNC))
+	Music.set_quiet(config.get_value("settings", "quiet_bg", DEFAULT_QUIET_BG))
+	AudioServer.set_bus_volume_db(0, config.get_value("volume", "master", DEFAULT_MASTER_VOL))
+	AudioServer.set_bus_volume_db(1, config.get_value("volume", "sound", DEFAULT_SOUND_VOL))
+	AudioServer.set_bus_volume_db(2, config.get_value("volume", "music", DEFAULT_MUSIC_VOL))
+
+func default_settings() -> void:
+	OS.set_window_fullscreen(DEFAULT_FS)
+	OS.set_use_vsync(DEFAULT_VSYNC)
+	Music.set_quiet(DEFAULT_QUIET_BG)
+	AudioServer.set_bus_volume_db(0, DEFAULT_MASTER_VOL)
+	AudioServer.set_bus_volume_db(1, DEFAULT_SOUND_VOL)
+	AudioServer.set_bus_volume_db(2, DEFAULT_MUSIC_VOL)
+
+func _verify_save(save: String) -> void:
+	match save:
+		"save1":
+			pass
+		"save2":
+			pass
+		"save3":
+			pass
+		_:
+			assert("Save " + save + " does not exist.")
