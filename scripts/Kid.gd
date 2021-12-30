@@ -41,8 +41,6 @@ const MAX_BULLET := 3
 const BLOOD_CNT := 40
 const MAX_BLOOD_CYCLES := 20
 
-# The kid hovers 0.4 pixels above the ground, so on_floor() does not work
-var on_floor := false
 var dead := false # Useless for now
 var xscale := 1
 var _jump := false
@@ -53,6 +51,7 @@ var vspeed := 0.0
 var _anim: String
 var _bullet_array: Array = []
 var _blood_cycles := 0
+var _snap := Vector2.ZERO
 
 var _bullet: PackedScene = preload("res://scenes/Bullet.tscn")
 #var _blood: PackedScene = preload("res://scenes/Blood.tscn")
@@ -113,6 +112,8 @@ func _set_jump() -> void:
 
 				_snd_djump.play()
 
+			_snap = Vector2.ZERO
+
 	elif Input.is_action_just_released("jump") and _jump and vspeed < 0:
 		vspeed *= JUMP_DEACCEL
 
@@ -140,14 +141,14 @@ func _set_v_mov() -> void:
 		else:
 			_anim = "fall"
 
-		if on_floor and vspeed >= 0:
+		if is_on_floor() and vspeed >= 0:
 			_jump = false
 		elif is_on_ceiling():
 			vspeed = 0.01 # Not exact physics logic, but it works
 	else:
 		vspeed = 0
 		_djump = true
-		if not on_floor:
+		if not is_on_floor():
 			_jump = true
 
 		if _hspeed != 0:
@@ -167,15 +168,6 @@ func _flip(xscale: int) -> void:
 			_sprite.flip_h = true
 			_sprite.offset = Vector2(3,0)
 
-## Laggy for expected 800 particles
-##
-## Godot could generate them when the scene loads and then hide them,
-## when the player dies, the position of the explosion is set
-## and the explosion is called
-##
-## Or create a system that's not node based
-##
-## Also shoots them all at once
 func _explode() -> void:
 	var parent: Node = get_parent()
 
@@ -207,13 +199,8 @@ func _death() -> void:
 	_mus_death.play()
 	emit_signal("death")
 
-func _on_Floor_body_entered(_body) -> void:
-	on_floor = true
-
-func _on_Floor_body_exited(_body) -> void:
-	# To prevent but where platform would leave Floor and render the kid
-	if $Floor.get_overlapping_bodies().empty():
-		on_floor = false
+func is_on_floor() -> bool:
+	return not $Floor.get_overlapping_bodies().empty()
 
 func _on_Spike_body_entered(body: Node) -> void:
 	if body.is_in_group("spikes"):

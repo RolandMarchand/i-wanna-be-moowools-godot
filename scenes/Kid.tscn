@@ -136,7 +136,7 @@ shape = SubResource( 1 )
 [node name="Floor" type="Area2D" parent="."]
 position = Vector2( 0, -2 )
 collision_layer = 0
-collision_mask = 2
+collision_mask = 18
 __meta__ = {
 "_editor_description_": " The kid hovers 0.4 pixels above the ground, so is_on_floor() does not work."
 }
@@ -146,6 +146,7 @@ position = Vector2( 0, 10.7 )
 shape = SubResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+current = true
 zoom = Vector2( 0.3, 0.3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -178,5 +179,3 @@ stream = ExtResource( 18 )
 bus = "Music"
 
 [connection signal="body_entered" from="Spike" to="." method="_on_Spike_body_entered"]
-[connection signal="body_entered" from="Floor" to="." method="_on_Floor_body_entered"]
-[connection signal="body_exited" from="Floor" to="." method="_on_Floor_body_exited"]
