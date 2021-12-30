@@ -3,7 +3,7 @@ This is a Godot project template for Aiwana games. This template expects some Go
 
 This template includes...
 * The Kid
-* Platforms (Vertical platforms currently not supported)
+* Platforms
 * Tilemaps of base tiles and spikes
 * Saves
 * Music
