@@ -28,8 +28,6 @@
 
 extends CanvasLayer
 
-
-
 onready var _go: MarginContainer = $GameOver
 onready var _menu: MarginContainer = $Menu
 
