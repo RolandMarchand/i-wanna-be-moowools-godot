@@ -28,12 +28,18 @@
 
 extends KinematicBody2D
 
+signal looped
+
+var loop_counter := 0
+
 func _physics_process(delta) -> void:
 	# warning-ignore:return_value_discarded
 	move_and_slide(Vector2(3,0) / delta)
 
 	# Loops around the screen
 	if position.x > 852:
+		loop_counter += 1
+		emit_signal("looped", loop_counter)
 		position.x = -64
 
 ## Loops kid back at the beginning if hit

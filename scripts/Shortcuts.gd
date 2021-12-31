@@ -54,6 +54,8 @@ func _unhandled_key_input(_event):
 
 	if Input.is_action_just_pressed("fullscreen"):
 		OS.set_window_fullscreen(not OS.is_window_fullscreen())
+		ProjectSettings.set_setting("display/window/size/width", 800)
+		ProjectSettings.set_setting("display/window/size/height", 608)
 		emit_signal("fullscreen")
 
 	# Implement boss skip

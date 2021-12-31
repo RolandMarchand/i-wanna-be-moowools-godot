@@ -1,12 +1,68 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://sprites/sprPlayerRunning_1.png" type="Texture" id=1]
 [ext_resource path="res://scripts/MenuSpikes.gd" type="Script" id=2]
 [ext_resource path="res://scripts/MenuExplosion.gd" type="Script" id=3]
 [ext_resource path="res://scripts/MenuKid.gd" type="Script" id=4]
 [ext_resource path="res://scripts/TitleScreen.gd" type="Script" id=5]
 [ext_resource path="res://res/crt_material.tres" type="Material" id=6]
 [ext_resource path="res://res/Menu.tres" type="Theme" id=7]
+[ext_resource path="res://scripts/MenuLoopCounter.gd" type="Script" id=8]
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "explode"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45 ),
+"transitions": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"update": 0,
+"values": [ 0.0, 120.0, 240.0, 120.0, 0.0, 240.0, 0.0, 120.0, 240.0, 90.0 ]
+}
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -101,38 +157,6 @@ tracks/0/keys = {
 "values": [ -10.0, 10.0, -10.0 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Flicker"
-length = 0.16
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 0 ),
-"update": 0,
-"values": [ Vector2( -24, 104 ), Vector2( -72, 952 ) ]
-}
-
-[sub_resource type="Animation" id=6]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -24, 104 ) ]
-}
-
 [sub_resource type="Environment" id=1]
 background_mode = 4
 background_canvas_max_layer = 1
@@ -147,88 +171,30 @@ adjustment_enabled = true
 pause_mode = 2
 script = ExtResource( 5 )
 
-[node name="Icon" type="Sprite" parent="."]
-visible = false
-position = Vector2( -80, 312 )
-scale = Vector2( 4, 4 )
-texture = ExtResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="MainGraphics" type="Node2D" parent="."]
 
-[node name="Explosion" type="Node2D" parent="."]
+[node name="Explosion" type="Node2D" parent="MainGraphics"]
 position = Vector2( -96, 256 )
 script = ExtResource( 3 )
 
-[node name="Line2D" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, 0, -1 )
+[node name="Line2D" type="Line2D" parent="MainGraphics/Explosion"]
+points = PoolVector2Array( 0, 0, 28, -43, 0, 0, -21, -44, 0, 0, 34, -5, 0, 0, -45, -17, 0, 0, 0, 49, 0, 0, 27, 30, 0, 0, -29, 31 )
 width = 3.0
 default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+antialiased = true
 
-[node name="Line2D2" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, -1, -1 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainGraphics/Explosion"]
+anims/RESET = SubResource( 10 )
+anims/explode = SubResource( 11 )
 
-[node name="Line2D3" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, 1, 1 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Line2D4" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, -1, 1 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Line2D5" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, 1, 0 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Line2D6" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, -1, 0 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Line2D7" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, 1, -1 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Line2D8" type="Line2D" parent="Explosion"]
-points = PoolVector2Array( 0, 0, 0, 1 )
-width = 3.0
-default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
-[node name="Kid" type="KinematicBody2D" parent="."]
+[node name="Kid" type="KinematicBody2D" parent="MainGraphics"]
 position = Vector2( -40, 280 )
 script = ExtResource( 4 )
 
-[node name="Head" type="Line2D" parent="Kid"]
+[node name="Head" type="Line2D" parent="MainGraphics/Kid"]
 points = PoolVector2Array( 32, -16, -8, -16, -16, 0, -16, 8, 0, 24, 16, 24, 24, 16, 24, 0, 32, -8, 32, -16 )
 width = 3.0
 default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
@@ -240,7 +206,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Body1" type="Line2D" parent="Kid"]
+[node name="Body1" type="Line2D" parent="MainGraphics/Kid"]
 points = PoolVector2Array( -8, 16, -24, 40, -24, 48, 0, 24, 16, 24, 24, 16, 48, 16, 48, 24, 32, 24, 32, 40, 16, 40, 16, 48, 8, 48, 16, 64, -8, 64, 0, 56, -24, 56, -24, 48, -16, 40, 16, 40, 0, 40, 0, 56, 0, 40, 16, 40, 16, 24, 32, 24, 0, 24, -8, 16, -16, 16, -24, 24, -37, 26, -56, 32, -40, 40, -24, 40 )
 width = 3.0
 default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
@@ -249,7 +215,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Body2" type="Line2D" parent="Kid"]
+[node name="Body2" type="Line2D" parent="MainGraphics/Kid"]
 visible = false
 points = PoolVector2Array( -8, 16, -24, 40, -24, 48, 0, 24, 16, 24, 24, 16, 48, 16, 48, 24, 32, 24, 32, 40, 16, 40, 16, 48, 8, 48, 24, 64, 0, 64, 0, 56, 0, 40, -16, 40, -24, 48, -16, 40, 16, 40, 0, 40, 0, 56, 0, 40, 16, 40, 16, 24, 32, 24, 0, 24, -8, 16, -16, 16, -24, 24, -37, 26, -56, 32, -40, 40, -24, 40, 16, 40, 32, 56, 8, 56, 16, 48 )
 width = 3.0
@@ -259,25 +225,25 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Walking" type="AnimationPlayer" parent="Kid"]
+[node name="Walking" type="AnimationPlayer" parent="MainGraphics/Kid"]
 autoplay = "Walking"
 anims/RESET = SubResource( 7 )
 anims/Walking = SubResource( 8 )
 
-[node name="Hitbox" type="Area2D" parent="Kid"]
+[node name="Hitbox" type="Area2D" parent="MainGraphics/Kid"]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Kid/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainGraphics/Kid/Hitbox"]
 position = Vector2( 7, 24 )
 shape = SubResource( 9 )
 
-[node name="FallingSpikes" type="Node2D" parent="."]
+[node name="FallingSpikes" type="Node2D" parent="MainGraphics"]
 script = ExtResource( 2 )
 
-[node name="Spikes" type="Node2D" parent="FallingSpikes"]
+[node name="Spikes" type="Node2D" parent="MainGraphics/FallingSpikes"]
 
-[node name="Spike" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 35, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -287,14 +253,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike3" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike3" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 99, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -304,14 +270,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike3"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike3"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike3/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike3/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike5" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike5" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 163, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -321,14 +287,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike5"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike5"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike5/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike5/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike7" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike7" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 227, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -338,14 +304,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike7"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike7"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike7/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike7/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike9" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike9" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 291, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -355,14 +321,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike9"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike9"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike9/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike9/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike11" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike11" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 355, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -372,14 +338,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike11"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike11"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike11/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike11/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike13" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike13" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 419, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -389,14 +355,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike13"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike13"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike13/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike13/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike15" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike15" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 483, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -406,14 +372,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike15"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike15"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike15/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike15/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike17" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike17" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 547, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -423,14 +389,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike17"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike17"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike17/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike17/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike19" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike19" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 611, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -440,14 +406,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike19"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike19"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike19/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike19/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike21" type="Line2D" parent="FallingSpikes/Spikes"]
+[node name="Spike21" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
 position = Vector2( 675, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -457,20 +423,20 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="FallingSpikes/Spikes/Spike21"]
+[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike21"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FallingSpikes/Spikes/Spike21/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike21/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Tween" type="Tween" parent="FallingSpikes"]
+[node name="Tween" type="Tween" parent="MainGraphics/FallingSpikes"]
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="Mask" type="Polygon2D" parent="MainGraphics"]
 color = Color( 0.0509804, 0.101961, 0.101961, 1 )
 polygon = PoolVector2Array( 0, 344, 800, 344, 800, 608, 0, 608 )
 
-[node name="Floor" type="Line2D" parent="."]
+[node name="Floor" type="Line2D" parent="MainGraphics"]
 position = Vector2( 0, -40 )
 points = PoolVector2Array( -64, 384, 832, 384 )
 width = 3.0
@@ -480,14 +446,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Godot" type="Node2D" parent="."]
+[node name="Godot" type="Node2D" parent="MainGraphics"]
 visible = false
 position = Vector2( 400, 168 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Outline" type="Line2D" parent="Godot"]
+[node name="Outline" type="Line2D" parent="MainGraphics/Godot"]
 position = Vector2( -376, -253 )
 points = PoolVector2Array( 371, 125, 387, 125, 402, 99, 427, 104, 447, 115, 448, 146, 469, 161, 488, 151, 500, 150, 522, 178, 521, 188, 508, 213, 508, 321, 493, 348, 468, 366, 431, 376, 388, 382, 379, 382 )
 width = 3.0
@@ -497,7 +463,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline2" type="Line2D" parent="Godot"]
+[node name="Outline2" type="Line2D" parent="MainGraphics/Godot"]
 position = Vector2( 382, -253 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -509,7 +475,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline3" type="Line2D" parent="Godot"]
+[node name="Outline3" type="Line2D" parent="MainGraphics/Godot"]
 position = Vector2( 382, -253 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -521,7 +487,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline4" type="Line2D" parent="Godot"]
+[node name="Outline4" type="Line2D" parent="MainGraphics/Godot"]
 position = Vector2( 382, -253 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -533,7 +499,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline5" type="Line2D" parent="Godot"]
+[node name="Outline5" type="Line2D" parent="MainGraphics/Godot"]
 position = Vector2( 381, -254 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -545,7 +511,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline6" type="Line2D" parent="Godot"]
+[node name="Outline6" type="Line2D" parent="MainGraphics/Godot"]
 position = Vector2( 515, -254 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -573,15 +539,46 @@ __meta__ = {
 [node name="Gui" type="CanvasLayer" parent="."]
 layer = 0
 
-[node name="Label" type="Label" parent="Gui"]
+[node name="Menu" type="Control" parent="Gui"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="Control" parent="Gui/Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoopCounter" type="Label" parent="Gui/Menu/Main"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -800.0
+margin_top = -26.5
+margin_bottom = 26.5
+theme = ExtResource( 7 )
+text = "0"
+align = 2
+valign = 1
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Gui/Menu/Main"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -360.0
-margin_top = -160.0
-margin_right = 365.0
-margin_bottom = -107.0
+margin_left = -362.5
+margin_top = -182.0
+margin_right = 362.5
+margin_bottom = -129.0
 rect_rotation = -20.0
 rect_pivot_offset = Vector2( 362, 26 )
 size_flags_horizontal = 0
@@ -593,12 +590,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Gui/Label"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Gui/Menu/Main/Title"]
 autoplay = "Wobble"
 anims/RESET = SubResource( 3 )
 anims/Wobble = SubResource( 4 )
 
-[node name="MarginContainer" type="MarginContainer" parent="Gui"]
+[node name="MarginContainer" type="MarginContainer" parent="Gui/Menu/Main"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 7 )
@@ -607,56 +604,47 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Gui/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Gui/Menu/Main/MarginContainer"]
 margin_top = 304.0
 margin_right = 800.0
 margin_bottom = 608.0
 alignment = 1
 
-[node name="NewGame" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="Gui/Menu/Main/MarginContainer/VBoxContainer"]
 margin_top = 62.0
 margin_right = 800.0
 margin_bottom = 104.0
 size_flags_vertical = 0
-text = "NEW GAME"
+text = "PLAY"
 
-[node name="Options" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+[node name="Options" type="Button" parent="Gui/Menu/Main/MarginContainer/VBoxContainer"]
 margin_top = 108.0
 margin_right = 800.0
 margin_bottom = 150.0
 size_flags_vertical = 0
 text = "OPTIONS"
 
-[node name="LoadGame" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+[node name="LoadGame" type="Button" parent="Gui/Menu/Main/MarginContainer/VBoxContainer"]
 margin_top = 154.0
 margin_right = 800.0
 margin_bottom = 196.0
 size_flags_vertical = 0
 text = "LOAD GAME"
 
-[node name="Quit" type="Button" parent="Gui/MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="Gui/Menu/Main/MarginContainer/VBoxContainer"]
 margin_top = 200.0
 margin_right = 800.0
 margin_bottom = 242.0
 size_flags_vertical = 0
 text = "QUIT"
 
-[node name="Flicker" type="Polygon2D" parent="Gui"]
-visible = false
-position = Vector2( -24, 104 )
-color = Color( 0.0509804, 0.101961, 0.101961, 1 )
-polygon = PoolVector2Array( -128, -280, 960, -88, 1024, -152, -64, -344 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Gui/Flicker"]
-anims/Flicker = SubResource( 5 )
-anims/RESET = SubResource( 6 )
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
 [connection signal="tree_entered" from="." to="." method="_on_TitleScreen_tree_entered"]
-[connection signal="area_entered" from="Kid/Hitbox" to="Explosion" method="_on_Hitbox_area_entered"]
-[connection signal="area_entered" from="Kid/Hitbox" to="Kid" method="_on_Hitbox_area_entered"]
-[connection signal="tween_completed" from="FallingSpikes/Tween" to="FallingSpikes" method="_on_Tween_tween_completed"]
-[connection signal="pressed" from="Gui/MarginContainer/VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
-[connection signal="pressed" from="Gui/MarginContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="looped" from="MainGraphics/Kid" to="Gui/Menu/Main/LoopCounter" method="_on_Kid_looped"]
+[connection signal="area_entered" from="MainGraphics/Kid/Hitbox" to="MainGraphics/Explosion" method="_on_Hitbox_area_entered"]
+[connection signal="area_entered" from="MainGraphics/Kid/Hitbox" to="MainGraphics/Kid" method="_on_Hitbox_area_entered"]
+[connection signal="tween_completed" from="MainGraphics/FallingSpikes/Tween" to="MainGraphics/FallingSpikes" method="_on_Tween_tween_completed"]
+[connection signal="pressed" from="Gui/Menu/Main/MarginContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="Gui/Menu/Main/MarginContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

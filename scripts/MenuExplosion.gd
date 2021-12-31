@@ -28,34 +28,8 @@
 
 extends Node2D
 
-var frame := 25
-# Key: Node
-# Value: PoolVector2Array
-var default_lines := {}
-
-func _ready() -> void:
-	# Records original lines
-	for line in get_children():
-		default_lines[line] = line.get_points()
-
-func _physics_process(_delta) -> void:
-	# Explosion
-	if frame < 25:
-		show()
-		for line in get_children():
-			line.add_point(line.points[line.points.size() - 1] + line.points[1] * 4)
-		frame +=1
-	else:
-		hide()
-
-func _reset() -> void:
-	for line in get_children():
-		line.set_points(default_lines[line])
-
-	frame = 0
-
 func _on_Hitbox_area_entered(area) -> void:
 	# Area's position isn't exact
 	# Guessing where explosion should happen
-	global_position = area.global_position + Vector2(32,56)
-	_reset()
+	global_position = get_node("../Kid").global_position
+	$AnimationPlayer.play("explode")
