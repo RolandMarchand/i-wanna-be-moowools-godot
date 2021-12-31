@@ -27,15 +27,17 @@
 # SUCH DAMAGE.
 
 # Description:
-# Singleton managing audio buses and constantly playing music
+# Singleton managing background music
 
 extends Node
 
 const QUIET_MULT := 3
 
 var _audio_player := AudioStreamPlayer.new()
-var _last_pos := 0.0
-var _mus_rock: AudioStream = preload("res://audio/musGuyRock.mp3")
+# Key: AudioStream
+# value: float of recorded time
+var _last_pos := {}
+var _last_song: AudioStream
 var _quiet: bool = true setget set_quiet, is_quiet
 # Takes a decibel value
 # Set in UI.gd
@@ -44,9 +46,6 @@ var original_volume: float
 
 func _ready() -> void:
 	add_child(_audio_player)
-
-	_audio_player.stream = _mus_rock
-	_audio_player.play()
 
 	_audio_player.bus = "Music"
 
@@ -67,19 +66,31 @@ func is_playing() -> bool:
 	return _audio_player.playing
 
 ## Plays the music back, starts from where it left off by default
-func play(restart: bool = false) -> void:
-	if restart:
+func play(stream: AudioStream, restart := false) -> void:
+	_audio_player.stream = stream
+	_last_song = stream
+
+	if restart or not _last_pos.has(stream):
 		_audio_player.play()
 	else:
-		_audio_player.play(_last_pos)
+		_audio_player.play(_last_pos[stream])
+
+## Uses the play function with the last played song
+func play_last_song(restart := false):
+	if not _last_song:
+		push_error("No last long available.")
+	else:
+		print(_audio_player.get_playback_position())
+		play(_last_song, restart)
 
 ## Stops the music and records the last position
 func stop() -> void:
 	if _audio_player.playing:
-		_last_pos = _audio_player.get_playback_position()
+		_last_pos[_audio_player.stream] = _audio_player.get_playback_position()
 		_audio_player.stop()
 
-
+func get_last_song() -> AudioStream:
+	return _last_song
 
 func set_quiet(quiet: bool) -> void:
 	_quiet = quiet

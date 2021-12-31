@@ -35,7 +35,7 @@ signal fullscreen
 func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
 
-
+#get_tree().current_scene.name
 func _unhandled_key_input(_event):
 	# Toggles pause
 	if Input.is_action_just_pressed("pause"):
@@ -45,9 +45,9 @@ func _unhandled_key_input(_event):
 		emit_signal("paused", pause)
 
 	if Input.is_action_just_pressed("reset"):
-		if not get_tree().is_paused():
+		if not get_tree().is_paused()\
+			and get_tree().current_scene.name != "TitleScreen":
 			_reset()
-			emit_signal("reset")
 
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit(0)
@@ -62,18 +62,19 @@ func _unhandled_key_input(_event):
 
 	# Implement going back to title screen
 	if Input.is_action_just_pressed("title_screen"):
-		pass
+		if get_tree().current_scene.name != "TitleScreen":
+			# warning-ignore:return_value_discarded
+			get_tree().change_scene_to(preload("res://scenes/TitleScreen.tscn"))
 
 ## Reset the scene, restarts music, increments the death counter
 func _reset() -> void:
 		Save.deaths += 1
 
 		if not Music.is_playing():
-			Music.play()
+			Music.play_last_song()
 
-	# warning-ignore:return_value_discarded
+		# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()
 		get_tree().set_pause(false)
 
-		OS.set_window_title("I Don't Wanna Be Game Maker! (deaths: "
-				+ str(Save.deaths) + ")")
+		emit_signal("reset")

@@ -28,33 +28,34 @@
 
 extends Node2D
 
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
-var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
-
-onready var ui: CanvasLayer = $UI
+var frame := 25
+# Key: Node
+# Value: PoolVector2Array
+var default_lines := {}
 
 func _ready() -> void:
-	_connect_kid()
-	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
-	+ " (deaths: " + str(Save.deaths) + ")")
+	# Records original lines
+	for line in get_children():
+		default_lines[line] = line.get_points()
 
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
+func _physics_process(_delta) -> void:
+	# Explosion
+	if frame < 25:
+		show()
+		for line in get_children():
+			line.add_point(line.points[line.points.size() - 1] + line.points[1] * 4)
+		frame +=1
+	else:
+		hide()
 
+func _reset() -> void:
+	for line in get_children():
+		line.set_points(default_lines[line])
 
-func _connect_kid() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
+	frame = 0
 
-		# Load save
-		if Save.pos:
-			kid.global_position = Save.pos
-		if Save.xscale:
-			kid.xscale = Save.xscale
-
-func _on_Kid_death() -> void:
-	ui.game_over()
-	Music.stop()
-
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
+func _on_Hitbox_area_entered(area) -> void:
+	# Area's position isn't exact
+	# Guessing where explosion should happen
+	global_position = area.global_position + Vector2(32,56)
+	_reset()

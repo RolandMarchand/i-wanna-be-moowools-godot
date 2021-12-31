@@ -26,35 +26,52 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+# Description:
+# Animates the falling spikes from the title screen
+
 extends Node2D
 
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
-var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
+onready var tween := $Tween
 
-onready var ui: CanvasLayer = $UI
+onready var spikes: Array = $Spikes.get_children()
+var _delay := 0.0
+var _fall_time := 6.0
 
 func _ready() -> void:
-	_connect_kid()
-	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
-	+ " (deaths: " + str(Save.deaths) + ")")
+	# Randomizes the order of fallen spikes
+	randomize()
+	spikes.shuffle()
 
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
+	_start_tween()
 
+func _start_tween() -> void:
+	for s in spikes:
+		tween.interpolate_property(s,
+		"position",
+		s.position,
+		s.position + Vector2(0,720),
+		_fall_time,
+		Tween.TRANS_QUINT,
+		Tween.EASE_IN,
+		_delay)
 
-func _connect_kid() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
+		_delay += clamp(randf(), 0.3, 1.0)
 
-		# Load save
-		if Save.pos:
-			kid.global_position = Save.pos
-		if Save.xscale:
-			kid.xscale = Save.xscale
+	_delay = 0.0
+	tween.start()
 
-func _on_Kid_death() -> void:
-	ui.game_over()
-	Music.stop()
+func _reset_spike_pos() -> void:
+	for s in spikes:
+		s.position = s.position + Vector2(0,-720)
 
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
+## Resets and reanimates each fallen spike
+func _on_Tween_tween_completed(spike, pos):
+	tween.remove(spike, pos)
+	spike.position -= Vector2(0,720)
+	tween.interpolate_property(spike,
+			"position",
+			spike.position,
+			spike.position + Vector2(0,720),
+			_fall_time, Tween.TRANS_QUINT,
+			Tween.EASE_IN,
+			_delay)

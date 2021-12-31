@@ -26,35 +26,17 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-extends Node2D
+extends KinematicBody2D
 
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
-var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
+func _physics_process(delta) -> void:
+	# warning-ignore:return_value_discarded
+	move_and_slide(Vector2(3,0) / delta)
 
-onready var ui: CanvasLayer = $UI
+	# Loops around the screen
+	if position.x > 852:
+		position.x = -64
 
-func _ready() -> void:
-	_connect_kid()
-	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
-	+ " (deaths: " + str(Save.deaths) + ")")
-
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
-
-
-func _connect_kid() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
-
-		# Load save
-		if Save.pos:
-			kid.global_position = Save.pos
-		if Save.xscale:
-			kid.xscale = Save.xscale
-
-func _on_Kid_death() -> void:
-	ui.game_over()
-	Music.stop()
-
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
+## Loops kid back at the beginning if hit
+func _on_Hitbox_area_entered(_area) -> void:
+	# Randomizes travels
+	position.x = (randi() % 128 + 64) * -1

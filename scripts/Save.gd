@@ -39,6 +39,9 @@ var deaths: int = 0
 var pos: Vector2
 var xscale: int
 
+func _ready():
+	load_settings()
+
 func save_settings() -> void:
 	var config := ConfigFile.new()
 

@@ -28,33 +28,20 @@
 
 extends Node2D
 
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
-var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
+var mus_bg: AudioStream = preload("res://audio/musMegaman.mp3")
 
-onready var ui: CanvasLayer = $UI
-
-func _ready() -> void:
-	_connect_kid()
-	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
-	+ " (deaths: " + str(Save.deaths) + ")")
-
+func _ready():
 	if Music.get_last_song() != mus_bg:
 		Music.play(mus_bg)
 
+func _on_Quit_pressed():
+	get_tree().quit()
 
-func _connect_kid() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
 
-		# Load save
-		if Save.pos:
-			kid.global_position = Save.pos
-		if Save.xscale:
-			kid.xscale = Save.xscale
+func _on_NewGame_pressed():
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://scenes/Scene.tscn")
 
-func _on_Kid_death() -> void:
-	ui.game_over()
-	Music.stop()
 
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
+func _on_TitleScreen_tree_entered():
+	get_tree().set_pause(false)

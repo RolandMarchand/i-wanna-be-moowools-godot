@@ -51,8 +51,6 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	Shortcuts.connect("fullscreen", self, "_refresh_settings")
 
-	Save.load_settings()
-
 	_refresh_settings()
 
 func game_over() -> void:
@@ -92,8 +90,9 @@ func _on_Ok_pressed() -> void:
 
 	_refresh_settings()
 
-## Title screen to be implemented
 func _on_Back2Title_pressed():
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene_to(preload("res://scenes/TitleScreen.tscn"))
 
 	_refresh_settings()
 

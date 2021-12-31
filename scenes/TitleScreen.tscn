@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://res/crt_material.tres" type="Material" id=1]
-[ext_resource path="res://sprites/sprPlayerRunning_1.png" type="Texture" id=2]
-[ext_resource path="res://scenes/MenuSpikes.gd" type="Script" id=3]
-[ext_resource path="res://res/Menu.tres" type="Theme" id=4]
-[ext_resource path="res://scenes/MenuKid.gd" type="Script" id=5]
-[ext_resource path="res://scenes/MenuExplosion.gd" type="Script" id=6]
+[ext_resource path="res://sprites/sprPlayerRunning_1.png" type="Texture" id=1]
+[ext_resource path="res://scripts/MenuSpikes.gd" type="Script" id=2]
+[ext_resource path="res://scripts/MenuExplosion.gd" type="Script" id=3]
+[ext_resource path="res://scripts/MenuKid.gd" type="Script" id=4]
+[ext_resource path="res://scripts/TitleScreen.gd" type="Script" id=5]
+[ext_resource path="res://res/crt_material.tres" type="Material" id=6]
+[ext_resource path="res://res/Menu.tres" type="Theme" id=7]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -102,6 +103,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "Flicker"
+length = 0.16
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -141,20 +143,22 @@ glow_hdr_threshold = 0.0
 glow_high_quality = true
 adjustment_enabled = true
 
-[node name="Node2D" type="Node2D"]
+[node name="TitleScreen" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 5 )
 
 [node name="Icon" type="Sprite" parent="."]
 visible = false
 position = Vector2( -80, 312 )
 scale = Vector2( 4, 4 )
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Explosion" type="Node2D" parent="."]
 position = Vector2( -96, 256 )
-script = ExtResource( 6 )
+script = ExtResource( 3 )
 
 [node name="Line2D" type="Line2D" parent="Explosion"]
 points = PoolVector2Array( 0, 0, 0, -1 )
@@ -221,8 +225,8 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="Kid" type="KinematicBody2D" parent="."]
-position = Vector2( -80, 312 )
-script = ExtResource( 5 )
+position = Vector2( -40, 280 )
+script = ExtResource( 4 )
 
 [node name="Head" type="Line2D" parent="Kid"]
 points = PoolVector2Array( 32, -16, -8, -16, -16, 0, -16, 8, 0, 24, 16, 24, 24, 16, 24, 0, 32, -8, 32, -16 )
@@ -269,7 +273,7 @@ position = Vector2( 7, 24 )
 shape = SubResource( 9 )
 
 [node name="FallingSpikes" type="Node2D" parent="."]
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 
 [node name="Spikes" type="Node2D" parent="FallingSpikes"]
 
@@ -462,7 +466,22 @@ polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
 [node name="Tween" type="Tween" parent="FallingSpikes"]
 
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.0509804, 0.101961, 0.101961, 1 )
+polygon = PoolVector2Array( 0, 344, 800, 344, 800, 608, 0, 608 )
+
+[node name="Floor" type="Line2D" parent="."]
+position = Vector2( 0, -40 )
+points = PoolVector2Array( -64, 384, 832, 384 )
+width = 3.0
+default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
 [node name="Godot" type="Node2D" parent="."]
+visible = false
 position = Vector2( 400, 168 )
 __meta__ = {
 "_edit_group_": true
@@ -542,7 +561,7 @@ antialiased = true
 layer = 3
 
 [node name="ScreenShader" type="ColorRect" parent="Shader"]
-material = ExtResource( 1 )
+material = ExtResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -559,15 +578,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -358.954
-margin_top = -19.6046
-margin_right = 366.046
-margin_bottom = 33.3954
+margin_left = -360.0
+margin_top = -160.0
+margin_right = 365.0
+margin_bottom = -107.0
 rect_rotation = -20.0
 rect_pivot_offset = Vector2( 362, 26 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 4 )
+theme = ExtResource( 7 )
 text = "I Don't Wanna Be Game Maker"
 uppercase = true
 __meta__ = {
@@ -582,7 +601,7 @@ anims/Wobble = SubResource( 4 )
 [node name="MarginContainer" type="MarginContainer" parent="Gui"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 4 )
+theme = ExtResource( 7 )
 custom_constants/margin_top = 304
 __meta__ = {
 "_edit_use_anchors_": false
@@ -635,6 +654,9 @@ anims/RESET = SubResource( 6 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
-[connection signal="area_entered" from="Kid/Hitbox" to="Kid" method="_on_Hitbox_area_entered"]
+[connection signal="tree_entered" from="." to="." method="_on_TitleScreen_tree_entered"]
 [connection signal="area_entered" from="Kid/Hitbox" to="Explosion" method="_on_Hitbox_area_entered"]
+[connection signal="area_entered" from="Kid/Hitbox" to="Kid" method="_on_Hitbox_area_entered"]
 [connection signal="tween_completed" from="FallingSpikes/Tween" to="FallingSpikes" method="_on_Tween_tween_completed"]
+[connection signal="pressed" from="Gui/MarginContainer/VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="pressed" from="Gui/MarginContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

@@ -35,6 +35,7 @@ func _on_SaveButton_body_entered(_body) -> void:
 
 	var kid: KinematicBody2D = get_tree().get_nodes_in_group("kid")[0]
 
+	# To review
 	if not kid.dead:
 		Save.pos = kid.global_position
 		Save.xscale = kid.xscale
