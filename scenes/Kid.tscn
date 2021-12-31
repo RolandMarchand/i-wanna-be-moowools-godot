@@ -96,6 +96,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=5]
 resource_name = "run"
 length = 0.16
+loop = true
 step = 0.04
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -111,7 +112,7 @@ tracks/0/keys = {
 }
 
 [node name="Kid" type="KinematicBody2D"]
-collision_mask = 2
+collision_mask = 18
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 9.0 ]
