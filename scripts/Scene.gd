@@ -41,16 +41,20 @@ func _ready() -> void:
 	if Music.get_last_song() != mus_bg:
 		Music.play(mus_bg)
 
+	OS.execute("touch", ["/home/tom/worked"], false)
+
 
 func _connect_kid() -> void:
 	for kid in get_tree().get_nodes_in_group("kid"):
 		kid.connect("death", self, "_on_Kid_death")
 
 		# Load save
-		if Save.pos:
-			kid.global_position = Save.pos
-		if Save.xscale:
-			kid.xscale = Save.xscale
+		var save: Dictionary = Save.load_game(Save.SAVE1)
+
+		if save["position"]:
+			kid.global_position = save["position"]
+
+		kid.xscale = save["xscale"]
 
 func _on_Kid_death() -> void:
 	ui.game_over()

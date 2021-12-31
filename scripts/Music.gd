@@ -80,7 +80,6 @@ func play_last_song(restart := false):
 	if not _last_song:
 		push_error("No last long available.")
 	else:
-		print(_audio_player.get_playback_position())
 		play(_last_song, restart)
 
 ## Stops the music and records the last position

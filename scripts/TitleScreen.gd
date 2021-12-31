@@ -40,6 +40,7 @@ func _on_Quit_pressed():
 
 func _on_NewGame_pressed():
 	# warning-ignore:return_value_discarded
+	Save.set_active_save(Save.SAVE1)
 	get_tree().change_scene("res://scenes/Scene.tscn")
 
 

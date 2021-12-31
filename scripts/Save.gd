@@ -26,6 +26,13 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+# Description:
+# Manages the settings and game saves' permanent states
+
+# Todo:
+# 1) Save screen capture with get_viewport().get_texture().get_data()
+#    to show on the main menu' save screen
+
 extends Node
 
 const DEFAULT_MASTER_VOL := -4.0
@@ -35,13 +42,21 @@ const DEFAULT_FS := false
 const DEFAULT_VSYNC := true
 const DEFAULT_QUIET_BG := true
 
+const SAVE1 := "save1"
+const SAVE2 := "save2"
+const SAVE3 := "save3"
+
+# Keeps the record of this amount of saves
+const MAX_SAVES := 5
+
 var deaths: int = 0
-var pos: Vector2
-var xscale: int
+
+var active_save: String setget set_active_save
 
 func _ready():
 	load_settings()
 
+## Writes the settings on disk
 func save_settings() -> void:
 	var config := ConfigFile.new()
 
@@ -56,35 +71,101 @@ func save_settings() -> void:
 	# warning-ignore:return_value_discarded
 	config.save("user://settings.cfg")
 
-func save_game(save: String) -> void:
+
+## Writes the save's proprieties to disk.
+## The saved values are written as arrays, to preserve save history.
+func save(save: String, position: Vector2, xscale: int = 1) -> void:
 	_verify_save(save)
 
 	var config := ConfigFile.new()
+	config.load("user://saves.cfg")
 
-	config.set_value(save, "deaths", deaths)
-	config.set_value(save, "position", pos)
-	config.set_value(save, "xscale", xscale)
+	if not config.has_section(save):
+		config.set_value(save, "deaths", [deaths])
+		config.set_value(save, "position", [position])
+		config.set_value(save, "xscale", [xscale])
+	else:
+		var prev_val: Array = []
+
+		# Obvious room for optimization
+		prev_val = config.get_value(save, "deaths")
+		prev_val.append(deaths)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "deaths", prev_val)
+
+		prev_val = config.get_value(save, "position")
+		prev_val.append(position)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "position", prev_val)
+
+		prev_val = config.get_value(save, "xscale")
+		prev_val.append(xscale)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "xscale", prev_val)
 
 	# warning-ignore:return_value_discarded
 	config.save("user://saves.cfg")
 
-func load_game(save: String) -> void:
+## Loads the save's propriety to disk
+func load_game(save: String) -> Dictionary:
 	_verify_save(save)
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
 	config.load("user://saves.cfg")
 
-	deaths = config.get_value(save, "deaths", 0)
-	pos = config.get_value(save, "position")
-	xscale = config.get_value(save, "xscale")
+	var deaths := 0
+	if config.has_section_key(save, "deaths"):
+		deaths = config.get_value(save, "deaths")[-1]
+
+	var position := Vector2()
+	if config.has_section_key(save, "position"):
+		position = config.get_value(save, "position")[-1]
+
+	var xscale := 1
+	if config.has_section_key(save, "xscale"):
+		xscale = config.get_value(save, "xscale")[-1]
+
+	return {
+		"deaths": deaths,
+		"position": position,
+		"xscale": xscale,
+		}
+
+func delete_save(save: String):
+	_verify_save(save)
 
 
+	var config := ConfigFile.new()
+	config.load("user://saves.cfg")
+
+	config.erase_section(save)
+
+func set_active_save(save: String):
+	_verify_save(save)
+
+	deaths = load_game(save)["deaths"]
+
+func revert_last_save(save: String):
+	_verify_save(save)
+
+	var config := ConfigFile.new()
+	config.load("user://saves.cfg")
+
+	for prop in ["deaths", "position", "xscale"]:
+		var values: Array = config.get_value(save, prop)
+		config.set_value(save, prop, values.pop_back())
+
+## Reads the settings from disk
 func load_settings() -> void:
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
 	config.load("user://settings.cfg")
 
+	print_debug(config.get_value("volume", "master", DEFAULT_MASTER_VOL))
 	OS.set_window_fullscreen(config.get_value("settings", "fullscreen", DEFAULT_FS))
 	OS.set_use_vsync(config.get_value("settings", "vsync", DEFAULT_VSYNC))
 	Music.set_quiet(config.get_value("settings", "quiet_bg", DEFAULT_QUIET_BG))
@@ -93,6 +174,7 @@ func load_settings() -> void:
 	AudioServer.set_bus_volume_db(1, config.get_value("volume", "sound", DEFAULT_SOUND_VOL))
 	AudioServer.set_bus_volume_db(2, config.get_value("volume", "music", DEFAULT_MUSIC_VOL))
 
+## Resets settings to their default states
 func default_settings() -> void:
 	OS.set_window_fullscreen(DEFAULT_FS)
 	OS.set_use_vsync(DEFAULT_VSYNC)
