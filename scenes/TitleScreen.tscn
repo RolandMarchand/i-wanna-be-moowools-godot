@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/MenuSpikes.gd" type="Script" id=2]
 [ext_resource path="res://scripts/MenuExplosion.gd" type="Script" id=3]
@@ -64,6 +64,9 @@ tracks/1/keys = {
 "values": [ 0.0, 120.0, 240.0, 120.0, 0.0, 240.0, 0.0, 120.0, 240.0, 90.0 ]
 }
 
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 17, 40 )
+
 [sub_resource type="Animation" id=7]
 length = 0.001
 tracks/0/type = "value"
@@ -124,6 +127,9 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 17, 40 )
 
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 912, 12 )
+
 [sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
@@ -171,13 +177,13 @@ adjustment_enabled = true
 pause_mode = 2
 script = ExtResource( 5 )
 
-[node name="MainGraphics" type="Node2D" parent="."]
+[node name="Main" type="Node2D" parent="."]
 
-[node name="Explosion" type="Node2D" parent="MainGraphics"]
+[node name="Explosion" type="Node2D" parent="Main"]
 position = Vector2( -96, 256 )
 script = ExtResource( 3 )
 
-[node name="Line2D" type="Line2D" parent="MainGraphics/Explosion"]
+[node name="Line2D" type="Line2D" parent="Main/Explosion"]
 points = PoolVector2Array( 0, 0, 28, -43, 0, 0, -21, -44, 0, 0, 34, -5, 0, 0, -45, -17, 0, 0, 0, 49, 0, 0, 27, 30, 0, 0, -29, 31 )
 width = 3.0
 default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
@@ -186,15 +192,21 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MainGraphics/Explosion"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Main/Explosion"]
 anims/RESET = SubResource( 10 )
 anims/explode = SubResource( 11 )
 
-[node name="Kid" type="KinematicBody2D" parent="MainGraphics"]
+[node name="Kid" type="KinematicBody2D" parent="Main"]
 position = Vector2( -40, 280 )
+collision_layer = 0
+collision_mask = 2
 script = ExtResource( 4 )
 
-[node name="Head" type="Line2D" parent="MainGraphics/Kid"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/Kid"]
+position = Vector2( 7, 24 )
+shape = SubResource( 12 )
+
+[node name="Head" type="Line2D" parent="Main/Kid"]
 points = PoolVector2Array( 32, -16, -8, -16, -16, 0, -16, 8, 0, 24, 16, 24, 24, 16, 24, 0, 32, -8, 32, -16 )
 width = 3.0
 default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
@@ -206,7 +218,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Body1" type="Line2D" parent="MainGraphics/Kid"]
+[node name="Body1" type="Line2D" parent="Main/Kid"]
 points = PoolVector2Array( -8, 16, -24, 40, -24, 48, 0, 24, 16, 24, 24, 16, 48, 16, 48, 24, 32, 24, 32, 40, 16, 40, 16, 48, 8, 48, 16, 64, -8, 64, 0, 56, -24, 56, -24, 48, -16, 40, 16, 40, 0, 40, 0, 56, 0, 40, 16, 40, 16, 24, 32, 24, 0, 24, -8, 16, -16, 16, -24, 24, -37, 26, -56, 32, -40, 40, -24, 40 )
 width = 3.0
 default_color = Color( 0.356863, 0.54902, 0.486275, 1 )
@@ -215,7 +227,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Body2" type="Line2D" parent="MainGraphics/Kid"]
+[node name="Body2" type="Line2D" parent="Main/Kid"]
 visible = false
 points = PoolVector2Array( -8, 16, -24, 40, -24, 48, 0, 24, 16, 24, 24, 16, 48, 16, 48, 24, 32, 24, 32, 40, 16, 40, 16, 48, 8, 48, 24, 64, 0, 64, 0, 56, 0, 40, -16, 40, -24, 48, -16, 40, 16, 40, 0, 40, 0, 56, 0, 40, 16, 40, 16, 24, 32, 24, 0, 24, -8, 16, -16, 16, -24, 24, -37, 26, -56, 32, -40, 40, -24, 40, 16, 40, 32, 56, 8, 56, 16, 48 )
 width = 3.0
@@ -225,25 +237,25 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Walking" type="AnimationPlayer" parent="MainGraphics/Kid"]
+[node name="Walking" type="AnimationPlayer" parent="Main/Kid"]
 autoplay = "Walking"
 anims/RESET = SubResource( 7 )
 anims/Walking = SubResource( 8 )
 
-[node name="Hitbox" type="Area2D" parent="MainGraphics/Kid"]
+[node name="Hitbox" type="Area2D" parent="Main/Kid"]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainGraphics/Kid/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/Kid/Hitbox"]
 position = Vector2( 7, 24 )
 shape = SubResource( 9 )
 
-[node name="FallingSpikes" type="Node2D" parent="MainGraphics"]
+[node name="FallingSpikes" type="Node2D" parent="Main"]
 script = ExtResource( 2 )
 
-[node name="Spikes" type="Node2D" parent="MainGraphics/FallingSpikes"]
+[node name="Spikes" type="Node2D" parent="Main/FallingSpikes"]
 
-[node name="Spike" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 35, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -253,14 +265,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike3" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike3" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 99, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -270,14 +282,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike3"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike3"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike3/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike3/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike5" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike5" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 163, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -287,14 +299,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike5"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike5"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike5/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike5/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike7" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike7" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 227, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -304,14 +316,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike7"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike7"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike7/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike7/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike9" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike9" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 291, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -321,14 +333,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike9"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike9"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike9/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike9/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike11" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike11" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 355, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -338,14 +350,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike11"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike11"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike11/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike11/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike13" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike13" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 419, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -355,14 +367,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike13"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike13"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike13/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike13/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike15" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike15" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 483, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -372,14 +384,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike15"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike15"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike15/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike15/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike17" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike17" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 547, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -389,14 +401,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike17"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike17"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike17/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike17/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike19" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike19" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 611, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -406,14 +418,14 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike19"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike19"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike19/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike19/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Spike21" type="Line2D" parent="MainGraphics/FallingSpikes/Spikes"]
+[node name="Spike21" type="Line2D" parent="Main/FallingSpikes/Spikes"]
 position = Vector2( 675, -93 )
 points = PoolVector2Array( 0, 0, 32, 64, 64, 0, 0, 0 )
 width = 3.0
@@ -423,20 +435,24 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Area2D" type="Area2D" parent="MainGraphics/FallingSpikes/Spikes/Spike21"]
+[node name="Area2D" type="Area2D" parent="Main/FallingSpikes/Spikes/Spike21"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainGraphics/FallingSpikes/Spikes/Spike21/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Main/FallingSpikes/Spikes/Spike21/Area2D"]
 polygon = PoolVector2Array( 0, 0, 32, 64, 64, 0 )
 
-[node name="Tween" type="Tween" parent="MainGraphics/FallingSpikes"]
+[node name="Tween" type="Tween" parent="Main/FallingSpikes"]
 
-[node name="Mask" type="Polygon2D" parent="MainGraphics"]
+[node name="Floor" type="StaticBody2D" parent="Main"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="Polygon2D" type="Polygon2D" parent="Main/Floor"]
 color = Color( 0.0509804, 0.101961, 0.101961, 1 )
 polygon = PoolVector2Array( 0, 344, 800, 344, 800, 608, 0, 608 )
 
-[node name="Floor" type="Line2D" parent="MainGraphics"]
+[node name="Line2D" type="Line2D" parent="Main/Floor"]
 position = Vector2( 0, -40 )
 points = PoolVector2Array( -64, 384, 832, 384 )
 width = 3.0
@@ -446,14 +462,19 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Godot" type="Node2D" parent="MainGraphics"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main/Floor"]
+visible = false
+position = Vector2( 400, 356 )
+shape = SubResource( 13 )
+
+[node name="Godot" type="Node2D" parent="Main"]
 visible = false
 position = Vector2( 400, 168 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Outline" type="Line2D" parent="MainGraphics/Godot"]
+[node name="Outline" type="Line2D" parent="Main/Godot"]
 position = Vector2( -376, -253 )
 points = PoolVector2Array( 371, 125, 387, 125, 402, 99, 427, 104, 447, 115, 448, 146, 469, 161, 488, 151, 500, 150, 522, 178, 521, 188, 508, 213, 508, 321, 493, 348, 468, 366, 431, 376, 388, 382, 379, 382 )
 width = 3.0
@@ -463,7 +484,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline2" type="Line2D" parent="MainGraphics/Godot"]
+[node name="Outline2" type="Line2D" parent="Main/Godot"]
 position = Vector2( 382, -253 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -475,7 +496,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline3" type="Line2D" parent="MainGraphics/Godot"]
+[node name="Outline3" type="Line2D" parent="Main/Godot"]
 position = Vector2( 382, -253 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -487,7 +508,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline4" type="Line2D" parent="MainGraphics/Godot"]
+[node name="Outline4" type="Line2D" parent="Main/Godot"]
 position = Vector2( 382, -253 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -499,7 +520,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline5" type="Line2D" parent="MainGraphics/Godot"]
+[node name="Outline5" type="Line2D" parent="Main/Godot"]
 position = Vector2( 381, -254 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -511,7 +532,7 @@ begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
 
-[node name="Outline6" type="Line2D" parent="MainGraphics/Godot"]
+[node name="Outline6" type="Line2D" parent="Main/Godot"]
 position = Vector2( 515, -254 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
@@ -642,9 +663,9 @@ text = "QUIT"
 environment = SubResource( 1 )
 
 [connection signal="tree_entered" from="." to="." method="_on_TitleScreen_tree_entered"]
-[connection signal="looped" from="MainGraphics/Kid" to="Gui/Menu/Main/LoopCounter" method="_on_Kid_looped"]
-[connection signal="area_entered" from="MainGraphics/Kid/Hitbox" to="MainGraphics/Explosion" method="_on_Hitbox_area_entered"]
-[connection signal="area_entered" from="MainGraphics/Kid/Hitbox" to="MainGraphics/Kid" method="_on_Hitbox_area_entered"]
-[connection signal="tween_completed" from="MainGraphics/FallingSpikes/Tween" to="MainGraphics/FallingSpikes" method="_on_Tween_tween_completed"]
+[connection signal="looped" from="Main/Kid" to="Gui/Menu/Main/LoopCounter" method="_on_Kid_looped"]
+[connection signal="area_entered" from="Main/Kid/Hitbox" to="Main/Explosion" method="_on_Hitbox_area_entered"]
+[connection signal="area_entered" from="Main/Kid/Hitbox" to="Main/Kid" method="_on_Hitbox_area_entered"]
+[connection signal="tween_completed" from="Main/FallingSpikes/Tween" to="Main/FallingSpikes" method="_on_Tween_tween_completed"]
 [connection signal="pressed" from="Gui/Menu/Main/MarginContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Gui/Menu/Main/MarginContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

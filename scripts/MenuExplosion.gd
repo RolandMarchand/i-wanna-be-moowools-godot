@@ -28,7 +28,7 @@
 
 extends Node2D
 
-func _on_Hitbox_area_entered(area) -> void:
+func _on_Hitbox_area_entered(_area) -> void:
 	# Area's position isn't exact
 	# Guessing where explosion should happen
 	global_position = get_node("../Kid").global_position

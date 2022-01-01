@@ -47,7 +47,7 @@ const SAVE2 := "save2"
 const SAVE3 := "save3"
 
 # Keeps the record of this amount of saves
-const MAX_SAVES := 5
+const MAX_SAVES := INF
 
 var deaths: int = 0
 
@@ -78,6 +78,7 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 	_verify_save(save)
 
 	var config := ConfigFile.new()
+	# warning-ignore:return_value_discarded
 	config.load("user://saves.cfg")
 
 	if not config.has_section(save):
@@ -117,6 +118,7 @@ func load_game(save: String) -> Dictionary:
 	# warning-ignore:return_value_discarded
 	config.load("user://saves.cfg")
 
+	# warning-ignore:shadowed_variable
 	var deaths := 0
 	if config.has_section_key(save, "deaths"):
 		deaths = config.get_value(save, "deaths")[-1]
@@ -140,6 +142,7 @@ func delete_save(save: String):
 
 
 	var config := ConfigFile.new()
+	# warning-ignore:return_value_discarded
 	config.load("user://saves.cfg")
 
 	config.erase_section(save)
@@ -153,6 +156,7 @@ func revert_last_save(save: String):
 	_verify_save(save)
 
 	var config := ConfigFile.new()
+	# warning-ignore:return_value_discarded
 	config.load("user://saves.cfg")
 
 	for prop in ["deaths", "position", "xscale"]:

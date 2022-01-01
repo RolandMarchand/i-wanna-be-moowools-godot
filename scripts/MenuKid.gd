@@ -30,16 +30,41 @@ extends KinematicBody2D
 
 signal looped
 
-var loop_counter := 0
+const GRAVITY := 0.5
+const SPEED := 3.0
+const JUMP := -10.0
+
+var _loop_counter := 0
+var _velocity := Vector2()
+
+var _jump := true
+var _djump := true
 
 func _physics_process(delta) -> void:
+	_velocity.x = SPEED
+
+	if is_on_floor():
+		_jump = true
+		_djump = true
+
+	if Input.is_action_just_pressed("jump") and (_jump or _djump):
+		_velocity.y = JUMP
+
+		if _jump:
+			_jump = false
+		elif _djump:
+			_djump = false
+
 	# warning-ignore:return_value_discarded
-	move_and_slide(Vector2(3,0) / delta)
+	move_and_slide(_velocity / delta, Vector2.UP)
+
+	# Gravity
+	_velocity.y += GRAVITY
 
 	# Loops around the screen
 	if position.x > 852:
-		loop_counter += 1
-		emit_signal("looped", loop_counter)
+		_loop_counter += 1
+		emit_signal("looped", _loop_counter)
 		position.x = -64
 
 ## Loops kid back at the beginning if hit
