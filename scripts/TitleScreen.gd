@@ -41,6 +41,7 @@ func _on_Quit_pressed():
 func _on_Play_pressed():
 	# warning-ignore:return_value_discarded
 	Save.set_active_save(Save.SAVE1)
+	#GameStats.timer.start()
 	get_tree().change_scene("res://scenes/Scene.tscn")
 
 

@@ -24,6 +24,7 @@ Save="*res://scripts/Save.gd"
 Music="*res://scripts/Music.gd"
 Shortcuts="*res://scripts/Shortcuts.gd"
 BlackBars="*res://scripts/BlackBars.gd"
+GameStats="*res://scripts/GameStats.gd"
 
 [debug]
 

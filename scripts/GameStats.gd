@@ -26,37 +26,29 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-extends Node2D
+# Description:
+# Records stats such as deaths and time into memory.
 
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
-var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
+extends Node
 
-onready var ui: CanvasLayer = $UI
+var _timer := Timer.new()
+
+var deaths: int = 0
+# Seconds since new game
+var time: int = 0
 
 func _ready() -> void:
-	_connect_kid()
-	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
-	+ " (deaths: " + str(GameStats.deaths) + ")")
+	_setup_timer()
 
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
+func _setup_timer() -> void:
+	_timer.wait_time = 1.0
+	_timer.process_mode = Timer.TIMER_PROCESS_IDLE
+	_timer.one_shot = false
+	_timer.autostart = true
+	# warning-ignore:return_value_discarded
+	_timer.connect("timeout", self, "_on_timer_timeout")
+	add_child(_timer)
 
-
-func _connect_kid() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
-
-		# Load save
-		var save: Dictionary = Save.load_game(Save.SAVE1)
-
-		if save["position"]:
-			kid.global_position = save["position"]
-
-		kid.xscale = save["xscale"]
-
-func _on_Kid_death() -> void:
-	ui.game_over()
-	Music.stop()
-
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
+func _on_timer_timeout() -> void:
+	time += 1
+	print_debug(time)

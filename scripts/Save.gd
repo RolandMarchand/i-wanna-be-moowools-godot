@@ -27,11 +27,11 @@
 # SUCH DAMAGE.
 
 # Description:
-# Manages the settings and game saves' permanent states
+# Manages the settings and game saves' permanent states.
 
 # Todo:
 # 1) Save screen capture with get_viewport().get_texture().get_data()
-#    to show on the main menu' save screen
+#    to show on the main menu' save screen.
 
 extends Node
 
@@ -49,9 +49,8 @@ const SAVE3 := "save3"
 # Keeps the record of this amount of saves
 const MAX_SAVES := INF
 
-var deaths: int = 0
-
 var active_save: String setget set_active_save
+var current_save: String
 
 func _ready():
 	load_settings()
@@ -82,15 +81,16 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 	config.load("user://saves.cfg")
 
 	if not config.has_section(save):
-		config.set_value(save, "deaths", [deaths])
+		config.set_value(save, "deaths", [GameStats.deaths])
 		config.set_value(save, "position", [position])
 		config.set_value(save, "xscale", [xscale])
+		config.set_value(save, "time", [GameStats.time])
 	else:
 		var prev_val: Array = []
 
 		# Obvious room for optimization
 		prev_val = config.get_value(save, "deaths")
-		prev_val.append(deaths)
+		prev_val.append(GameStats.deaths)
 		while prev_val.size() > MAX_SAVES:
 			prev_val.pop_front()
 		config.set_value(save, "deaths", prev_val)
@@ -106,6 +106,12 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 		while prev_val.size() > MAX_SAVES:
 			prev_val.pop_front()
 		config.set_value(save, "xscale", prev_val)
+
+		prev_val = config.get_value(save, "time")
+		prev_val.append(GameStats.time)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "time", prev_val)
 
 	# warning-ignore:return_value_discarded
 	config.save("user://saves.cfg")
@@ -131,10 +137,15 @@ func load_game(save: String) -> Dictionary:
 	if config.has_section_key(save, "xscale"):
 		xscale = config.get_value(save, "xscale")[-1]
 
+	var time = 0
+	if config.has_section_key(save, "time"):
+		time = config.get_value(save, "time")[-1]
+
 	return {
 		"deaths": deaths,
 		"position": position,
 		"xscale": xscale,
+		"time": time,
 		}
 
 func delete_save(save: String):
@@ -150,7 +161,12 @@ func delete_save(save: String):
 func set_active_save(save: String):
 	_verify_save(save)
 
-	deaths = load_game(save)["deaths"]
+	current_save = save
+
+	var data: Dictionary = load_game(save)
+
+	GameStats.deaths = data["deaths"]
+	GameStats.time = data["time"]
 
 func revert_last_save(save: String):
 	_verify_save(save)

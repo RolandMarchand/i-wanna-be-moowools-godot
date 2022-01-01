@@ -27,10 +27,11 @@
 # SUCH DAMAGE.
 
 # Description:
-# The kid on the title screen
+# The kid on the title screen.
 
 # Todo:
-# 1) Add bullets to destroy spikes
+# 1) Add bullets to destroy spikes.
+# 2) Jump animation.
 
 extends KinematicBody2D
 

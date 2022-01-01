@@ -70,7 +70,8 @@ func _unhandled_key_input(_event):
 
 ## Reset the scene, restarts music, increments the death counter
 func _reset() -> void:
-		Save.deaths += 1
+		GameStats.deaths += 1
+		GameStats.time = Save.load_game(Save.current_save)["time"]
 
 		if not Music.is_playing():
 			Music.play_last_song()
