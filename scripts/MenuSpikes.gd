@@ -36,6 +36,8 @@ onready var tween := $Tween
 onready var spikes: Array = $Spikes.get_children()
 var _delay := 0.0
 var _fall_time := 6.0
+var _y_start_pos := -93.0
+var _y_end_pos := _y_start_pos + 720
 
 func _ready() -> void:
 	# Randomizes the order of fallen spikes
@@ -47,13 +49,13 @@ func _ready() -> void:
 func _start_tween() -> void:
 	for s in spikes:
 		tween.interpolate_property(s,
-		"position",
-		s.position,
-		s.position + Vector2(0,720),
-		_fall_time,
-		Tween.TRANS_QUINT,
-		Tween.EASE_IN,
-		_delay)
+				"position",
+				Vector2(s.position.x, _y_start_pos),
+				Vector2(s.position.x, _y_end_pos),
+				_fall_time,
+				Tween.TRANS_QUINT,
+				Tween.EASE_IN,
+				_delay)
 
 		_delay += clamp(randf(), 0.3, 1.0)
 
@@ -62,16 +64,17 @@ func _start_tween() -> void:
 
 func _reset_spike_pos() -> void:
 	for s in spikes:
-		s.position = s.position + Vector2(0,-720)
+		s.position.y = _y_start_pos
 
 ## Resets and reanimates each fallen spike
 func _on_Tween_tween_completed(spike, pos):
 	tween.remove(spike, pos)
-	spike.position -= Vector2(0,720)
+	spike.position.y = _y_start_pos
 	tween.interpolate_property(spike,
 			"position",
-			spike.position,
-			spike.position + Vector2(0,720),
-			_fall_time, Tween.TRANS_QUINT,
+			Vector2(spike.position.x, _y_start_pos),
+			Vector2(spike.position.x, _y_end_pos),
+			_fall_time,
+			Tween.TRANS_QUINT,
 			Tween.EASE_IN,
 			_delay)

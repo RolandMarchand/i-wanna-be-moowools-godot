@@ -26,6 +26,12 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+# Description:
+# The kid on the title screen
+
+# Todo:
+# 1) Add bullets to destroy spikes
+
 extends KinematicBody2D
 
 signal looped
