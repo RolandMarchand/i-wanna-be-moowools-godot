@@ -35,6 +35,10 @@
 
 extends Node
 
+const ERASED = 1
+
+const SAVE_PATH := "user://saves.cfg"
+
 const DEFAULT_MASTER_VOL := -4.0
 const DEFAULT_SOUND_VOL := -8.0
 const DEFAULT_MUSIC_VOL := -8.0
@@ -67,8 +71,12 @@ func save_settings() -> void:
 	config.set_value("volume", "sound", AudioServer.get_bus_volume_db(1))
 	config.set_value("volume", "music", AudioServer.get_bus_volume_db(2))
 
+	for action in InputMap.get_actions():
+		config.set_value("controls", action, InputMap.get_action_list(action))
+
 	# warning-ignore:return_value_discarded
 	config.save("user://settings.cfg")
+
 
 
 ## Writes the save's proprieties to disk.
@@ -78,13 +86,17 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
-	config.load("user://saves.cfg")
+	config.load(SAVE_PATH)
 
 	if not config.has_section(save):
 		config.set_value(save, "deaths", [GameStats.deaths])
 		config.set_value(save, "position", [position])
 		config.set_value(save, "xscale", [xscale])
 		config.set_value(save, "time", [GameStats.time])
+		config.set_value(save, "difficulty", [GameStats.difficulty])
+		config.set_value(save, "location", [GameStats.location])
+		config.set_value(save, "scene", [GameStats.scene])
+		#config.set_value(save, "screenshot", [_get_image()])
 	else:
 		var prev_val: Array = []
 
@@ -113,8 +125,32 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 			prev_val.pop_front()
 		config.set_value(save, "time", prev_val)
 
+		prev_val = config.get_value(save, "difficulty")
+		prev_val.append(GameStats.difficulty)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "difficulty", prev_val)
+
+		prev_val = config.get_value(save, "location")
+		prev_val.append(GameStats.location)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "location", prev_val)
+
+		prev_val = config.get_value(save, "scene")
+		prev_val.append(GameStats.scene)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "scene", prev_val)
+
+#		prev_val = config.get_value(save, "screenshot")
+#		prev_val.append(get_image())
+#		while prev_val.size() > MAX_SAVES:
+#			prev_val.pop_front()
+#		config.set_value(save, "screenshot", prev_val)
+
 	# warning-ignore:return_value_discarded
-	config.save("user://saves.cfg")
+	config.save(SAVE_PATH)
 
 ## Loads the save's propriety to disk
 func load_game(save: String) -> Dictionary:
@@ -122,31 +158,20 @@ func load_game(save: String) -> Dictionary:
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
-	config.load("user://saves.cfg")
+	config.load(SAVE_PATH)
 
-	# warning-ignore:shadowed_variable
-	var deaths := 0
-	if config.has_section_key(save, "deaths"):
-		deaths = config.get_value(save, "deaths")[-1]
-
-	var position := Vector2()
-	if config.has_section_key(save, "position"):
-		position = config.get_value(save, "position")[-1]
-
-	var xscale := 1
-	if config.has_section_key(save, "xscale"):
-		xscale = config.get_value(save, "xscale")[-1]
-
-	var time = 0
-	if config.has_section_key(save, "time"):
-		time = config.get_value(save, "time")[-1]
-
-	return {
-		"deaths": deaths,
-		"position": position,
-		"xscale": xscale,
-		"time": time,
-		}
+	if config.has_section(save):
+		return {
+			"deaths": config.get_value(save, "deaths")[-1],
+			"position": config.get_value(save, "position")[-1],
+			"xscale": config.get_value(save, "xscale")[-1],
+			"time": config.get_value(save, "time")[-1],
+			"difficulty": config.get_value(save, "difficulty")[-1],
+			"location": config.get_value(save, "location")[-1],
+			"scene": config.get_value(save, "scene")[-1],
+			}
+	else:
+		return {}
 
 func delete_save(save: String):
 	_verify_save(save)
@@ -154,9 +179,12 @@ func delete_save(save: String):
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
-	config.load("user://saves.cfg")
+	config.load(SAVE_PATH)
 
 	config.erase_section(save)
+
+	# warning-ignore:return_value_discarded
+	config.save(SAVE_PATH)
 
 func set_active_save(save: String):
 	_verify_save(save)
@@ -165,19 +193,40 @@ func set_active_save(save: String):
 
 	var data: Dictionary = load_game(save)
 
-	GameStats.deaths = data["deaths"]
-	GameStats.time = data["time"]
+	if data:
+		GameStats.deaths = data["deaths"]
+		GameStats.time = data["time"]
+		GameStats.difficulty = data["difficulty"]
+		GameStats.location = data["location"]
+		GameStats.scene = data["scene"]
+	else:
+		GameStats.time = 0
 
-func revert_last_save(save: String):
+func revert_last_save(save: String) -> int:
 	_verify_save(save)
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
-	config.load("user://saves.cfg")
+	config.load(SAVE_PATH)
 
-	for prop in ["deaths", "position", "xscale"]:
-		var values: Array = config.get_value(save, prop)
-		config.set_value(save, prop, values.pop_back())
+	for el in ["deaths", "position", "xscale", "time", "difficulty", "location", "scene", "screenshot"]:
+		var values: Array = config.get_value(save, el)
+		if values:
+			values.pop_back()
+
+			if values.empty():
+				config.erase_section(save)
+				# warning-ignore:return_value_discarded
+				config.save(SAVE_PATH)
+				return 1
+
+			config.set_value(save, el, values)
+		else:
+			push_warning("No " + el + " element to be reverted.")
+
+	# warning-ignore:return_value_discarded
+	config.save(SAVE_PATH)
+	return 0
 
 ## Reads the settings from disk
 func load_settings() -> void:
@@ -185,7 +234,6 @@ func load_settings() -> void:
 	# warning-ignore:return_value_discarded
 	config.load("user://settings.cfg")
 
-	print_debug(config.get_value("volume", "master", DEFAULT_MASTER_VOL))
 	OS.set_window_fullscreen(config.get_value("settings", "fullscreen", DEFAULT_FS))
 	OS.set_use_vsync(config.get_value("settings", "vsync", DEFAULT_VSYNC))
 	Music.set_quiet(config.get_value("settings", "quiet_bg", DEFAULT_QUIET_BG))
@@ -193,6 +241,11 @@ func load_settings() -> void:
 	AudioServer.set_bus_volume_db(0, config.get_value("volume", "master", DEFAULT_MASTER_VOL))
 	AudioServer.set_bus_volume_db(1, config.get_value("volume", "sound", DEFAULT_SOUND_VOL))
 	AudioServer.set_bus_volume_db(2, config.get_value("volume", "music", DEFAULT_MUSIC_VOL))
+
+	for action in config.get_section_keys("controls"):
+		InputMap.action_erase_events(action)
+		for event in config.get_value("controls", action):
+			InputMap.action_add_event(action, event)
 
 ## Resets settings to their default states
 func default_settings() -> void:
@@ -213,4 +266,4 @@ func _verify_save(save: String) -> void:
 		"save3":
 			pass
 		_:
-			assert("Save " + save + " does not exist.")
+			push_error("Save " + save + " does not exist.")

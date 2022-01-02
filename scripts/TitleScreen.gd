@@ -31,6 +31,7 @@ extends Node2D
 var mus_bg: AudioStream = preload("res://audio/musMegaman.mp3")
 
 func _ready():
+	Save.load_settings()
 	if Music.get_last_song() != mus_bg:
 		Music.play(mus_bg)
 
@@ -39,11 +40,11 @@ func _on_Quit_pressed():
 
 
 func _on_Play_pressed():
-	# warning-ignore:return_value_discarded
-	Save.set_active_save(Save.SAVE1)
-	#GameStats.timer.start()
-	get_tree().change_scene("res://scenes/Scene.tscn")
+	pass
 
 
 func _on_TitleScreen_tree_entered():
 	get_tree().set_pause(false)
+
+func _on_Kid_looped(loops: int):
+	$Main/LoopCounter.text = str(loops)

@@ -18,4 +18,4 @@ shader_param/show_vertical_scan_lines = false
 shader_param/vertical_scan_lines_amount = 320.0
 shader_param/vertical_scan_lines_opacity = 1.0
 shader_param/boost = 1.2
-shader_param/aberration_amount = 1.0
+shader_param/aberration_amount = 0.5

@@ -26,18 +26,17 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-extends Area2D
+extends CanvasLayer
 
-onready var anim_player: AnimationPlayer = $AnimationPlayer
-export(bool) var _allow_save_if_dead := false
+var _play_menu: PackedScene = preload("res://scenes/MenuPlay.tscn")
 
-func _on_SaveButton_body_entered(_body) -> void:
-	anim_player.play("saved")
+func _on_Quit_pressed():
+	get_tree().quit(0)
 
-	var kid: KinematicBody2D = get_tree().get_nodes_in_group("kid")[0]
 
-	if kid.dead:
-		if _allow_save_if_dead:
-			Save.save(Save.current_save, self.global_position, kid.xscale)
-	else:
-		Save.save(Save.current_save, kid.global_position, kid.xscale)
+func _on_Play_pressed():
+	$Menu.add_child(_play_menu.instance())
+
+
+func _on_Options_pressed():
+	$Menu/Settings.show()

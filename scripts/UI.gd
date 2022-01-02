@@ -71,6 +71,11 @@ func _refresh_settings() -> void:
 	_music.value = db2linear(AudioServer.get_bus_volume_db(2))
 	_change_bg.disabled = not OS.is_window_fullscreen()
 
+	if _change_bg.disabled:
+		_change_bg.mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
+	else:
+		_change_bg.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
 	Save.save_settings()
 
 func _test_audio() -> void:
@@ -96,6 +101,15 @@ func _on_Back2Title_pressed():
 
 	_refresh_settings()
 
+func _on_Master_value_changed(value) -> void:
+	AudioServer.set_bus_volume_db(0, linear2db(value))
+	# Used to set quiet bg
+	# Notifications are broken and signals don't exist :(
+	Music.original_volume = linear2db(value)
+
+	_test_audio()
+
+	_refresh_settings()
 
 func _on_Sound_value_changed(value) -> void:
 	AudioServer.set_bus_volume_db(1, linear2db(value))
@@ -106,19 +120,6 @@ func _on_Sound_value_changed(value) -> void:
 
 func _on_Music_value_changed(value) -> void:
 	AudioServer.set_bus_volume_db(2, linear2db(value))
-
-	_test_audio()
-
-	_refresh_settings()
-
-
-func _on_Master_value_changed(value) -> void:
-	AudioServer.set_bus_volume_db(0, linear2db(value))
-	# Used to set quiet bg
-	# Notifications are broken and signals don't exist :(
-	Music.original_volume = linear2db(value)
-
-	_test_audio()
 
 	_refresh_settings()
 

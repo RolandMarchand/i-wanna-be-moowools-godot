@@ -78,7 +78,16 @@ position = Vector2( 80, 144 )
 
 [node name="UI" parent="." instance=ExtResource( 7 )]
 
+[node name="Screenshot" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+__meta__ = {
+"_editor_description_": ""
+}
+
 [connection signal="body_entered" from="Warp" to="." method="_on_Warp_body_entered"]
+[connection signal="timeout" from="Screenshot" to="." method="_on_Timer_timeout"]
 
 [editable path="Platform"]
 [editable path="Platform2"]

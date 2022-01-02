@@ -31,10 +31,28 @@ extends Node2D
 var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
 var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
 
+var location := "GB Room"
+var difficulty: String
+
+var kid: KinematicBody2D
+
 onready var ui: CanvasLayer = $UI
 
 func _ready() -> void:
 	_connect_kid()
+
+	GameStats.location = location
+
+	if GameStats.difficulty == GameStats.DIFFICULTY_MEDIUM:
+		$Spikes.queue_free()
+
+	if GameStats.difficulty == GameStats.DIFFICULTY_IMPOSSIBLE:
+		$SaveButton.queue_free()
+		$SaveButton2.queue_free()
+
+	if not Save.load_game(Save.current_save):
+		Save.save(Save.current_save, kid.global_position, kid.xscale)
+
 	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
 	+ " (deaths: " + str(GameStats.deaths) + ")")
 
@@ -43,15 +61,16 @@ func _ready() -> void:
 
 
 func _connect_kid() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
+	kid = get_tree().get_nodes_in_group("kid")[0]
 
-		# Load save
-		var save: Dictionary = Save.load_game(Save.SAVE1)
+	# warning-ignore:return_value_discarded
+	kid.connect("death", self, "_on_Kid_death")
 
-		if save["position"]:
-			kid.global_position = save["position"]
+	# Load save
+	var save: Dictionary = Save.load_game(Save.current_save)
 
+	if save:
+		kid.global_position = save["position"]
 		kid.xscale = save["xscale"]
 
 func _on_Kid_death() -> void:
@@ -60,3 +79,10 @@ func _on_Kid_death() -> void:
 
 func _on_Warp_body_entered(_body) -> void:
 	get_tree().quit(0)
+
+## Takes a screenshot.
+## Taking a screenshot inside of the _ready function causes a bug
+## where the menu is captured, because of the nature of change_scene
+func _on_Timer_timeout():
+	if not GameStats.has_screenshot(Save.current_save, filename):
+		GameStats.take_screenshot()

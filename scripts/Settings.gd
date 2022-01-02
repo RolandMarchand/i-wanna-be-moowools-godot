@@ -26,18 +26,52 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-extends Area2D
+extends Control
 
-onready var anim_player: AnimationPlayer = $AnimationPlayer
-export(bool) var _allow_save_if_dead := false
+# Main
+onready var _vsync := $MarginContainer/Main/VBoxContainer2/Vsync
+onready var _fs := $MarginContainer/Main/VBoxContainer2/Fullscreen
+onready var _main_menu := $MarginContainer/Main
+onready var _audio := $MarginContainer/Main/VBoxContainer2/Audio
+onready var _controls_menu := $MarginContainer/Controls
+onready var _back := $MarginContainer/Main/VBoxContainer/Back
+onready var _audio_menu := $MarginContainer/Audio
 
-func _on_SaveButton_body_entered(_body) -> void:
-	anim_player.play("saved")
 
-	var kid: KinematicBody2D = get_tree().get_nodes_in_group("kid")[0]
+func _ready() -> void:
+	_refresh_settings()
 
-	if kid.dead:
-		if _allow_save_if_dead:
-			Save.save(Save.current_save, self.global_position, kid.xscale)
-	else:
-		Save.save(Save.current_save, kid.global_position, kid.xscale)
+func _refresh_settings() -> void:
+	_fs.pressed = OS.is_window_fullscreen()
+	_vsync.pressed = OS.is_vsync_enabled()
+
+	Save.save_settings()
+
+func _on_Fullscreen_toggled(button_pressed: bool) -> void:
+	OS.set_window_fullscreen(button_pressed)
+
+	_refresh_settings()
+
+func _on_Vsync_toggled(button_pressed: bool) -> void:
+	OS.set_use_vsync(button_pressed)
+
+	_refresh_settings()
+
+func _on_Back_pressed() -> void:
+	hide()
+
+func _on_Controls_pressed() -> void:
+	_main_menu.hide()
+	_controls_menu.show()
+
+func _on_Audio_pressed() -> void:
+	_main_menu.hide()
+	_audio_menu.show()
+
+func _on_Audio_Back_pressed() -> void:
+	_audio_menu.hide()
+	_main_menu.show()
+
+func _on_Control_Back_pressed() -> void:
+	_controls_menu.hide()
+	_main_menu.show()

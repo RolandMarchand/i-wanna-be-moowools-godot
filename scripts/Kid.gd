@@ -62,10 +62,13 @@ onready var _snd_death: AudioStreamPlayer = $Sounds/Death
 onready var _snd_shoot: AudioStreamPlayer = $Sounds/Shoot
 onready var _mus_death: AudioStreamPlayer = $Sounds/DeathMus
 
-onready var _sprite: Sprite = $Sprite
+onready var _bow_sprite: Sprite = $Bow
+onready var _kid_sprite: Sprite = $Kid
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
+	if GameStats.difficulty == GameStats.DIFFICULTY_MEDIUM:
+		_bow_sprite.show()
 	_flip(xscale)
 
 func _unhandled_key_input(_event) -> void:
@@ -119,8 +122,8 @@ func _set_jump() -> void:
 ## Also sets xscale, and flips the player accordingly
 func _set_h_mov() -> void:
 	# Left right movement
-	_xdir = Input.get_action_strength("ui_right") \
-			 - Input.get_action_strength("ui_left")
+	_xdir = Input.get_action_strength("right") \
+			 - Input.get_action_strength("left")
 	_hspeed = _xdir * WALK_SPEED
 
 	# Facing left or right
@@ -160,11 +163,15 @@ func _set_v_mov() -> void:
 func _flip(xscale: int) -> void:
 	match xscale:
 		1:
-			_sprite.flip_h = false
-			_sprite.offset = Vector2(0,0)
+			_kid_sprite.flip_h = false
+			_kid_sprite.offset = Vector2(0,0)
+
 		-1:
-			_sprite.flip_h = true
-			_sprite.offset = Vector2(3,0)
+			_kid_sprite.flip_h = true
+			_kid_sprite.offset = Vector2(3,0)
+
+	_bow_sprite.flip_h = _kid_sprite.flip_h
+	_bow_sprite.offset = _kid_sprite.offset
 
 func _explode() -> void:
 	var parent: Node = get_parent()
@@ -194,9 +201,13 @@ func _remove_bullet(_body) -> void:
 
 func _death() -> void:
 	dead = true
+
 	_snd_death.play()
-	_sprite.hide()
 	_mus_death.play()
+
+	_kid_sprite.hide()
+	_bow_sprite.hide()
+
 	emit_signal("death")
 
 func is_on_floor() -> bool:
