@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="I Don't Wanna Be Game Maker"
+config/name="I Wanna Be The Godot: A Moowool Engine"
 run/main_scene="res://scenes/TitleScreen.tscn"
 boot_splash/image="res://splash.png"
 boot_splash/fullsize=false

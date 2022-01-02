@@ -74,7 +74,7 @@ position = Vector2( 256, 0 )
 position = Vector2( 0, 0 )
 
 [node name="Kid" parent="." groups=["kid"] instance=ExtResource( 3 )]
-position = Vector2( 80, 144 )
+position = Vector2( 640, 544 )
 
 [node name="UI" parent="." instance=ExtResource( 7 )]
 

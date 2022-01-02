@@ -54,7 +54,9 @@ const SAVE3 := "save3"
 const MAX_SAVES := INF
 
 var active_save: String setget set_active_save
-var current_save: String
+var current_save: String = "tmp"
+
+var tmp_save := {}
 
 func _ready():
 	load_settings()
@@ -82,7 +84,21 @@ func save_settings() -> void:
 ## Writes the save's proprieties to disk.
 ## The saved values are written as arrays, to preserve save history.
 func save(save: String, position: Vector2, xscale: int = 1) -> void:
-	_verify_save(save)
+	if not _verify_save(save):
+		return
+
+	if save == "tmp":
+		tmp_save = {
+			"deaths": GameStats.deaths,
+			"position": position,
+			"xscale": xscale,
+			"time": GameStats.time,
+			"difficulty": GameStats.difficulty,
+			"location": GameStats.location,
+			"scene": GameStats.scene,
+		}
+		return
+
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
@@ -96,7 +112,6 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 		config.set_value(save, "difficulty", [GameStats.difficulty])
 		config.set_value(save, "location", [GameStats.location])
 		config.set_value(save, "scene", [GameStats.scene])
-		#config.set_value(save, "screenshot", [_get_image()])
 	else:
 		var prev_val: Array = []
 
@@ -154,7 +169,11 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 
 ## Loads the save's propriety to disk
 func load_game(save: String) -> Dictionary:
-	_verify_save(save)
+	if not _verify_save(save):
+		return {}
+
+	if save == "tmp":
+		return tmp_save
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
@@ -174,8 +193,8 @@ func load_game(save: String) -> Dictionary:
 		return {}
 
 func delete_save(save: String):
-	_verify_save(save)
-
+	if not _verify_save(save):
+		return
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
@@ -186,8 +205,9 @@ func delete_save(save: String):
 	# warning-ignore:return_value_discarded
 	config.save(SAVE_PATH)
 
-func set_active_save(save: String):
-	_verify_save(save)
+func set_active_save(save: String) -> void:
+	if not _verify_save(save):
+		return
 
 	current_save = save
 
@@ -203,7 +223,8 @@ func set_active_save(save: String):
 		GameStats.time = 0
 
 func revert_last_save(save: String) -> int:
-	_verify_save(save)
+	if not _verify_save(save):
+		return ERR_UNAVAILABLE
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded
@@ -257,13 +278,16 @@ func default_settings() -> void:
 	AudioServer.set_bus_volume_db(1, DEFAULT_SOUND_VOL)
 	AudioServer.set_bus_volume_db(2, DEFAULT_MUSIC_VOL)
 
-func _verify_save(save: String) -> void:
+func _verify_save(save: String) -> bool:
 	match save:
 		"save1":
-			pass
+			return true
 		"save2":
-			pass
+			return true
 		"save3":
-			pass
+			return true
+		"tmp":
+			return true
 		_:
 			push_error("Save " + save + " does not exist.")
+			return false

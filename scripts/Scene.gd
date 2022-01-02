@@ -43,6 +43,7 @@ func _ready() -> void:
 
 	GameStats.location = location
 
+	# Placeholder
 	if GameStats.difficulty == GameStats.DIFFICULTY_MEDIUM:
 		$Spikes.queue_free()
 
@@ -50,6 +51,7 @@ func _ready() -> void:
 		$SaveButton.queue_free()
 		$SaveButton2.queue_free()
 
+	# Saves when spawning and there are no saves yet
 	if not Save.load_game(Save.current_save):
 		Save.save(Save.current_save, kid.global_position, kid.xscale)
 
