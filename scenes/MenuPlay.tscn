@@ -171,6 +171,13 @@ text = "N/A"
 clip_text = true
 uppercase = true
 
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 253.0
+margin_bottom = 351.0
+flat = true
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/SaveCard"]
 margin_top = 380.0
 margin_right = 260.0
@@ -402,6 +409,13 @@ custom_fonts/font = SubResource( 14 )
 text = "N/A"
 clip_text = true
 uppercase = true
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 253.0
+margin_bottom = 351.0
+flat = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2"]
 margin_top = 380.0
@@ -635,6 +649,13 @@ text = "N/A"
 clip_text = true
 uppercase = true
 
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 253.0
+margin_bottom = 351.0
+flat = true
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3"]
 margin_top = 380.0
 margin_right = 260.0
@@ -769,6 +790,7 @@ size_flags_horizontal = 4
 text = "BACK"
 align = 0
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/PanelContainer/Play" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_Play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/HBoxContainer/Previous" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_Previous_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/HBoxContainer/Play" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_Play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/HBoxContainer/Revert" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_Revert_pressed"]
@@ -778,6 +800,7 @@ align = 0
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/HBoxContainer/VeryHard" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_VeryHard_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/HBoxContainer/Impossible" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_Impossible_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard/HBoxContainer/Next" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard" method="_on_Next_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/PanelContainer/Play" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_Play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/HBoxContainer/Previous" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_Previous_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/HBoxContainer/Play" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_Play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/HBoxContainer/Revert" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_Revert_pressed"]
@@ -787,6 +810,7 @@ align = 0
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/HBoxContainer/VeryHard" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_VeryHard_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/HBoxContainer/Impossible" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_Impossible_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2/HBoxContainer/Next" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard2" method="_on_Next_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3/PanelContainer/Play" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3" method="_on_Play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3/HBoxContainer/Previous" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3" method="_on_Previous_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3/HBoxContainer/Play" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3" method="_on_Play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3/HBoxContainer/Revert" to="MarginContainer/VBoxContainer/HBoxContainer/SaveCard3" method="_on_Revert_pressed"]

@@ -134,11 +134,12 @@ extents = Vector2( 912, 12 )
 background_mode = 4
 background_canvas_max_layer = 1
 glow_enabled = true
-glow_intensity = 1.51
-glow_strength = 1.58
-glow_hdr_threshold = 0.0
+glow_intensity = 8.0
+glow_bloom = 0.04
+glow_blend_mode = 0
 glow_high_quality = true
 adjustment_enabled = true
+adjustment_contrast = 1.15
 
 [node name="TitleScreen" type="Node2D"]
 pause_mode = 2
