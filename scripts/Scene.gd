@@ -86,5 +86,5 @@ func _on_Warp_body_entered(_body) -> void:
 ## Taking a screenshot inside of the _ready function causes a bug
 ## where the menu is captured, because of the nature of change_scene
 func _on_Timer_timeout():
-	if not GameStats.has_screenshot(Save.current_save, filename):
-		GameStats.take_screenshot()
+	if not Screenshots.has_screenshot(Save.current_save, filename):
+		Screenshots.call_deferred("take_screenshot")

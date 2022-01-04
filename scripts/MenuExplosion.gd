@@ -28,8 +28,8 @@
 
 extends Node2D
 
-func _on_Hitbox_area_entered(_area) -> void:
+func _on_Kid_hit(pos: Vector2):
 	# Area's position isn't exact
 	# Guessing where explosion should happen
-	global_position = get_node("../Kid").global_position
+	global_position = pos
 	$AnimationPlayer.play("explode")

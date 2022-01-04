@@ -26,27 +26,68 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-extends Control
+extends Node
 
-var _play_menu: PackedScene = preload("res://scenes/menu/Play.tscn")
-var mus_bg: AudioStream = preload("res://audio/musMegaman.mp3")
+const SCREENSHOT_PATH := "user://screenshots.cfg"
 
-func _ready() -> void:
-	Save.load_settings()
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
+func delete_screenshot(save: String, id: String) -> void:
+	var config = ConfigFile.new()
+	config.load(SCREENSHOT_PATH)
 
-func _on_Quit_pressed() -> void:
-	get_tree().quit(0)
+	config.erase_section_key(save, id)
+
+	config.save(SCREENSHOT_PATH)
+
+func delete_all_screenshots(save: String) -> void:
+	var config = ConfigFile.new()
+	config.load(SCREENSHOT_PATH)
+
+	config.erase_section(save)
+
+	config.save(SCREENSHOT_PATH)
 
 
-func _on_Play_pressed() -> void:
-	add_child(_play_menu.instance())
+func has_screenshot(save: String, id: String) -> bool:
+	var config = ConfigFile.new()
+	config.load(SCREENSHOT_PATH)
+
+	return config.has_section_key(save, id)
+
+func get_screenshot(save: String, id: String) -> ImageTexture:
+	var config = ConfigFile.new()
+	var err = config.load(SCREENSHOT_PATH)
+
+	if err != OK:
+		push_error("ConfigFile error " + str(err))
+		return null
+
+	var image = config.get_value(save, id, null)
+
+	if not image:
+		return null
+
+	err = image.decompress()
+
+	assert(err == OK, "Image error " + str(err))
+
+	var image_texture := ImageTexture.new()
+
+	image_texture.create_from_image(image)
+
+	return image_texture
 
 
-func _on_Options_pressed() -> void:
-	$Settings.show()
+func take_screenshot() -> void:
+	var capture: Image = get_viewport().get_texture().get_data()
+	var id: String = get_tree().current_scene.filename
 
+	capture.flip_y()
+	capture.resize(202,152, Image.INTERPOLATE_CUBIC)
+	# warning-ignore:return_value_discarded
+	capture.compress(Image.COMPRESS_PVRTC2, Image.COMPRESS_SOURCE_GENERIC, 50.0)
 
-func _on_Kid_looped(loop: int) -> void:
-	$BG/Main/LoopCounter.text = str(loop)
+	var config = ConfigFile.new()
+	config.load(SCREENSHOT_PATH)
+
+	config.set_value(Save.current_save, id, capture)
+	config.save(SCREENSHOT_PATH)

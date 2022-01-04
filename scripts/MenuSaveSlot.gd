@@ -57,20 +57,20 @@ onready var _capture := $PanelContainer/MarginContainer/VBoxContainer/Panel/Text
 
 onready var DIR_BUTTONS := [
 	_previous_button,
-	_next_button
+	_next_button,
 ]
 
 onready var START_LOAD_BUTTONS := [
 	_play_button,
+	_delete_button,
 	_revert_button,
-	_delete_button
 ]
 
 onready var DIFFICULTY_BUTTONS := [
 	_medium_button,
 	_hard_button,
 	_very_hard_button,
-	_impossible_button
+	_impossible_button,
 ]
 
 func _ready():
@@ -103,7 +103,7 @@ func _set_image() -> void:
 	else:
 		return
 
-	img = GameStats.get_screenshot(_save, _filename)
+	img = Screenshots.get_screenshot(_save, _filename)
 	if img:
 		_capture.texture = img
 
@@ -172,15 +172,15 @@ func _hide_all_buttons() -> void:
 
 func _load_game() -> void:
 	# warning-ignore:return_value_discarded
-	Save.set_active_save(Save.SAVE1)
-	get_tree().change_scene(GameStats.scene)
+	Save.set_active_save(_save)
+	get_tree().change_scene_to(load(GameStats.scene))
 
 func _new_game(dif: String) -> void:
 		Save.set_active_save(_save)
 		GameStats.set_difficulty(dif)
 		GameStats.scene = GameStats.START_SCENE
 		# warning-ignore:return_value_discarded
-		get_tree().change_scene(GameStats.START_SCENE)
+		get_tree().change_scene_to(load(GameStats.START_SCENE))
 
 func _on_Next_pressed():
 	# Next difficulty
@@ -245,6 +245,7 @@ func _on_Revert_pressed():
 func _on_Delete_pressed():
 	if _delete_confirm:
 		Save.delete_save(_save)
+		Screenshots.delete_all_screenshots(_save)
 		_set_save()
 		_set_state()
 		_set_image()

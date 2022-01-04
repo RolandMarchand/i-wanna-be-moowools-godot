@@ -39,14 +39,15 @@ func _ready():
 func _unhandled_key_input(_event):
 	# Toggles pause
 	if Input.is_action_just_pressed("pause"):
-		var pause := not get_tree().is_paused()
+		if get_tree().current_scene.name != "Menu":
+			var pause := not get_tree().is_paused()
 
-		get_tree().set_pause(pause)
-		emit_signal("paused", pause)
+			get_tree().set_pause(pause)
+			emit_signal("paused", pause)
 
 	if Input.is_action_just_pressed("reset"):
 		if not get_tree().is_paused()\
-			and get_tree().current_scene.name != "TitleScreen":
+			and get_tree().current_scene.name != "Menu":
 			_reset()
 
 	if Input.is_action_just_pressed("quit"):
@@ -64,9 +65,9 @@ func _unhandled_key_input(_event):
 
 	# Implement going back to title screen
 	if Input.is_action_just_pressed("title_screen"):
-		if get_tree().current_scene.name != "TitleScreen":
+		if get_tree().current_scene.name != "Menu":
 			# warning-ignore:return_value_discarded
-			get_tree().change_scene_to(preload("res://scenes/TitleScreen.tscn"))
+			get_tree().change_scene("res://scenes/menu/Menu.tscn")
 
 ## Reset the scene, restarts music, increments the death counter
 func _reset() -> void:

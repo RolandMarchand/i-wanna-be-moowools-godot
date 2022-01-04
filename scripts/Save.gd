@@ -158,12 +158,6 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 			prev_val.pop_front()
 		config.set_value(save, "scene", prev_val)
 
-#		prev_val = config.get_value(save, "screenshot")
-#		prev_val.append(get_image())
-#		while prev_val.size() > MAX_SAVES:
-#			prev_val.pop_front()
-#		config.set_value(save, "screenshot", prev_val)
-
 	# warning-ignore:return_value_discarded
 	config.save(SAVE_PATH)
 
@@ -230,7 +224,7 @@ func revert_last_save(save: String) -> int:
 	# warning-ignore:return_value_discarded
 	config.load(SAVE_PATH)
 
-	for el in ["deaths", "position", "xscale", "time", "difficulty", "location", "scene", "screenshot"]:
+	for el in ["deaths", "position", "xscale", "time", "difficulty", "location", "scene"]:
 		var values: Array = config.get_value(save, el)
 		if values:
 			values.pop_back()

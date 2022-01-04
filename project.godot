@@ -10,8 +10,8 @@ config_version=4
 
 [application]
 
-config/name="I Wanna Be The Godot: A Moowool Engine"
-run/main_scene="res://scenes/TitleScreen.tscn"
+config/name="I Wanna Be Moowool's Godot"
+run/main_scene="res://scenes/menu/Menu.tscn"
 boot_splash/image="res://splash.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
@@ -26,6 +26,7 @@ Music="*res://scripts/Music.gd"
 Shortcuts="*res://scripts/Shortcuts.gd"
 BlackBars="*res://scripts/BlackBars.gd"
 GameStats="*res://scripts/GameStats.gd"
+Screenshots="*res://scripts/Screenshots.gd"
 
 [debug]
 
@@ -149,5 +150,6 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 environment/default_clear_color=Color( 0.0509804, 0.101961, 0.101961, 1 )
+quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

@@ -36,6 +36,7 @@
 extends KinematicBody2D
 
 signal looped
+signal hit
 
 const GRAVITY := 0.5
 const SPEED := 3.0
@@ -77,4 +78,5 @@ func _physics_process(delta) -> void:
 ## Loops kid back at the beginning if hit
 func _on_Hitbox_area_entered(_area) -> void:
 	# Randomizes travels
+	emit_signal("hit", global_position)
 	position.x = (randi() % 128 + 64) * -1

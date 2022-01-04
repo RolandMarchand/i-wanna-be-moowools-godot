@@ -1,12 +1,12 @@
 extends VBoxContainer
 
 
-onready var _master := $MasterSlider
-onready var _sound := $SoundSlider
-onready var _music := $MusicSlider
+onready var _master := $VBoxContainer/MasterSlider
+onready var _sound := $VBoxContainer/SoundSlider
+onready var _music := $VBoxContainer/MusicSlider
+onready var _quiet_bg := $VBoxContainer/QuietBG
 onready var _audio_back := $Back
 onready var _sound_test := $Test
-onready var _quiet_bg := $QuietBG
 
 func _ready() -> void:
 	_refresh_settings()

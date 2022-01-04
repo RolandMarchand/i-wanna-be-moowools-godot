@@ -97,7 +97,7 @@ func _on_Ok_pressed() -> void:
 
 func _on_Back2Title_pressed():
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene_to(preload("res://scenes/TitleScreen.tscn"))
+	get_tree().change_scene("res://scenes/menu/Menu.tscn")
 
 	_refresh_settings()
 
