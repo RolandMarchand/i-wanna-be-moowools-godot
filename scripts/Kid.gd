@@ -134,7 +134,7 @@ func _set_jump() -> void:
 				_snd_djump.play()
 
 	elif Input.is_action_just_released("jump")and jump and vspeed < 0:
-		vspeed *= JUMP_DEACCEL/2
+		vspeed *= JUMP_DEACCEL#/2
 
 ## Sets hspeed, which gets used in _physics_process
 ## Also sets xscale, and flips the player accordingly
@@ -153,7 +153,7 @@ func _set_h_mov() -> void:
 ## Sets _anim, which gets used in _physics_process
 func _set_v_mov() -> void:
 	if jump:
-		vspeed = min(MAX_FALL_SPEED, vspeed + GRAVITY)
+		vspeed = min(9, vspeed + GRAVITY)
 
 		if vspeed < 0:
 			_anim = "jump"
