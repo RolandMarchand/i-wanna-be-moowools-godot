@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://res/Spikes.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://sprites/sprWater_0.png" type="Texture" id=12]
 [ext_resource path="res://scenes/AirRefresh.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/Cherry.tscn" type="PackedScene" id=14]
+[ext_resource path="res://sprites/invisible.png" type="Texture" id=15]
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 points = PoolVector2Array( 32, 32, 16, 32, 16, 0, 32, 0 )
@@ -65,6 +66,61 @@ points = PoolVector2Array( 16, 32, 0, 32, 0, 0, 16, 0 )
 } ]
 1/z_index = 0
 
+[sub_resource type="Animation" id=7]
+resource_name = "New Anim"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -360.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
@@ -87,6 +143,32 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 "one_way": false,
 "one_way_margin": 1.0,
 "shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="ConvexPolygonShape2D" id=9]
+points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
+
+[sub_resource type="TileSet" id=10]
+0/name = "invisible.png 0"
+0/texture = ExtResource( 15 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 32, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 9 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 9 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
@@ -127,7 +209,6 @@ __meta__ = {
 tile_set = SubResource( 2 )
 cell_size = Vector2( 32, 32 )
 cell_tile_origin = 1
-show_collision = true
 collision_layer = 64
 collision_mask = 0
 format = 1
@@ -142,7 +223,7 @@ cell_size = Vector2( 32, 32 )
 collision_layer = 4
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 131091, 0, 0, 131092, 0, 0, 131093, 0, 0, 131094, 0, 0, 196616, 0, 0, 196617, 0, 0, 196625, 0, 0, 393225, 0, 0, 458764, 0, 0, 655363, 0, 0, 655365, 0, 0, 655366, 0, 0, 655367, 0, 0, 655370, 3, 0, 655371, 3, 0, 655373, 1, 0, 655382, 3, 0, 655383, 2, 0, 720909, 1, 0, 720919, 2, 0, 786434, 3, 0, 786445, 1, 0, 786455, 2, 0, 851971, 0, 0, 851977, 3, 0, 851978, 3, 0, 851981, 1, 0, 851991, 2, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917523, 0, 0, 917524, 0, 0, 917525, 0, 0, 917527, 2, 0, 983063, 2, 0, 1048588, 3, 0, 1048599, 2, 0, 1114125, 0, 0, 1114127, 0, 0, 1114130, 0, 0, 1114135, 2, 0 )
+tile_data = PoolIntArray( 131091, 0, 0, 131092, 0, 0, 131093, 0, 0, 131094, 0, 0, 196616, 0, 0, 196617, 0, 0, 196625, 0, 0, 393225, 0, 0, 655363, 0, 0, 655365, 0, 0, 655366, 0, 0, 655367, 0, 0, 655370, 3, 0, 655371, 3, 0, 655373, 1, 0, 655382, 3, 0, 655383, 2, 0, 720909, 1, 0, 720919, 2, 0, 786434, 3, 0, 786445, 1, 0, 786455, 2, 0, 851971, 0, 0, 851977, 3, 0, 851978, 3, 0, 851981, 1, 0, 851991, 2, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917523, 0, 0, 917524, 0, 0, 917525, 0, 0, 917527, 2, 0, 983063, 2, 0, 1048588, 3, 0, 1048599, 2, 0, 1114125, 0, 0, 1114127, 0, 0, 1114130, 0, 0, 1114135, 2, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -156,44 +237,57 @@ position = Vector2( 48, 80 )
 [node name="SaveButton2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 688, 528 )
 
-[node name="Cherry2" parent="." instance=ExtResource( 14 )]
-position = Vector2( 459, 255 )
-
 [node name="Platform" parent="." instance=ExtResource( 6 )]
-position = Vector2( 656, 264 )
+position = Vector2( 408, 168 )
+rotation = 6.28319
+_snap = false
+_drag = false
 
-[node name="1" parent="Platform/Trajectory" index="0"]
+[node name="KinematicBody2D" parent="Platform" index="0"]
+position = Vector2( 0, -40 )
+
+[node name="Trajectory" parent="Platform/KinematicBody2D" index="2"]
+visible = false
+
+[node name="AnimationPlayer" parent="Platform" index="1"]
+autoplay = "New Anim"
+"anims/New Anim" = SubResource( 7 )
+anims/RESET = SubResource( 8 )
+
+[node name="Platform2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 576, 224 )
+_snap = false
+
+[node name="KinematicBody2D" parent="Platform2" index="0"]
+position = Vector2( -8, -56 )
+
+[node name="1" parent="Platform2/KinematicBody2D/Trajectory" index="0"]
 position = Vector2( 0, 0 )
 
-[node name="2" parent="Platform/Trajectory" index="1"]
-position = Vector2( 128, 0 )
+[node name="2" parent="Platform2/KinematicBody2D/Trajectory" index="1"]
+position = Vector2( 0, 112 )
 
-[node name="3" parent="Platform/Trajectory" index="2"]
+[node name="3" parent="Platform2/KinematicBody2D/Trajectory" index="2"]
 position = Vector2( 0, 0 )
 
 [node name="Platform3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 560, 168 )
+position = Vector2( 696, 248 )
+_snap = false
 
-[node name="1" parent="Platform3/Trajectory" index="0"]
+[node name="KinematicBody2D" parent="Platform3" index="0"]
+position = Vector2( -80, 8 )
+
+[node name="1" parent="Platform3/KinematicBody2D/Trajectory" index="0"]
 position = Vector2( 0, 0 )
 
-[node name="2" parent="Platform3/Trajectory" index="1"]
-position = Vector2( 0, 104 )
+[node name="2" parent="Platform3/KinematicBody2D/Trajectory" index="1"]
+position = Vector2( 168, 0 )
 
-[node name="3" parent="Platform3/Trajectory" index="2"]
+[node name="3" parent="Platform3/KinematicBody2D/Trajectory" index="2"]
 position = Vector2( 0, 0 )
 
-[node name="Platform2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 496, 456 )
-
-[node name="1" parent="Platform2/Trajectory" index="0"]
-position = Vector2( 0, 0 )
-
-[node name="2" parent="Platform2/Trajectory" index="1"]
-position = Vector2( 256, 0 )
-
-[node name="3" parent="Platform2/Trajectory" index="2"]
-position = Vector2( 0, 0 )
+[node name="Cherry2" parent="." instance=ExtResource( 14 )]
+position = Vector2( 459, 255 )
 
 [node name="Kid" parent="." groups=["kid"] instance=ExtResource( 3 )]
 position = Vector2( 520, 256 )
@@ -217,11 +311,24 @@ position = Vector2( 496, 104 )
 tile_set = SubResource( 6 )
 cell_size = Vector2( 32, 32 )
 cell_tile_origin = 1
-show_collision = true
 collision_layer = 128
 collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393222, 0, 0, 393223, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458758, 0, 0, 458759, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524294, 0, 0, 524295, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 655361, 0, 0, 655362, 0, 0, 655363, 0, 0, 655364, 0, 0, 655365, 0, 0, 655366, 0, 0, 655367, 0, 0, 720900, 0, 0, 786433, 0, 0, 786434, 0, 0, 786435, 0, 0, 786436, 0, 0, 786437, 0, 0, 786438, 0, 0, 786439, 0, 0, 851969, 0, 0, 851970, 0, 0, 851971, 0, 0, 851972, 0, 0, 851973, 0, 0, 851975, 0, 0, 917505, 0, 0, 917506, 0, 0, 917511, 0, 0, 983041, 0, 0, 983042, 0, 0, 983043, 0, 0, 983044, 0, 0, 983045, 0, 0, 983047, 0, 0, 1048577, 0, 0, 1048578, 0, 0, 1048579, 0, 0, 1048581, 0, 0, 1048583, 0, 0, 1114113, 0, 0, 1114114, 0, 0, 1114115, 0, 0, 1114117, 0, 0, 1114118, 0, 0, 1114119, 0, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BulletStoppers" type="TileMap" parent="."]
+modulate = Color( 0.00784314, 1, 0, 1 )
+tile_set = SubResource( 10 )
+cell_size = Vector2( 32, 32 )
+cell_tile_origin = 1
+show_collision = true
+collision_layer = 256
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 1048595, 0, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -240,5 +347,5 @@ __meta__ = {
 [connection signal="timeout" from="Screenshot" to="." method="_on_Timer_timeout"]
 
 [editable path="Platform"]
-[editable path="Platform3"]
 [editable path="Platform2"]
+[editable path="Platform3"]

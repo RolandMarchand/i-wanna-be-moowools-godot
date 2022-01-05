@@ -143,6 +143,7 @@ down={
 2d_physics/layer_6="platform snap"
 2d_physics/layer_7="vines"
 2d_physics/layer_8="water"
+2d_physics/layer_9="bullet_stoppers"
 
 [physics]
 
