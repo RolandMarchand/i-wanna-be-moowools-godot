@@ -45,6 +45,6 @@ func _on_Hitbox_body_entered(body) -> void:
 	emit_signal("hit", body)
 	queue_free()
 
-func _on_Timer_timeout() -> void:
+func _on_VisibilityNotifier2D_screen_exited():
 	emit_signal("hit", null)
 	queue_free()

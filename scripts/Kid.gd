@@ -33,20 +33,24 @@ signal death
 const JUMP_SPEED := -8.5
 const DJUMP_SPEED := -7.0
 const WALK_SPEED := 3.0
+const WALL_SLIDE := 2.0
+const WALL_JUMP := 9.0
 const JUMP_DEACCEL := 0.45
+const GRAVITY := 0.4
 const MAX_FALL_SPEED := 9.4
-const VALIGN := 0.4
 const MAX_BULLET := 3
 
 const BLOOD_CNT := 40
 const MAX_BLOOD_CYCLES := 20
 
+export(bool) var _check_for_slopes = false
+
 var dead := false # Useless for now
 var xscale := 1
-var _jump := false
-var _djump := false
+var jump := false
+var djump := false
 var _xdir := 0.0
-var _hspeed := 0.0
+var hspeed := 0.0
 var vspeed := 0.0
 var _anim: String
 var _bullet_array: Array = []
@@ -54,22 +58,23 @@ var _blood_cycles := 0
 var _snap := Vector2.ZERO
 
 var _bullet: PackedScene = preload("res://scenes/Bullet.tscn")
-#var _blood: PackedScene = preload("res://scenes/Blood.tscn")
 
 onready var _snd_jump: AudioStreamPlayer = $Sounds/Jump
 onready var _snd_djump: AudioStreamPlayer = $Sounds/DJump
 onready var _snd_death: AudioStreamPlayer = $Sounds/Death
 onready var _snd_shoot: AudioStreamPlayer = $Sounds/Shoot
+onready var _snd_wall_jump: AudioStreamPlayer = $Sounds/WallJump
 onready var _mus_death: AudioStreamPlayer = $Sounds/DeathMus
 
 onready var _bow_sprite: Sprite = $Bow
 onready var _kid_sprite: Sprite = $Kid
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
+
 func _ready() -> void:
 	if GameStats.difficulty == GameStats.DIFFICULTY_MEDIUM:
 		_bow_sprite.show()
-	_flip(xscale)
+	flip(xscale)
 
 func _unhandled_key_input(_event) -> void:
 	if Input.is_action_just_pressed("shoot") and _bullet_array.size() < MAX_BULLET:
@@ -77,14 +82,26 @@ func _unhandled_key_input(_event) -> void:
 
 func _physics_process(delta) -> void:
 	if not dead:
+		# Slopes
+		if _check_for_slopes:
+			if is_on_slope():
+				_snap = Vector2(0,18)
+
 		_set_h_mov()
 		_set_jump()
 		_set_v_mov()
+		_set_wall_slide()
+		_set_water()
+
 
 		# move_and_slide multiplies velocity by delta, but we want pixel/frame movement
 		# warning-ignore:return_value_discarded
-		move_and_slide(Vector2(_hspeed,vspeed) / delta, Vector2.UP)
-		#move_and_slide_with_snap(Vector2(_hspeed,vspeed) / delta, _snap, Vector2.UP)
+		move_and_slide_with_snap(
+				Vector2(hspeed,vspeed) / delta,
+				_snap,
+				Vector2.UP,
+				true
+		)
 
 		# Animation
 		_anim_player.play(_anim)
@@ -98,44 +115,45 @@ func _physics_process(delta) -> void:
 		set_process_unhandled_key_input(false)
 		set_physics_process(false)
 
-
 ## Sets the jumping movement
 ## Plays jumping sounds
 func _set_jump() -> void:
 	if Input.is_action_pressed("jump"):
+		_snap = Vector2.ZERO
+
 		if Input.is_action_just_pressed("jump"):
-			if not _jump:
-				_jump = true
+			if not jump:
+				jump = true
 				vspeed = JUMP_SPEED
 
 				_snd_jump.play()
-			elif _djump:
-				_djump = false
+			elif djump:
+				djump = false
 				vspeed = DJUMP_SPEED
 
 				_snd_djump.play()
 
-	elif Input.is_action_just_released("jump") and _jump and vspeed < 0:
-		vspeed *= JUMP_DEACCEL
+	elif Input.is_action_just_released("jump")and jump and vspeed < 0:
+		vspeed *= JUMP_DEACCEL/2
 
-## Sets _hspeed, which gets used in _physics_process
+## Sets hspeed, which gets used in _physics_process
 ## Also sets xscale, and flips the player accordingly
 func _set_h_mov() -> void:
 	# Left right movement
 	_xdir = Input.get_action_strength("right") \
 			 - Input.get_action_strength("left")
-	_hspeed = _xdir * WALK_SPEED
+	hspeed = _xdir * WALK_SPEED
 
 	# Facing left or right
 	if _xdir != 0:
 		xscale = int(_xdir)
-	_flip(xscale)
+	flip(xscale)
 
 ## Sets vspeed, which gets used in _physics_process
 ## Sets _anim, which gets used in _physics_process
 func _set_v_mov() -> void:
-	if _jump:
-		vspeed = min(MAX_FALL_SPEED, vspeed + VALIGN)
+	if jump:
+		vspeed = min(MAX_FALL_SPEED, vspeed + GRAVITY)
 
 		if vspeed < 0:
 			_anim = "jump"
@@ -143,24 +161,50 @@ func _set_v_mov() -> void:
 			_anim = "fall"
 
 		if is_on_floor() and vspeed >= 0:
-			_jump = false
+			jump = false
 		elif is_on_ceiling():
 			vspeed = 0.01 # Not exact physics logic, but it works
 	else:
 		vspeed = 0
-		_djump = true
+		djump = true
 		if not is_on_floor():
-			_jump = true
+			jump = true
 
-		if _hspeed != 0:
+		if hspeed != 0:
 			_anim = "run"
 		else:
 			_anim = "idle"
 
+func _set_wall_slide() -> void:
+	if $LVines.get_overlapping_bodies():
+		flip(1)
+		vspeed = 2
+		_anim = "wall"
+
+		if Input.is_action_pressed("jump") and Input.is_action_pressed("right"):
+			hspeed = 15
+			vspeed = -9
+			_snd_wall_jump.play()
+
+	if $RVines.get_overlapping_bodies():
+		flip(-1)
+		vspeed = 2
+		_anim = "wall"
+
+		if Input.is_action_pressed("jump") and Input.is_action_pressed("left"):
+			hspeed = -15
+			vspeed = -9
+			_snd_wall_jump.play()
+
+func _set_water() -> void:
+	if is_in_water():
+		vspeed = min(vspeed, 2)
+		djump = 1
+
 ## Flips the character sprite simulating a change in scale.
 ## Godot has problems with continuously setting the scale to -1
 # warning-ignore:shadowed_variable
-func _flip(xscale: int) -> void:
+func flip(xscale: int) -> void:
 	match xscale:
 		1:
 			_kid_sprite.flip_h = false
@@ -208,20 +252,20 @@ func _death() -> void:
 	_kid_sprite.hide()
 	_bow_sprite.hide()
 
+	$Hazards.set_deferred("monitoring", false)
+
 	emit_signal("death")
+
+func is_on_slope() -> bool:
+	if is_on_floor() and not $Slope.is_colliding():
+		return true
+	return false
 
 func is_on_floor() -> bool:
 	return not $Floor.get_overlapping_bodies().empty()
 
-func is_on_platform() -> bool:
-	var p := false
+func is_in_water() -> bool:
+	return not $Water.get_overlapping_bodies().empty()
 
-	for body in $Floor.get_overlapping_bodies():
-		if body.get_parent().is_in_group("platforms"):
-			p = true
-
-	return p
-
-func _on_Spike_body_entered(body: Node) -> void:
-	if body.is_in_group("spikes"):
-		_death()
+func _on_Hazards_body_entered(_body: Node) -> void:
+	_death()

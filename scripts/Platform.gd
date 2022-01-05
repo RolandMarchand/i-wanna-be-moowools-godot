@@ -77,4 +77,4 @@ func _on_Snap_area_entered(area):
 	if _snap:
 		var player = area.get_parent()
 		player.global_position.y = global_position.y - 8.5 - 8 # player and platform height
-		player._jump = false
+		player.jump = false

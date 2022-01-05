@@ -82,9 +82,9 @@ func _on_Kid_death() -> void:
 func _on_Warp_body_entered(_body) -> void:
 	get_tree().quit(0)
 
-## Takes a screenshot.
+## Takes a screenshot of the stage.
 ## Taking a screenshot inside of the _ready function causes a bug
 ## where the menu is captured, because of the nature of change_scene
-func _on_Timer_timeout():
+func _on_Timer_timeout() -> void:
 	if not Screenshots.has_screenshot(Save.current_save, filename):
 		Screenshots.call_deferred("take_screenshot")

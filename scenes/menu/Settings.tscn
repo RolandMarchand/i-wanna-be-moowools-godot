@@ -431,9 +431,10 @@ align = 0
 margin_left = 287.0
 margin_top = 408.0
 margin_right = 396.0
-margin_bottom = 450.0
+margin_bottom = 451.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
 custom_fonts/font = SubResource( 7 )
 text = "RESET"
 __meta__ = {
@@ -441,9 +442,9 @@ __meta__ = {
 }
 
 [node name="Back" type="Button" parent="MarginContainer/Controls"]
-margin_top = 449.0
+margin_top = 450.0
 margin_right = 88.0
-margin_bottom = 491.0
+margin_bottom = 492.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 7 )

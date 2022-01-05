@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="I Wanna Be Moowool's Godot"
-run/main_scene="res://scenes/menu/Menu.tscn"
+run/main_scene="res://scenes/Scene.tscn"
 boot_splash/image="res://splash.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
@@ -137,10 +137,12 @@ down={
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="environment"
-2d_physics/layer_3="spikes"
-2d_physics/layer_4="bullet"
+2d_physics/layer_3="hazards"
+2d_physics/layer_4="bullets"
 2d_physics/layer_5="platforms"
 2d_physics/layer_6="platform snap"
+2d_physics/layer_7="vines"
+2d_physics/layer_8="water"
 
 [physics]
 
@@ -149,7 +151,6 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_clear_color=Color( 0.0509804, 0.101961, 0.101961, 1 )
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

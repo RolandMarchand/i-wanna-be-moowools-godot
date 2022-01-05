@@ -83,6 +83,10 @@ layer = -1
 
 [node name="Main" type="Node2D" parent="BG"]
 
+[node name="Polygon2D" type="Polygon2D" parent="BG/Main"]
+color = Color( 0.0509804, 0.101961, 0.101961, 1 )
+polygon = PoolVector2Array( 0, 0, 0, 384, 800, 384, 800, 0 )
+
 [node name="Explosion" parent="BG/Main" instance=ExtResource( 8 )]
 
 [node name="Kid" parent="BG/Main" instance=ExtResource( 5 )]
