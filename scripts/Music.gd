@@ -29,11 +29,14 @@
 # Description:
 # Singleton managing background music
 
+# Todo:
+# Plenty of deprecated functions to remove
+
 extends Node
 
 const QUIET_MULT := 3
 
-var _audio_player := AudioStreamPlayer.new()
+var player := AudioStreamPlayer.new()
 # Key: AudioStream
 # value: float of recorded time
 var _last_pos := {}
@@ -45,9 +48,9 @@ var _quiet: bool = true setget set_quiet, is_quiet
 var original_volume: float
 
 func _ready() -> void:
-	add_child(_audio_player)
+	add_child(player)
 
-	_audio_player.bus = "Music"
+	player.bus = "Music"
 
 	pause_mode = PAUSE_MODE_PROCESS
 
@@ -63,17 +66,17 @@ func _process(_delta) -> void:
 
 
 func is_playing() -> bool:
-	return _audio_player.playing
+	return player.playing
 
 ## Plays the music back, starts from where it left off by default
 func play(stream: AudioStream, restart := false) -> void:
-	_audio_player.stream = stream
+	player.stream = stream
 	_last_song = stream
 
 	if restart or not _last_pos.has(stream):
-		_audio_player.play()
+		player.play()
 	else:
-		_audio_player.play(_last_pos[stream])
+		player.play(_last_pos[stream])
 
 ## Uses the play function with the last played song
 func play_last_song(restart := false):
@@ -84,18 +87,18 @@ func play_last_song(restart := false):
 
 ## Stops the music and records the last position
 func stop() -> void:
-	if _audio_player.playing:
-		_last_pos[_audio_player.stream] = _audio_player.get_playback_position()
-		_audio_player.stop()
+	if player.playing:
+		_last_pos[player.stream] = player.get_playback_position()
+		player.stop()
 
 func pause() -> void:
-	_audio_player.stream_paused = true
+	player.stream_paused = true
 
 func is_paused() -> bool:
-	return _audio_player.stream_paused
+	return player.stream_paused
 
 func resume() -> void:
-	_audio_player.stream_paused = false
+	player.stream_paused = false
 
 func get_last_song() -> AudioStream:
 	return _last_song

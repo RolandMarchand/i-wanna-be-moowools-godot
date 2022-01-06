@@ -58,10 +58,10 @@ func _ready() -> void:
 	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
 	+ " (deaths: " + str(GameStats.deaths) + ")")
 
-	if Music.is_paused():
-		Music.resume()
-	elif not Music.is_playing():
+	if Music.get_last_song() != mus_bg:
 		Music.play(mus_bg)
+	elif Music.player.stream_paused:
+		Music.player.stream_paused = false
 
 
 func _connect_kid() -> void:
