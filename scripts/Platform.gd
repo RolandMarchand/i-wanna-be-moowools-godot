@@ -34,6 +34,10 @@ var _playback_pos := 0
 var velocity: Vector2
 
 onready var body := $KinematicBody2D
+onready var drag := $KinematicBody2D/Drag
+onready var push := $KinematicBody2D/Push
+onready var trajectory := $KinematicBody2D/Trajectory
+onready var tween := $Tween
 
 export(float) var speed: float = BASE_SPEED
 export(bool) var _snap := true
@@ -43,11 +47,11 @@ func _ready():
 	_gen_path()
 	if not $AnimationPlayer.autoplay:
 		_next_tween()
-		$Tween.start()
+		tween.start()
 
 func _physics_process(delta):
 	if _drag:
-		for player in $KinematicBody2D/Drag.get_overlapping_bodies():
+		for player in drag.get_overlapping_bodies():
 			player.djump = true
 			player.move_and_slide(velocity / delta)
 
@@ -55,7 +59,13 @@ func _next_tween() -> void:
 	var duration = _get_tween_duration(_path[_playback_pos].distance_to(_path[_playback_pos + 1]))
 	velocity = _path[_playback_pos].direction_to(_path[_playback_pos + 1]).normalized() * speed
 
-	$Tween.interpolate_property($KinematicBody2D, "global_position", _path[_playback_pos], _path[_playback_pos + 1], duration)
+	# Patches a bug where the player wouldn't slide with the platform when
+	# he touches a wall
+	for player in push.get_overlapping_bodies():
+		if player.is_on_wall():
+			player.move_and_slide((velocity + Vector2(0,1)) / get_physics_process_delta_time())
+
+	tween.interpolate_property(body, "global_position", _path[_playback_pos], _path[_playback_pos + 1], duration)
 
 	_playback_pos += 1
 	_playback_pos %= _path.size() - 1
@@ -67,17 +77,17 @@ func _get_tween_duration(distance: float) -> float:
 func _gen_path() -> void:
 	_path.clear()
 
-	for point in $KinematicBody2D/Trajectory.get_children():
+	for point in trajectory.get_children():
 		_path.append(point.global_position)
 
 
 func _on_Tween_tween_completed(_object, _key):
 	_next_tween()
-	$Tween.start()
+	tween.start()
 
 
 func _on_Snap_area_entered(area):
 	if _snap:
 		var player = area.get_parent()
-		player.global_position.y = global_position.y - 8.5 - 8 # player and platform height
+		player.global_position.y = body.global_position.y - 8.5 - 8 # player and platform height
 		player.jump = false

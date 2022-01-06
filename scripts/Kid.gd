@@ -82,11 +82,7 @@ func _unhandled_key_input(_event) -> void:
 
 func _physics_process(delta) -> void:
 	if not dead:
-		# Slopes
-		if _check_for_slopes:
-			if is_on_slope():
-				_snap = Vector2(0,18)
-
+		_set_snap()
 		_set_h_mov()
 		_set_jump()
 		_set_v_mov()
@@ -114,6 +110,13 @@ func _physics_process(delta) -> void:
 	else:
 		set_process_unhandled_key_input(false)
 		set_physics_process(false)
+
+func _set_snap() -> void:
+	_snap = Vector2.ZERO
+	# Slopes
+	if _check_for_slopes:
+		if is_on_slope():
+			_snap = Vector2(0,18)
 
 ## Sets the jumping movement
 ## Plays jumping sounds
@@ -244,6 +247,7 @@ func _remove_bullet(_body) -> void:
 	_bullet_array.pop_front()
 
 func _death() -> void:
+	#Shortcuts._reset()
 	dead = true
 
 	_snd_death.play()

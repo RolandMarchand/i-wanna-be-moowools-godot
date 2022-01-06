@@ -1,7 +1,7 @@
 extends Area2D
 
 func _ready() -> void:
-	$AnimationPlayer.seek(randf())
+	$AnimationPlayer.seek(randf() * $AnimationPlayer.get_current_animation_length())
 
 func _on_AirJump_body_entered(player: KinematicBody2D) -> void:
 	player.djump = true

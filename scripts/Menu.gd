@@ -33,8 +33,11 @@ var mus_bg: AudioStream = preload("res://audio/musMegaman.mp3")
 
 func _ready() -> void:
 	Save.load_settings()
+
 	if Music.get_last_song() != mus_bg:
 		Music.play(mus_bg)
+
+	get_tree().paused = false
 
 func _on_Quit_pressed() -> void:
 	get_tree().quit(0)

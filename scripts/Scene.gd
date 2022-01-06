@@ -58,7 +58,9 @@ func _ready() -> void:
 	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
 	+ " (deaths: " + str(GameStats.deaths) + ")")
 
-	if Music.get_last_song() != mus_bg:
+	if Music.is_paused():
+		Music.resume()
+	elif not Music.is_playing():
 		Music.play(mus_bg)
 
 
@@ -77,7 +79,7 @@ func _connect_kid() -> void:
 
 func _on_Kid_death() -> void:
 	ui.game_over()
-	Music.stop()
+	Music.pause()
 
 func _on_Warp_body_entered(_body) -> void:
 	get_tree().quit(0)

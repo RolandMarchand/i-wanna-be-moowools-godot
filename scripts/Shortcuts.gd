@@ -77,8 +77,8 @@ func _reset() -> void:
 		if data:
 			GameStats.time = data["time"]
 
-		if not Music.is_playing():
-			Music.play_last_song()
+#		if not Music.is_playing():
+#			Music.play_last_song()
 
 		# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()

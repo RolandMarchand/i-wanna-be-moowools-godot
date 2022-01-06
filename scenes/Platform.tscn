@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/Platform.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprMovingPlatform_0.png" type="Texture" id=2]
@@ -12,13 +12,14 @@ extents = Vector2( 16, 7 )
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 16, 1 )
 
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 16, 0.5 )
+
 [node name="Platform" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=["platforms"]]
+position = Vector2( 0, 8 )
 collision_layer = 16
 collision_mask = 0
 motion/sync_to_physics = true
@@ -34,13 +35,11 @@ one_way_collision = true
 [node name="Trajectory" type="Node2D" parent="KinematicBody2D"]
 
 [node name="1" type="Position2D" parent="KinematicBody2D/Trajectory"]
-position = Vector2( -24, 16 )
 
 [node name="2" type="Position2D" parent="KinematicBody2D/Trajectory"]
-position = Vector2( 24, -16 )
+position = Vector2( 32, 32 )
 
 [node name="3" type="Position2D" parent="KinematicBody2D/Trajectory"]
-position = Vector2( -24, 16 )
 
 [node name="Drag" type="Area2D" parent="KinematicBody2D"]
 collision_layer = 0
@@ -56,6 +55,13 @@ collision_mask = 32
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D/Snap"]
 position = Vector2( 0, -7 )
 shape = SubResource( 6 )
+
+[node name="Push" type="Area2D" parent="KinematicBody2D"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D/Push"]
+position = Vector2( 0, -8.5 )
+shape = SubResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../KinematicBody2D")

@@ -51,7 +51,7 @@ func _ready() -> void:
 
 	pause_mode = PAUSE_MODE_PROCESS
 
-func _physics_process(_delta) -> void:
+func _process(_delta) -> void:
 	# Sets the audio quiet when window isn' focused
 	# Hacky, I know, but notifications don't work
 	if _quiet:
@@ -78,7 +78,7 @@ func play(stream: AudioStream, restart := false) -> void:
 ## Uses the play function with the last played song
 func play_last_song(restart := false):
 	if not _last_song:
-		push_error("No last long available.")
+		push_error("Music.gd: No last song available.")
 	else:
 		play(_last_song, restart)
 
@@ -87,6 +87,15 @@ func stop() -> void:
 	if _audio_player.playing:
 		_last_pos[_audio_player.stream] = _audio_player.get_playback_position()
 		_audio_player.stop()
+
+func pause() -> void:
+	_audio_player.stream_paused = true
+
+func is_paused() -> bool:
+	return _audio_player.stream_paused
+
+func resume() -> void:
+	_audio_player.stream_paused = false
 
 func get_last_song() -> AudioStream:
 	return _last_song
