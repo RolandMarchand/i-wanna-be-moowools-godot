@@ -106,6 +106,9 @@ func _physics_process(delta) -> void:
 	elif _blood_cycles < MAX_BLOOD_CYCLES:
 		_explode()
 		_blood_cycles += 1
+
+		# Can't shoot while exploding
+		set_process_unhandled_key_input(false)
 	# Can't move or shoot
 	else:
 		set_process_unhandled_key_input(false)
