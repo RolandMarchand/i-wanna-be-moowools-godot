@@ -25,26 +25,31 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Cherry logic.
 
-extends Node2D
+extends KinematicBody2D
 
-var mus_bg: AudioStream = preload("res://audio/musMegaman.mp3")
+export(bool) var fall := false
+export(Vector2) var direction := Vector2.DOWN
+export(float) var speed := 2.0
+export(float) var length := 800
 
-func _ready():
-	Save.load_settings()
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
+func _ready() -> void:
+	set_physics_process(false)
+	$Area2D/CollisionShape2D.shape.b.x = length
+	$Area2D/CollisionShape2D2.shape.b.x = length
+	$Area2D.rotate(direction.angle())
 
-func _on_Quit_pressed():
-	get_tree().quit()
+func _on_VisibilityNotifier2D_screen_exited() -> void:
+	queue_free()
 
+func _physics_process(delta) -> void:
+	# warning-ignore:return_value_discarded
+	move_and_slide(direction.clamped(1) * speed / delta)
 
-func _on_Play_pressed():
-	pass
-
-
-func _on_TitleScreen_tree_entered():
-	get_tree().set_pause(false)
-
-func _on_Kid_looped(loops: int):
-	$Main/LoopCounter.text = str(loops)
+func _on_Area2D_body_entered(_body) -> void:
+	if fall:
+		$AudioStreamPlayer.play()
+		set_physics_process(true)

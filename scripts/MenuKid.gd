@@ -29,7 +29,7 @@
 # Description:
 # The kid on the title screen.
 
-# Todo:
+# TODO:
 # 1) Add bullets to destroy spikes.
 # 2) Jump animation.
 
@@ -77,6 +77,7 @@ func _physics_process(delta) -> void:
 
 ## Loops kid back at the beginning if hit
 func _on_Hitbox_area_entered(_area) -> void:
-	# Randomizes travels
+	# Randomizes travels, because spikes fall into a static pattern
+	# after generation
 	emit_signal("hit", global_position)
 	position.x = (randi() % 128 + 64) * -1

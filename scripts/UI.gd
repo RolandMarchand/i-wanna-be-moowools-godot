@@ -31,9 +31,9 @@ extends CanvasLayer
 onready var _go: MarginContainer = $GameOver
 onready var _menu: MarginContainer = $Menu
 
-onready var _master: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer3/Master
-onready var _sound: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/Sound
-onready var _music: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer2/Music
+onready var _master: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer/Master
+onready var _sound: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer/Sound
+onready var _music: HSlider = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer/Music
 onready var _fs: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen
 onready var _change_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/Fullscreen/ChangeBG
 onready var _quiet_bg: Button = $Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer/QuietBG

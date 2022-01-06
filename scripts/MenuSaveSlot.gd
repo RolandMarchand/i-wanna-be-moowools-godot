@@ -25,13 +25,19 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Save card in the play menu.
+# Starts and loads games dynamically,
+# and displays stats and scene screenshot.
 
+tool
 extends VBoxContainer
 
 enum {START, LOAD, DIFFICULTY}
 
 var _state: int
-var _save: String
+export(String, "save1", "save2", "save3") var _save: String
 var _button_pos := 0
 
 var _revert_confirm := false
@@ -73,19 +79,19 @@ onready var DIFFICULTY_BUTTONS := [
 	_impossible_button,
 ]
 
-func _ready():
+func _ready() -> void:
 	_set_save()
 	_set_state()
 	_set_image()
 
 func _set_save() -> void:
-	match _save_label.text:
-		"save 1":
-			_save = Save.SAVE1
-		"save 2":
-			_save = Save.SAVE2
-		"save 3":
-			_save = Save.SAVE3
+	match _save:
+		Save.SAVE1:
+			_save_label.text = "Save 1"
+		Save.SAVE2:
+			_save_label.text = "Save 2"
+		Save.SAVE3:
+			_save_label.text = "Save 3"
 		_:
 			push_warning(_save_label.txt + " isn't an available save name.")
 
@@ -152,7 +158,7 @@ func _get_time(seconds: int) -> String:
 		"seconds": seconds
 		})
 
-func _on_Play_pressed():
+func _on_Play_pressed() -> void:
 	if _state == LOAD:
 		_load_game()
 	# Player chooses difficulty
@@ -182,7 +188,7 @@ func _new_game(dif: String) -> void:
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene_to(load(GameStats.START_SCENE))
 
-func _on_Next_pressed():
+func _on_Next_pressed() -> void:
 	# Next difficulty
 	if _state == DIFFICULTY:
 		DIFFICULTY_BUTTONS[_button_pos].hide()
@@ -199,7 +205,8 @@ func _on_Next_pressed():
 		_button_pos %= START_LOAD_BUTTONS.size()
 
 		START_LOAD_BUTTONS[_button_pos].show()
-func _on_Previous_pressed():
+
+func _on_Previous_pressed() -> void:
 	# Previous difficulty
 	if _state == DIFFICULTY:
 		DIFFICULTY_BUTTONS[_button_pos].hide()
@@ -217,19 +224,19 @@ func _on_Previous_pressed():
 
 		START_LOAD_BUTTONS[_button_pos].show()
 
-func _on_Medium_pressed():
+func _on_Medium_pressed() -> void:
 	_new_game(GameStats.DIFFICULTY_MEDIUM)
 
-func _on_Hard_pressed():
+func _on_Hard_pressed() -> void:
 	_new_game(GameStats.DIFFICULTY_HARD)
 
-func _on_VeryHard_pressed():
+func _on_VeryHard_pressed() -> void:
 	_new_game(GameStats.DIFFICULTY_VERY_HARD)
 
-func _on_Impossible_pressed():
+func _on_Impossible_pressed() -> void:
 	_new_game(GameStats.DIFFICULTY_IMPOSSIBLE)
 
-func _on_Revert_pressed():
+func _on_Revert_pressed() -> void:
 	if _revert_confirm:
 		if Save.revert_last_save(_save) == Save.ERASED:
 			_revert_warning.text = "Reverted into\noblivion"
@@ -242,7 +249,7 @@ func _on_Revert_pressed():
 		_revert_confirm = true
 		_revert_warning.show()
 
-func _on_Delete_pressed():
+func _on_Delete_pressed() -> void:
 	if _delete_confirm:
 		Save.delete_save(_save)
 		Screenshots.delete_all_screenshots(_save)

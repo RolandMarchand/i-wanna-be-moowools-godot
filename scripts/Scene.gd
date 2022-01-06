@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Main scene.
 
 extends Node2D
 
@@ -43,10 +46,6 @@ func _ready() -> void:
 
 	GameStats.location = location
 
-	# Placeholder
-	if GameStats.difficulty == GameStats.DIFFICULTY_MEDIUM:
-		$Spikes.queue_free()
-
 	if GameStats.difficulty == GameStats.DIFFICULTY_IMPOSSIBLE:
 		$SaveButton.queue_free()
 		$SaveButton2.queue_free()
@@ -55,14 +54,17 @@ func _ready() -> void:
 	if not Save.load_game(Save.current_save):
 		Save.save(Save.current_save, kid.global_position, kid.xscale)
 
+	# Display deaths in the title bar.
 	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
 	+ " (deaths: " + str(GameStats.deaths) + ")")
 
+	# Doesn't restart music if the player dies or if the scene is reloaded
 	if Music.get_last_song() != mus_bg:
 		Music.play(mus_bg)
 	elif Music.player.stream_paused:
 		Music.player.stream_paused = false
 
+	# Hides invisible blocks depending on debug state
 	if not get_tree().is_debugging_collisions_hint():
 		for node in get_tree().get_nodes_in_group("invisible"):
 			node.hide()
@@ -85,6 +87,7 @@ func _on_Kid_death() -> void:
 	ui.game_over()
 	Music.pause()
 
+## Temporary
 func _on_Warp_body_entered(_body) -> void:
 	get_tree().quit(0)
 

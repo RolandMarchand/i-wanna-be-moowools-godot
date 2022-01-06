@@ -1,6 +1,5 @@
-[gd_resource type="Theme" load_steps=23 format=2]
+[gd_resource type="Theme" load_steps=22 format=2]
 
-[ext_resource path="res://fonts/prstartk.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://res/button.tres" type="StyleBox" id=2]
 [ext_resource path="res://sprites/button_pressed.png" type="Texture" id=3]
 [ext_resource path="res://sprites/button_disabled.png" type="Texture" id=4]
@@ -57,7 +56,7 @@ margin_bottom = 32.0
 
 [sub_resource type="DynamicFont" id=2]
 size = 8
-font_data = ExtResource( 1 )
+font_data = ExtResource( 5 )
 
 [resource]
 Button/colors/font_color = Color( 0.156863, 0.156863, 0.156863, 1 )

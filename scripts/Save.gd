@@ -25,10 +25,11 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-
+#
 # Description:
-# Manages the settings and game saves' permanent states.
-
+# Singleton, saves the current game and settings on disk.
+# Can also load, delete and revert saves.
+#
 # Todo:
 # 1) Save screen capture with get_viewport().get_texture().get_data()
 #    to show on the main menu' save screen.

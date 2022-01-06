@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://res/Spikes.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=2]
@@ -145,6 +145,62 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 } ]
 0/z_index = 0
 
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "rotate"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -360.0 ]
+}
+
 [node name="Scene" type="Node2D"]
 script = ExtResource( 9 )
 
@@ -230,7 +286,9 @@ position = Vector2( -80, 8 )
 position = Vector2( 96, 0 )
 
 [node name="Cherry2" parent="." instance=ExtResource( 14 )]
-position = Vector2( 704, 272 )
+position = Vector2( 704, 144 )
+fall = true
+speed = 25.0
 
 [node name="Kid" parent="." groups=["kid"] instance=ExtResource( 3 )]
 position = Vector2( 396, 247 )
@@ -293,8 +351,24 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="Platform" parent="." instance=ExtResource( 6 )]
+position = Vector2( 512, 384 )
+
+[node name="KinematicBody2D" parent="Platform" index="0"]
+position = Vector2( 16, 16 )
+
+[node name="Trajectory" parent="Platform/KinematicBody2D" index="2"]
+visible = false
+
+[node name="AnimationPlayer" parent="Platform" index="1"]
+autoplay = "rotate"
+playback_speed = 2.0
+anims/RESET = SubResource( 15 )
+anims/rotate = SubResource( 14 )
+
 [connection signal="body_entered" from="Warp" to="." method="_on_Warp_body_entered"]
 [connection signal="timeout" from="Screenshot" to="." method="_on_Timer_timeout"]
 
 [editable path="Platform3"]
 [editable path="Platform4"]
+[editable path="Platform"]

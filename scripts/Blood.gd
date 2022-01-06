@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Blood droplet from the player's death.
 
 extends KinematicBody2D
 
@@ -52,15 +55,16 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	_vspeed += _grav
 
+	if _coll and randf() > 0.5:
+		_stuck = true
+
+	# Stops the droplet
 	if not _stuck:
 		# warning-ignore:return_value_discarded
 		if move_and_collide(Vector2(_hspeed, _vspeed)):
 			_stuck = true
 	else:
 		set_physics_process(false)
-
-	if _coll and randf() > 0.5:
-		_stuck = true
 
 func _set_speed() -> void:
 	var d = floor(randf() * 36) * 10
@@ -72,13 +76,11 @@ func _set_speed() -> void:
 func _set_grav() -> void:
 	_grav = 0.1 + randf() * 0.2
 
-func _on_Hitbox_body_entered(body: Node) -> void:
-	# Little hack against bug found in _on_platform in Kid.gd
-	if not body.get_parent().is_in_group("platforms"):
-		_coll = true
+func _on_Hitbox_body_entered(_body: Node) -> void:
+	_coll = true
 
-		if randf() > 0.5:
-			_stuck = true
+	if randf() > 0.5:
+		_stuck = true
 
 func _on_Hitbox_body_exited(_body) -> void:
 	_coll = false

@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Projectile shot by the kid.
 
 extends KinematicBody2D
 
@@ -34,7 +37,7 @@ const HSPEED := 16.0
 
 var dir := 1
 
-func _ready():
+func _ready() -> void:
 	scale.x *= dir
 
 func _physics_process(delta) -> void:
@@ -45,6 +48,6 @@ func _on_Hitbox_body_entered(body) -> void:
 	emit_signal("hit", body)
 	queue_free()
 
-func _on_VisibilityNotifier2D_screen_exited():
+func _on_VisibilityNotifier2D_screen_exited() -> void:
 	emit_signal("hit", null)
 	queue_free()

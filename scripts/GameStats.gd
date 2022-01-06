@@ -25,9 +25,12 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-
+#
 # Description:
-# Records stats such as deaths and time into memory.
+# Singleton, records stats such as deaths and time into memory.
+#
+# TODO:
+# Replace the timer by an OS.get_ticks_msec recording.
 
 extends Node
 

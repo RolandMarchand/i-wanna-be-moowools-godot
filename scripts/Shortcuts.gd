@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Singleton, manages shortcuts such as reset and fullscreen.
 
 extends Node
 
@@ -35,7 +38,6 @@ signal fullscreen
 func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
 
-#get_tree().current_scene.name
 func _unhandled_key_input(_event):
 	# Toggles pause
 	if Input.is_action_just_pressed("pause"):
@@ -69,16 +71,14 @@ func _unhandled_key_input(_event):
 			# warning-ignore:return_value_discarded
 			get_tree().change_scene("res://scenes/menu/Menu.tscn")
 
-## Reset the scene, restarts music, increments the death counter
+## Reset the scene, increments the death counter
+## Music is handled by the scene.
 func _reset() -> void:
 		GameStats.deaths += 1
 
 		var data = Save.load_game(Save.current_save)
 		if data:
 			GameStats.time = data["time"]
-
-#		if not Music.is_playing():
-#			Music.play_last_song()
 
 		# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()

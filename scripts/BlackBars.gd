@@ -25,6 +25,14 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Sets images as black bars on fullscreen.
+#
+# TODO:
+# Manipulate a single image to fit all resolutions instead of loading every
+# image at once.
+
 extends Node
 
 var brown_block: Dictionary = {

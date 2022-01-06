@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Control settings in the main menu.
 
 extends VBoxContainer
 
@@ -46,30 +49,31 @@ func _ready() -> void:
 	_refresh_settings()
 
 func _refresh_settings() -> void:
-	_up_key.text = get_event_string_from_action("up").to_upper()
-	_down_key.text = get_event_string_from_action("down").to_upper()
-	_left_key.text = get_event_string_from_action("left").to_upper()
-	_right_key.text = get_event_string_from_action("right").to_upper()
-	_jump_key.text = get_event_string_from_action("jump").to_upper()
-	_shoot_key.text = get_event_string_from_action("shoot").to_upper()
-	_reset_key.text = get_event_string_from_action("reset").to_upper()
-	_pause_key.text = get_event_string_from_action("pause").to_upper()
-	_skip_key.text = get_event_string_from_action("skip").to_upper()
+	_up_key.text = action2event("up").to_upper()
+	_down_key.text = action2event("down").to_upper()
+	_left_key.text = action2event("left").to_upper()
+	_right_key.text = action2event("right").to_upper()
+	_jump_key.text = action2event("jump").to_upper()
+	_shoot_key.text = action2event("shoot").to_upper()
+	_reset_key.text = action2event("reset").to_upper()
+	_pause_key.text = action2event("pause").to_upper()
+	_skip_key.text = action2event("skip").to_upper()
 
 	Save.save_settings()
 
-func get_event_string_from_action(action: String) -> String:
+## Converts InputEventAction's action into an event string
+func action2event(action: String) -> String:
 	var events: Array = InputMap.get_action_list(action)
 	var scancode = events[0].scancode
 
 	return OS.get_scancode_string(scancode)
 
-func _on_Controls_Reset_pressed():
+func _on_Controls_Reset_pressed() -> void:
 	InputMap.load_from_globals()
 
 	_refresh_settings()
 
-func _unhandled_key_input(event: InputEventKey):
+func _unhandled_key_input(event: InputEventKey) -> void:
 	var scan: int = event.scancode
 
 	if _mod_key and (scan < KEY_F1 or scan > KEY_F16) and scan != KEY_ESCAPE:
@@ -105,45 +109,45 @@ func _unhandled_key_input(event: InputEventKey):
 
 		_mod_key = null
 
-func _on_Up_pressed():
+func _on_Up_pressed() -> void:
 	_press_label.show()
 	_mod_key = _up_key
 
-func _on_Left_pressed():
+func _on_Left_pressed() -> void:
 	_press_label.show()
 	_mod_key = _left_key
 
 
-func _on_Down_pressed():
+func _on_Down_pressed() -> void:
 	_press_label.show()
 	_mod_key = _down_key
 
 
-func _on_Right_pressed():
+func _on_Right_pressed() -> void:
 	_press_label.show()
 	_mod_key = _right_key
 
 
-func _on_Jump_pressed():
+func _on_Jump_pressed() -> void:
 	_press_label.show()
 	_mod_key = _jump_key
 
 
-func _on_Shoot_pressed():
+func _on_Shoot_pressed() -> void:
 	_press_label.show()
 	_mod_key = _shoot_key
 
 
-func _on_Reset_pressed():
+func _on_Reset_pressed() -> void:
 	_press_label.show()
 	_mod_key = _reset_key
 
 
-func _on_Pause_pressed():
+func _on_Pause_pressed() -> void:
 	_press_label.show()
 	_mod_key = _pause_key
 
 
-func _on_Skip_pressed():
+func _on_Skip_pressed() -> void:
 	_press_label.show()
 	_mod_key = _skip_key

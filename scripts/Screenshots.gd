@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Singleton, takes, saves, loads and deletes screenshots.
 
 extends Node
 
@@ -46,13 +49,13 @@ func delete_all_screenshots(save: String) -> void:
 
 	config.save(SCREENSHOT_PATH)
 
-
 func has_screenshot(save: String, id: String) -> bool:
 	var config = ConfigFile.new()
 	config.load(SCREENSHOT_PATH)
 
 	return config.has_section_key(save, id)
 
+## Kind of a mess. To fix.
 func get_screenshot(save: String, id: String) -> ImageTexture:
 	var config = ConfigFile.new()
 	var err = config.load(SCREENSHOT_PATH)
@@ -81,7 +84,7 @@ func take_screenshot() -> void:
 	var capture: Image = get_viewport().get_texture().get_data()
 	var id: String = get_tree().current_scene.filename
 
-	capture.flip_y()
+	capture.flip_y() # Viewport captures are reversed
 	capture.resize(202,152, Image.INTERPOLATE_CUBIC)
 	# warning-ignore:return_value_discarded
 	capture.compress(Image.COMPRESS_PVRTC2, Image.COMPRESS_SOURCE_GENERIC, 50.0)

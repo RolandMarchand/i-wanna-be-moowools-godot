@@ -25,10 +25,12 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Controls settings in the main menu.
 
 extends Control
 
-# Main
 onready var _vsync := $MarginContainer/Main/VBoxContainer2/Vsync
 onready var _fs := $MarginContainer/Main/VBoxContainer2/Fullscreen
 onready var _main_menu := $MarginContainer/Main

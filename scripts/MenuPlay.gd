@@ -25,10 +25,11 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Play menu.
 
 extends Control
 
-
-
-func _on_Button_pressed():
+func _on_Back_pressed():
 	queue_free()

@@ -25,11 +25,12 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Explosion for when the menu kid dies.
 
 extends Node2D
 
 func _on_Kid_hit(pos: Vector2):
-	# Area's position isn't exact
-	# Guessing where explosion should happen
 	global_position = pos
 	$AnimationPlayer.play("explode")
