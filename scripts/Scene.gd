@@ -34,6 +34,8 @@ var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
 var location := "GB Room"
 var difficulty: String
 
+export(bool) var _hide_invisible := true
+
 var kid: KinematicBody2D
 
 onready var ui: CanvasLayer = $UI
@@ -62,6 +64,10 @@ func _ready() -> void:
 		Music.play(mus_bg)
 	elif Music.player.stream_paused:
 		Music.player.stream_paused = false
+
+	if _hide_invisible:
+		for node in get_tree().get_nodes_in_group("invisible"):
+			node.hide()
 
 
 func _connect_kid() -> void:
