@@ -25,6 +25,10 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Platforms.
+
 extends Node2D
 
 const BASE_SPEED := 2.0
@@ -43,13 +47,13 @@ export(float) var speed: float = BASE_SPEED
 export(bool) var _snap := true
 export(bool) var _drag := true
 
-func _ready():
+func _ready() -> void:
 	_gen_path()
 	if not $AnimationPlayer.autoplay:
 		_next_tween()
 		tween.start()
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if _drag:
 		for player in drag.get_overlapping_bodies():
 			player.djump = true
@@ -81,12 +85,12 @@ func _gen_path() -> void:
 		_path.append(point.global_position)
 
 
-func _on_Tween_tween_completed(_object, _key):
+func _on_Tween_tween_completed(_object, _key) -> void:
 	_next_tween()
 	tween.start()
 
 
-func _on_Snap_area_entered(area):
+func _on_Snap_area_entered(area) -> void:
 	if _snap:
 		var player = area.get_parent()
 		player.global_position.y = body.global_position.y - 8.5 - 8 # player and platform height

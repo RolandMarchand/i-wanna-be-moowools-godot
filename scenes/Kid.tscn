@@ -211,10 +211,11 @@ tracks/0/keys = {
 "values": [ ExtResource( 22 ), ExtResource( 21 ) ]
 }
 
-[node name="Kid" type="KinematicBody2D"]
+[node name="Kid" type="KinematicBody2D" groups=["kid"]]
 collision_mask = 18
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_horizontal_guides_": [ 9.0 ]
 }
 

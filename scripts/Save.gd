@@ -36,6 +36,12 @@
 
 extends Node
 
+# IMPORTANT! If your modified save system is incompatible with the previous
+# system, change this number. Format DayMonthYear, keep the leading zeros
+# Not doing so will result in not reading the s
+# Is used in _verify_version
+const SAVE_VERSION := "070102022"
+
 const ERASED = 1
 
 const SAVE_PATH := "user://saves.cfg"
@@ -61,6 +67,36 @@ var tmp_save := {}
 
 func _ready():
 	load_settings()
+	#_verify_version()
+
+# Unfinished
+func _verify_version():
+	var dir: Directory =  Directory.new()
+	dir.open("user://")
+
+	# Gets the previous version of the save system
+	var file: File = File.new()
+	var prev_ver: String
+	if file.open("user://save_version.txt", File.READ) == OK:
+		prev_ver = file.get_as_text()
+	else:
+		prev_ver = "null"
+
+	var cur_ver: String = _get_version()
+
+	if cur_ver != prev_ver:
+		dir.make_dir_recursive("old/" + prev_ver)
+		#for f in ["saves.cfg", "screenshots.cfg", "settings.cfg"]
+		if dir.copy("saves.cfg", "old/saves.cfg"):
+			dir.remove("saves.cfg")
+		else:
+			push_error("Save.gd: Unable to backup saves.cfg.")
+		dir.remove("user://saves.cfg")
+		dir.remove("user://screenshots.cfg")
+		dir.remove("user://settings.cfg")
+
+func _get_version() -> String:
+	return File.new().get_sha256(get_script().get_path())
 
 ## Writes the settings on disk
 func save_settings() -> void:
@@ -97,6 +133,7 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 			"difficulty": GameStats.difficulty,
 			"location": GameStats.location,
 			"scene": GameStats.scene,
+			"state": GameStats.state
 		}
 		return
 
@@ -113,6 +150,7 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 		config.set_value(save, "difficulty", [GameStats.difficulty])
 		config.set_value(save, "location", [GameStats.location])
 		config.set_value(save, "scene", [GameStats.scene])
+		config.set_value(save, "state", [GameStats.scene])
 	else:
 		var prev_val: Array = []
 
@@ -159,10 +197,17 @@ func save(save: String, position: Vector2, xscale: int = 1) -> void:
 			prev_val.pop_front()
 		config.set_value(save, "scene", prev_val)
 
+		prev_val = config.get_value(save, "state")
+		prev_val.append(GameStats.state)
+		while prev_val.size() > MAX_SAVES:
+			prev_val.pop_front()
+		config.set_value(save, "state", prev_val)
+
 	# warning-ignore:return_value_discarded
 	config.save(SAVE_PATH)
 
-## Loads the save's propriety to disk
+## Loads the save's propriety to disk.
+## Takes a save constant.
 func load_game(save: String) -> Dictionary:
 	if not _verify_save(save):
 		return {}
@@ -183,6 +228,7 @@ func load_game(save: String) -> Dictionary:
 			"difficulty": config.get_value(save, "difficulty")[-1],
 			"location": config.get_value(save, "location")[-1],
 			"scene": config.get_value(save, "scene")[-1],
+			"state": config.get_value(save, "state")[-1],
 			}
 	else:
 		return {}
@@ -200,6 +246,9 @@ func delete_save(save: String):
 	# warning-ignore:return_value_discarded
 	config.save(SAVE_PATH)
 
+## Sets the current save and loads saved data into memory.
+## If no save has been dedicated, sets default data.
+## Feel free to override the default data.
 func set_active_save(save: String) -> void:
 	if not _verify_save(save):
 		return
@@ -208,14 +257,12 @@ func set_active_save(save: String) -> void:
 
 	var data: Dictionary = load_game(save)
 
-	if data:
-		GameStats.deaths = data["deaths"]
-		GameStats.time = data["time"]
-		GameStats.difficulty = data["difficulty"]
-		GameStats.location = data["location"]
-		GameStats.scene = data["scene"]
-	else:
-		GameStats.time = 0
+	GameStats.deaths = data.get("deaths", 0)
+	GameStats.time = data.get("time", 0)
+	GameStats.difficulty = data.get("deaths", GameStats.DIFFICULTY_HARD)
+	GameStats.location = data.get("location", "Unknown")
+	GameStats.scene = data.get("scene", GameStats.START_SCENE)
+	GameStats.state = data.get("state", {})
 
 func revert_last_save(save: String) -> int:
 	if not _verify_save(save):
@@ -225,7 +272,7 @@ func revert_last_save(save: String) -> int:
 	# warning-ignore:return_value_discarded
 	config.load(SAVE_PATH)
 
-	for el in ["deaths", "position", "xscale", "time", "difficulty", "location", "scene"]:
+	for el in ["deaths", "position", "xscale", "time", "difficulty", "location", "scene", "state"]:
 		var values: Array = config.get_value(save, el)
 		if values:
 			values.pop_back()

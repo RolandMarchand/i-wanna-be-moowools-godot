@@ -104,9 +104,9 @@ func _set_image() -> void:
 		_capture.texture = null
 		return
 
-	if data:
-		_filename = data["scene"]
-	else:
+	_filename = data.get("scene")
+
+	if not _filename:
 		return
 
 	img = Screenshots.get_screenshot(_save, _filename)
@@ -115,15 +115,15 @@ func _set_image() -> void:
 
 
 func _set_state() -> void:
-	var data = Save.load_game(_save)
+	var data: Dictionary = Save.load_game(_save)
+
+	_deaths_label.text = str(data.get("deaths", "N/A"))
+	_time_label.text = _get_time(data.get("time", -1))
+	_difficulty_label.text = data.get("difficulty", "N/A")
+	_location_label.text = data.get("location", "N/A")
 
 	if data:
 		_state = LOAD
-
-		_deaths_label.text = str(data["deaths"])
-		_time_label.text = _get_time(data["time"])
-		_difficulty_label.text = data["difficulty"]
-		_location_label.text = data["location"]
 
 		_hide_all_buttons()
 		_play_button.show()
@@ -132,15 +132,13 @@ func _set_state() -> void:
 	else:
 		_state = START
 
-		_deaths_label.text = "N/A"
-		_time_label.text = "N/A"
-		_difficulty_label.text = "N/A"
-		_location_label.text = "N/A"
-
 		_hide_all_buttons()
 		_play_button.show()
 
 func _get_time(seconds: int) -> String:
+	if seconds < 0:
+		return "N/A"
+
 	var minutes := 0
 	var hours := 0
 
@@ -184,7 +182,6 @@ func _load_game() -> void:
 func _new_game(dif: String) -> void:
 		Save.set_active_save(_save)
 		GameStats.set_difficulty(dif)
-		GameStats.scene = GameStats.START_SCENE
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene_to(load(GameStats.START_SCENE))
 

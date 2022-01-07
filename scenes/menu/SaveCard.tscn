@@ -38,7 +38,7 @@ _save = "save1"
 [node name="Save" type="Label" parent="."]
 margin_right = 800.0
 margin_bottom = 14.0
-text = "save 1"
+text = "Save 1"
 align = 1
 valign = 1
 uppercase = true

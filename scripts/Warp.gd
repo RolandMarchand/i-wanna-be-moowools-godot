@@ -27,61 +27,20 @@
 # SUCH DAMAGE.
 #
 # Description:
-# Singleton, manages shortcuts such as reset and fullscreen.
+# Warp logic.
 
-extends Node
+extends Area2D
 
-signal reset
-signal paused
-signal fullscreen
+export(String, FILE, "*.tscn") var next_scene: String
 
-func _ready():
-	pause_mode = PAUSE_MODE_PROCESS
+func _on_Warp_body_entered(body: Node2D) -> void:
+	assert(next_scene, "Warp.gd: next_scene is not set.")
 
-func _unhandled_key_input(_event):
-	# Toggles pause
-	if Input.is_action_just_pressed("pause"):
-		if get_tree().current_scene.name != "Menu":
-			var pause := not get_tree().is_paused()
-
-			get_tree().set_pause(pause)
-			emit_signal("paused", pause)
-
-	if Input.is_action_just_pressed("reset"):
-		if not get_tree().is_paused()\
-			and get_tree().current_scene.name != "Menu":
-			_reset()
-
-	if Input.is_action_just_pressed("quit"):
-		get_tree().quit(0)
-
-	if Input.is_action_just_pressed("fullscreen"):
-		OS.set_window_fullscreen(not OS.is_window_fullscreen())
-		ProjectSettings.set_setting("display/window/size/width", 800)
-		ProjectSettings.set_setting("display/window/size/height", 608)
-		emit_signal("fullscreen")
-
-	# Implement boss skip
-	if Input.is_action_just_pressed("skip"):
-		pass
-
-	# Implement going back to title screen
-	if Input.is_action_just_pressed("title_screen"):
-		if get_tree().current_scene.name != "Menu":
-			# warning-ignore:return_value_discarded
-			get_tree().change_scene("res://scenes/menu/Menu.tscn")
-
-## Reset the scene, increments the death counter
-## Music is handled by the scene.
-func _reset() -> void:
-		GameStats.deaths += 1
-
-		var data = Save.load_game(Save.current_save)
-
-		GameStats.time = data.get("time", GameStats.time)
-
+	if body.is_in_group("kid"):
 		# warning-ignore:return_value_discarded
-		get_tree().change_scene(data["scene"])
-		get_tree().set_pause(false)
-
-		emit_signal("reset")
+		get_tree().change_scene(next_scene)
+	else:
+		push_warning(
+			"Warp.gd: Node affecting the kid layer entered the warp."
+			+ " Not changing scene."
+		)

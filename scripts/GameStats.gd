@@ -39,7 +39,7 @@ const DIFFICULTY_HARD := "hard"
 const DIFFICULTY_VERY_HARD := "very hard"
 const DIFFICULTY_IMPOSSIBLE := "impossible"
 
-const START_SCENE := "res://scenes/Scene.tscn"
+const START_SCENE := "res://scenes/screens/ExampleScene.tscn"
 
 var _timer := Timer.new()
 
@@ -48,6 +48,10 @@ var time: int = 0 # Seconds since new game
 var difficulty: String setget set_difficulty
 var location: String
 var scene: String
+# Records the state of the scene, like if a trap has been enabled or not.
+# Key: Could be anything, script's filename recommended
+# Value: Whatever value you want stored
+var state := {}
 
 func _ready() -> void:
 	_setup_timer()

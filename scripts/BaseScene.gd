@@ -27,14 +27,13 @@
 # SUCH DAMAGE.
 #
 # Description:
-# Main scene.
+# Base scene.
 
 extends Node2D
 
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
-var mus_bg: AudioStream = preload("res://audio/musGuyRock.mp3")
+export(AudioStream) var background_music: AudioStream = preload("res://audio/musGuyRock.mp3")
 
-var location := "GB Room"
+export(String) var location_name := ""
 var difficulty: String
 
 var kid: KinematicBody2D
@@ -44,23 +43,23 @@ onready var ui: CanvasLayer = $UI
 func _ready() -> void:
 	_connect_kid()
 
-	GameStats.location = location
-
-	if GameStats.difficulty == GameStats.DIFFICULTY_IMPOSSIBLE:
-		$SaveButton.queue_free()
-		$SaveButton2.queue_free()
+	GameStats.location = location_name
+	GameStats.scene = filename
 
 	# Saves when spawning and there are no saves yet
 	if not Save.load_game(Save.current_save):
 		Save.save(Save.current_save, kid.global_position, kid.xscale)
+		GameStats.state.clear()
+	else:
+		GameStats.state = Save.load_game(Save.current_save).get("state", {})
 
 	# Display deaths in the title bar.
 	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
 	+ " (deaths: " + str(GameStats.deaths) + ")")
 
 	# Doesn't restart music if the player dies or if the scene is reloaded
-	if Music.get_last_song() != mus_bg:
-		Music.play(mus_bg)
+	if Music.get_last_song() != background_music:
+		Music.play(background_music)
 	elif Music.player.stream_paused:
 		Music.player.stream_paused = false
 
@@ -71,6 +70,7 @@ func _ready() -> void:
 
 
 func _connect_kid() -> void:
+	assert(get_tree().get_nodes_in_group("kid"), "BaseScene.gd: No kid has been instanced.")
 	kid = get_tree().get_nodes_in_group("kid")[0]
 
 	# warning-ignore:return_value_discarded
@@ -79,17 +79,12 @@ func _connect_kid() -> void:
 	# Load save
 	var save: Dictionary = Save.load_game(Save.current_save)
 
-	if save:
-		kid.global_position = save["position"]
-		kid.xscale = save["xscale"]
+	kid.global_position = save.get("position", kid.global_position)
+	kid.xscale = save.get("position", kid.xscale)
 
 func _on_Kid_death() -> void:
 	ui.game_over()
 	Music.pause()
-
-## Temporary
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
 
 ## Takes a screenshot of the stage.
 ## Taking a screenshot inside of the _ready function causes a bug
