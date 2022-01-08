@@ -72,4 +72,4 @@ margin_right = 788.0
 margin_bottom = 544.0
 _save = "save3"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Back" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Back" to="." method="_on_Back_pressed"]

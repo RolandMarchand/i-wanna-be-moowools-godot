@@ -29,10 +29,6 @@
 # Description:
 # Singleton, saves the current game and settings on disk.
 # Can also load, delete and revert saves.
-#
-# Todo:
-# 1) Save screen capture with get_viewport().get_texture().get_data()
-#    to show on the main menu' save screen.
 
 extends Node
 
