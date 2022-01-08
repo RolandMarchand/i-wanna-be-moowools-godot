@@ -58,7 +58,8 @@ func _ready() -> void:
 func _physics_process(delta) -> void:
 	if _drag:
 		for player in drag.get_overlapping_bodies():
-			player.djump = true
+			if Input.is_action_just_pressed("jump"):
+				player.djump = true
 			player.move_and_slide(velocity / delta)
 
 func _next_tween() -> void:
@@ -85,6 +86,7 @@ func _gen_path() -> void:
 
 	for point in trajectory.get_children():
 		_path.append(point.global_position)
+		_path.append(_path[0])
 
 
 func _on_Tween_tween_completed(_object, _key) -> void:

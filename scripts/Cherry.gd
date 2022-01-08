@@ -43,7 +43,8 @@ func _ready() -> void:
 	$Area2D.rotate(direction.angle())
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:
-	queue_free()
+	if $VisibilityNotifier2D.is_on_screen() and not $AudioStreamPlayer.playing:
+		queue_free()
 
 func _physics_process(delta) -> void:
 	# warning-ignore:return_value_discarded
@@ -53,3 +54,7 @@ func _on_Area2D_body_entered(_body) -> void:
 	if fall:
 		$AudioStreamPlayer.play()
 		set_physics_process(true)
+
+func _on_AudioStreamPlayer_finished():
+	if $VisibilityNotifier2D.is_on_screen() and not $AudioStreamPlayer.playing:
+		queue_free()

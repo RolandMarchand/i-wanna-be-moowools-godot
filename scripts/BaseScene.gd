@@ -48,7 +48,7 @@ func _ready() -> void:
 
 	# Saves when spawning and there are no saves yet
 	if not Save.load_game(Save.current_save):
-		Save.save(Save.current_save, kid.global_position, kid.xscale)
+		Save.save(Save.current_save)
 		GameStats.state.clear()
 	else:
 		GameStats.state = Save.load_game(Save.current_save).get("state", {})

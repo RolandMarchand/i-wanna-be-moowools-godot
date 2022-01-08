@@ -32,15 +32,11 @@
 extends Area2D
 
 onready var anim_player: AnimationPlayer = $AnimationPlayer
-export(bool) var _allow_save_if_dead := false
 
 func _on_SaveButton_body_entered(_body) -> void:
 	anim_player.play("saved")
 
 	var kid: KinematicBody2D = get_tree().get_nodes_in_group("kid")[0]
 
-	if kid.dead:
-		if _allow_save_if_dead:
-			Save.save(Save.current_save, self.global_position, kid.xscale)
-	else:
-		Save.save(Save.current_save, kid.global_position, kid.xscale)
+	if not kid.dead:
+		Save.save(Save.current_save)

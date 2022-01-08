@@ -41,7 +41,7 @@ const WALL_JUMP := 9.0
 const JUMP_DEACCEL := 0.45
 const GRAVITY := 0.4
 const MAX_FALL_SPEED := 9.4
-const MAX_BULLET := 3
+const MAX_BULLET := 4
 
 const BLOOD_CNT := 40
 const MAX_BLOOD_CYCLES := 20
@@ -81,7 +81,7 @@ func _ready() -> void:
 
 func _unhandled_key_input(_event) -> void:
 	if Input.is_action_just_pressed("shoot") and _bullet_array.size() < MAX_BULLET:
-		_shoot()
+			_shoot()
 
 func _physics_process(delta) -> void:
 	if not dead:
@@ -245,12 +245,12 @@ func _shoot() -> void:
 	bullet.global_position = self.global_position
 
 	_bullet_array.append(bullet)
-	bullet.connect("hit", self, "_remove_bullet")
+	bullet.connect("hit", self, "_remove_bullet", [bullet])
 
 	_snd_shoot.play()
 
-func _remove_bullet(_body) -> void:
-	_bullet_array.pop_front()
+func _remove_bullet(_body, bullet: KinematicBody2D) -> void:
+	_bullet_array.erase(bullet)
 
 func _death() -> void:
 	#Shortcuts._reset()

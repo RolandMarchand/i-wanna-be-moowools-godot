@@ -40,8 +40,5 @@ func _on_Area2D_body_entered(_body):
 	if not GameStats.state.get(filename):
 		$AnimationPlayer.play("fall")
 		$Area2D/CollisionShape2D.set_deferred("disabled", true)
-		
-		var kid: KinematicBody2D = get_tree().get_nodes_in_group("kid")[0]
-		Save.save(Save.current_save, kid.global_position, kid.xscale)
 
 	GameStats.state[filename] = true

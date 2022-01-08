@@ -67,30 +67,30 @@ func _ready():
 	#_verify_version()
 
 # Unfinished
-func _verify_version():
-	var dir: Directory =  Directory.new()
-	dir.open("user://")
-
-	# Gets the previous version of the save system
-	var file: File = File.new()
-	var prev_ver: String
-	if file.open("user://save_version.txt", File.READ) == OK:
-		prev_ver = file.get_as_text()
-	else:
-		prev_ver = "null"
-
-	var cur_ver: String = _get_version()
-
-	if cur_ver != prev_ver:
-		dir.make_dir_recursive("old/" + prev_ver)
-		#for f in ["saves.cfg", "screenshots.cfg", "settings.cfg"]
-		if dir.copy("saves.cfg", "old/saves.cfg"):
-			dir.remove("saves.cfg")
-		else:
-			push_error("Save.gd: Unable to backup saves.cfg.")
-		dir.remove("user://saves.cfg")
-		dir.remove("user://screenshots.cfg")
-		dir.remove("user://settings.cfg")
+#func _verify_version():
+#	var dir: Directory =  Directory.new()
+#	dir.open("user://")
+#
+#	# Gets the previous version of the save system
+#	var file: File = File.new()
+#	var prev_ver: String
+#	if file.open("user://save_version.txt", File.READ) == OK:
+#		prev_ver = file.get_as_text()
+#	else:
+#		prev_ver = "null"
+#
+#	var cur_ver: String = _get_version()
+#
+#	if cur_ver != prev_ver:
+#		dir.make_dir_recursive("old/" + prev_ver)
+#		#for f in ["saves.cfg", "screenshots.cfg", "settings.cfg"]
+#		if dir.copy("saves.cfg", "old/saves.cfg"):
+#			dir.remove("saves.cfg")
+#		else:
+#			push_error("Save.gd: Unable to backup saves.cfg.")
+#		dir.remove("user://saves.cfg")
+#		dir.remove("user://screenshots.cfg")
+#		dir.remove("user://settings.cfg")
 
 func _get_version() -> String:
 	return File.new().get_sha256(get_script().get_path())
@@ -117,9 +117,15 @@ func save_settings() -> void:
 
 ## Writes the save's proprieties to disk.
 ## The saved values are written as arrays, to preserve save history.
-func save(save: String, position: Vector2, xscale: int = 1) -> void:
+func save(save: String) -> void:
 	if not _verify_save(save):
 		return
+
+	var position := Vector2()
+	var xscale := 1
+	for kid in get_tree().get_nodes_in_group("kid"):
+		position = kid.position
+		xscale = kid.xscale
 
 	if save == "tmp":
 		tmp_save = {

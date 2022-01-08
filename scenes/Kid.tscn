@@ -36,7 +36,7 @@ extents = Vector2( 3.25, 10.5 )
 extents = Vector2( 5.5, 0.2 )
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 5.5, 0.25 )
+extents = Vector2( 5.5, 1 )
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -232,8 +232,6 @@ texture = ExtResource( 19 )
 position = Vector2( 0, -2 )
 shape = SubResource( 1 )
 
-[node name="Bullets" type="Node2D" parent="."]
-
 [node name="LVines" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
@@ -275,12 +273,11 @@ position = Vector2( 0, 10.7 )
 shape = SubResource( 8 )
 
 [node name="PlatformSnap" type="Area2D" parent="."]
-visible = false
 collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformSnap"]
-position = Vector2( 0, 8.25 )
+position = Vector2( 0, 7.5 )
 shape = SubResource( 9 )
 
 [node name="Water" type="Area2D" parent="."]
