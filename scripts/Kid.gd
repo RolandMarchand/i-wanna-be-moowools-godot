@@ -83,8 +83,13 @@ func _unhandled_key_input(_event) -> void:
 #	if Input.is_action_pressed("shoot"):
 #		yield($Timer, "timeout")
 #		_shoot()
-	if Input.is_action_just_pressed("shoot") and _bullet_array.size() < MAX_BULLET:
+	if Input.is_action_just_pressed("shoot"):
+		$AutoFireTimer.start()
+		if _bullet_array.size() < MAX_BULLET:
 			_shoot()
+	
+	if Input.is_action_just_released("shoot"):
+		$AutoFireTimer.stop()
 
 func _physics_process(delta) -> void:
 	if not dead:
@@ -110,7 +115,8 @@ func _physics_process(delta) -> void:
 		
 		if get_tree().get_frame() % 10 == 0\
 				and Input.is_action_pressed("shoot")\
-				and _bullet_array.size() < MAX_BULLET:
+				and _bullet_array.size() < MAX_BULLET\
+				and $AutoFireTimer.is_stopped():
 			_shoot()
 
 	# Blood

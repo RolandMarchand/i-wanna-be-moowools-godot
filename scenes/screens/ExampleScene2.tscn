@@ -292,6 +292,7 @@ tracks/2/keys = {
 
 [node name="ExampleScene2" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+location_name = "Example Scene 2"
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="0"]
 color = Color( 0.839216, 0.792157, 0.745098, 1 )

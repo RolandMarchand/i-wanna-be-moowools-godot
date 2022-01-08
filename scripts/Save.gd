@@ -153,7 +153,7 @@ func save(save: String) -> void:
 		config.set_value(save, "difficulty", [GameStats.difficulty])
 		config.set_value(save, "location", [GameStats.location])
 		config.set_value(save, "scene", [GameStats.scene])
-		config.set_value(save, "state", [GameStats.scene])
+		config.set_value(save, "state", [GameStats.state])
 	else:
 		var prev_val: Array = []
 

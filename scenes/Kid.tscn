@@ -335,4 +335,8 @@ bus = "Music"
 stream = ExtResource( 20 )
 bus = "Sound"
 
+[node name="AutoFireTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="body_entered" from="Hazards" to="." method="_on_Hazards_body_entered"]

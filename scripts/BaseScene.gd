@@ -34,7 +34,6 @@ extends Node2D
 export(AudioStream) var background_music: AudioStream = preload("res://audio/musGuyRock.mp3")
 
 export(String) var location_name := ""
-var difficulty: String
 
 var kid: KinematicBody2D
 
@@ -45,13 +44,18 @@ func _ready() -> void:
 
 	GameStats.location = location_name
 	GameStats.scene = filename
+	
+	if GameStats.difficulty == GameStats.DIFFICULTY_IMPOSSIBLE:
+		for button in get_tree().get_nodes_in_group("save buttons"):
+			button.queue_free()
 
 	# Saves when spawning and there are no saves yet
 	if not Save.load_game(Save.current_save):
 		Save.save(Save.current_save)
-		GameStats.state.clear()
-	else:
-		GameStats.state = Save.load_game(Save.current_save).get("state", {})
+		# Not sure about those next 3 lines
+#		GameStats.state.clear()
+#	else:
+#		GameStats.state = Save.load_game(Save.current_save).get("state", {})
 
 	# Display deaths in the title bar.
 	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
