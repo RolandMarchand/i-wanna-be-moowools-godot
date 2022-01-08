@@ -28,7 +28,7 @@ tile_data = PoolIntArray( 0, 0, 65537, 1, 0, 65537, 2, 0, 65537, 3, 0, 65537, 4,
 [node name="SaveButton" parent="Entities" index="0" instance=ExtResource( 3 )]
 position = Vector2( 464, 528 )
 
-[node name="Kid2" parent="Kid" index="0" instance=ExtResource( 4 )]
+[node name="Kid" parent="Kid" index="0" instance=ExtResource( 4 )]
 position = Vector2( 272, 560 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
