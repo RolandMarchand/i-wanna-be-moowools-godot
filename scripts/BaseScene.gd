@@ -79,8 +79,9 @@ func _connect_kid() -> void:
 	# Load save
 	var save: Dictionary = Save.load_game(Save.current_save)
 
-	kid.global_position = save.get("position", kid.global_position)
-	kid.xscale = save.get("position", kid.xscale)
+	if save.get("scene", "") == filename:
+		kid.global_position = save.get("position", kid.global_position)
+		kid.xscale = save.get("xscale", kid.xscale)
 
 func _on_Kid_death() -> void:
 	ui.game_over()

@@ -43,15 +43,17 @@ onready var push := $KinematicBody2D/Push
 onready var trajectory := $KinematicBody2D/Trajectory
 onready var tween := $Tween
 
+export(bool) var moving := true
 export(float) var speed: float = BASE_SPEED
 export(bool) var _snap := true
 export(bool) var _drag := true
 
 func _ready() -> void:
 	_gen_path()
-	if not $AnimationPlayer.autoplay:
-		_next_tween()
-		tween.start()
+	if moving:
+		if not $AnimationPlayer.autoplay:
+			_next_tween()
+			tween.start()
 
 func _physics_process(delta) -> void:
 	if _drag:

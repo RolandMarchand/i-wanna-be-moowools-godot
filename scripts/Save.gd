@@ -61,6 +61,7 @@ const SAVE3 := "save3"
 const MAX_SAVES := INF
 
 var active_save: String setget set_active_save
+# Set to permanent save in title screen
 var current_save: String = "tmp"
 
 var tmp_save := {}
@@ -259,7 +260,7 @@ func set_active_save(save: String) -> void:
 
 	GameStats.deaths = data.get("deaths", 0)
 	GameStats.time = data.get("time", 0)
-	GameStats.difficulty = data.get("deaths", GameStats.DIFFICULTY_HARD)
+	GameStats.difficulty = data.get("difficulty", GameStats.DIFFICULTY_HARD)
 	GameStats.location = data.get("location", "Unknown")
 	GameStats.scene = data.get("scene", GameStats.START_SCENE)
 	GameStats.state = data.get("state", {})
