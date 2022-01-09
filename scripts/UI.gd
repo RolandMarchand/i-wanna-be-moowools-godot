@@ -164,3 +164,8 @@ func _on_Default_pressed() -> void:
 	Save.default_settings()
 
 	_refresh_settings()
+
+
+func _on_Menu_visibility_changed():
+	if $Menu.visible:
+		$Menu/MenuSound.play()

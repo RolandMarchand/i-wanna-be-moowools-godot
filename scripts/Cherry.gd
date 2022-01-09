@@ -36,6 +36,8 @@ export(Vector2) var direction := Vector2.DOWN
 export(float) var speed := 2.0
 export(float) var length := 800
 
+var fallen := false
+
 func _ready() -> void:
 	set_physics_process(false)
 	$Area2D/CollisionShape2D.shape.b.x = length
@@ -51,9 +53,10 @@ func _physics_process(delta) -> void:
 	move_and_slide(direction.clamped(1) * speed / delta)
 
 func _on_Area2D_body_entered(_body) -> void:
-	if fall:
+	if fall and not fallen:
 		$AudioStreamPlayer.play()
 		set_physics_process(true)
+		fallen = true
 
 func _on_AudioStreamPlayer_finished():
 	if $VisibilityNotifier2D.is_on_screen() and not $AudioStreamPlayer.playing:

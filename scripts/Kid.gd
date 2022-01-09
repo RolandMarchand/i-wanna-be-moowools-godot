@@ -87,7 +87,7 @@ func _unhandled_key_input(_event) -> void:
 		$AutoFireTimer.start()
 		if _bullet_array.size() < MAX_BULLET:
 			_shoot()
-	
+
 	if Input.is_action_just_released("shoot"):
 		$AutoFireTimer.stop()
 
@@ -112,7 +112,7 @@ func _physics_process(delta) -> void:
 
 		# Animation
 		_anim_player.play(_anim)
-		
+
 		if get_tree().get_frame() % 10 == 0\
 				and Input.is_action_pressed("shoot")\
 				and _bullet_array.size() < MAX_BULLET\

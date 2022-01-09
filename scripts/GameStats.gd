@@ -45,7 +45,7 @@ var _timer := Timer.new()
 
 var deaths: int = 0
 var time: int = 0 # Seconds since new game
-var difficulty: String setget set_difficulty
+var difficulty: String = DIFFICULTY_MEDIUM setget set_difficulty
 var location: String
 var scene: String
 # Records the state of the scene, like if a trap has been enabled or not.

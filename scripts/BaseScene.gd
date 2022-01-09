@@ -44,33 +44,15 @@ func _ready() -> void:
 
 	GameStats.location = location_name
 	GameStats.scene = filename
-	
-	if GameStats.difficulty == GameStats.DIFFICULTY_IMPOSSIBLE:
-		for button in get_tree().get_nodes_in_group("save buttons"):
-			button.queue_free()
 
 	# Saves when spawning and there are no saves yet
 	if not Save.load_game(Save.current_save):
 		Save.save(Save.current_save)
-		# Not sure about those next 3 lines
-#		GameStats.state.clear()
-#	else:
-#		GameStats.state = Save.load_game(Save.current_save).get("state", {})
 
-	# Display deaths in the title bar.
-	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
-	+ " (deaths: " + str(GameStats.deaths) + ")")
-
-	# Doesn't restart music if the player dies or if the scene is reloaded
-	if Music.get_last_song() != background_music:
-		Music.play(background_music)
-	elif Music.player.stream_paused:
-		Music.player.stream_paused = false
-
-	# Hides invisible blocks depending on debug state
-	if not get_tree().is_debugging_collisions_hint():
-		for node in get_tree().get_nodes_in_group("invisible"):
-			node.hide()
+	_set_difficulty()
+	_set_title_bar()
+	_play_music()
+	_hide_invisible()
 
 
 func _connect_kid() -> void:
@@ -90,6 +72,29 @@ func _connect_kid() -> void:
 func _on_Kid_death() -> void:
 	ui.game_over()
 	Music.pause()
+
+func _set_difficulty() -> void:
+	for node in get_tree().get_nodes_in_group("difficulty"):
+		if not node.is_in_group(GameStats.difficulty):
+			node.queue_free()
+
+# Hides invisible blocks depending on debug state
+func _hide_invisible() -> void:
+	if not get_tree().is_debugging_collisions_hint():
+		for node in get_tree().get_nodes_in_group("invisible"):
+			node.hide()
+
+## Displays deaths in the title bar.
+func _set_title_bar() -> void:
+	OS.set_window_title(ProjectSettings.get_setting("application/config/name")
+	+ " (deaths: " + str(GameStats.deaths) + ")")
+
+# Doesn't restart music if the player dies or if the scene is reloaded
+func _play_music() -> void:
+	if Music.get_last_song() != background_music:
+		Music.play(background_music)
+	elif Music.player.stream_paused:
+		Music.player.stream_paused = false
 
 ## Takes a screenshot of the stage.
 ## Taking a screenshot inside of the _ready function causes a bug

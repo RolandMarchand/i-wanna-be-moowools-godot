@@ -78,7 +78,7 @@ func _reset() -> void:
 
 		var data = Save.load_game(Save.current_save)
 
-		GameStats.time = data.get("time", GameStats.time)
+		#GameStats.time = data.get("time", GameStats.time)
 
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene(data["scene"])
