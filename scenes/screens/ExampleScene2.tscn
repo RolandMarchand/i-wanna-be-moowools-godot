@@ -361,6 +361,7 @@ anims/fall = SubResource( 3 )
 [node name="Cherry" parent="Entities" index="1" instance=ExtResource( 8 )]
 position = Vector2( 48, 336 )
 fall = true
+_dir = Vector2( 0, 1 )
 speed = 20.0
 
 [node name="Trap2" type="Node2D" parent="Entities" index="2"]
@@ -368,10 +369,12 @@ script = ExtResource( 9 )
 
 [node name="Cherry" parent="Entities/Trap2" index="0" instance=ExtResource( 8 )]
 position = Vector2( 176, 304 )
+_dir = Vector2( 0, 1 )
 speed = 35.0
 
 [node name="Cherry2" parent="Entities/Trap2" index="1" instance=ExtResource( 8 )]
 position = Vector2( 112, 336 )
+_dir = Vector2( 0, 1 )
 speed = 35.0
 
 [node name="Area2D" type="Area2D" parent="Entities/Trap2" index="2"]

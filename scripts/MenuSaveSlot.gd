@@ -177,13 +177,13 @@ func _hide_all_buttons() -> void:
 func _load_game() -> void:
 	# warning-ignore:return_value_discarded
 	Save.set_active_save(_save)
-	get_tree().change_scene_to(load(GameStats.scene))
+	get_tree().change_scene(GameStats.scene)
 
 func _new_game(dif: String) -> void:
 		Save.set_active_save(_save)
 		GameStats.set_difficulty(dif)
 		# warning-ignore:return_value_discarded
-		get_tree().change_scene_to(load(GameStats.START_SCENE))
+		get_tree().change_scene(GameStats.START_SCENE)
 
 func _on_Next_pressed() -> void:
 	# Next difficulty
