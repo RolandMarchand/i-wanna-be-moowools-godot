@@ -107,7 +107,6 @@ func save_settings() -> void:
 	config.set_value("settings", "quiet_bg", Music.is_quiet())
 
 	config.set_value("volume", "master", AudioServer.get_bus_volume_db(0))
-	print_debug(AudioServer.get_bus_volume_db(0))
 	config.set_value("volume", "sound", AudioServer.get_bus_volume_db(1))
 	config.set_value("volume", "music", AudioServer.get_bus_volume_db(2))
 
