@@ -88,6 +88,8 @@ func _ready():
 	next_bg_img()
 
 func next_bg_img() -> void:
+	if OS.get_name() == "HTML5":
+		return
 	# Increment pos of the array
 	_img_pos = (_img_pos + 1) % _img_array.size()
 	var pattern = _img_array[_img_pos]

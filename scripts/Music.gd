@@ -91,8 +91,8 @@ func stop() -> void:
 		_last_pos[player.stream] = player.get_playback_position()
 		player.stop()
 
-func pause() -> void:
-	player.stream_paused = true
+func pause(p := true) -> void:
+	player.stream_paused = p
 
 func is_paused() -> bool:
 	return player.stream_paused

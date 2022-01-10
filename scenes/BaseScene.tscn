@@ -283,11 +283,16 @@ __meta__ = {
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
 [node name="Screenshot" type="Timer" parent="."]
-wait_time = 0.05
+wait_time = 0.5
 one_shot = true
 autostart = true
 __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="GameOverTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
 [connection signal="timeout" from="Screenshot" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]

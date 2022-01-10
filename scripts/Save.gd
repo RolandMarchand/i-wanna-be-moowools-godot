@@ -52,13 +52,14 @@ const DEFAULT_QUIET_BG := true
 const SAVE1 := "save1"
 const SAVE2 := "save2"
 const SAVE3 := "save3"
+const TMP := "tmp"
 
 # Keeps the record of this amount of saves
 const MAX_SAVES := INF
 
 var active_save: String setget set_active_save
 # Set to permanent save in title screen
-var current_save: String = "tmp"
+var current_save: String = TMP
 
 var tmp_save := {}
 
@@ -248,6 +249,17 @@ func delete_save(save: String):
 
 	# warning-ignore:return_value_discarded
 	config.save(SAVE_PATH)
+
+	# Deletes save file if empty
+	var file := File.new()
+
+	if file.open(SAVE_PATH, File.READ) != OK:
+		return
+
+	if file.get_len() == 0:
+		var dir := Directory.new()
+		# warning-ignore:return_value_discarded
+		dir.remove(SAVE_PATH)
 
 ## Sets the current save and loads saved data into memory.
 ## If no save has been dedicated, sets default data.

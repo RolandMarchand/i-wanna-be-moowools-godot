@@ -42,6 +42,9 @@ func _ready() -> void:
 
 	get_tree().paused = false
 
+	if OS.get_name() == "HTML5":
+		$Main/MarginContainer/VBoxContainer/Quit.hide()
+
 func _on_Quit_pressed() -> void:
 	get_tree().quit(0)
 

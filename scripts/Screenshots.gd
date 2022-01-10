@@ -33,6 +33,7 @@ extends Node
 
 const SCREENSHOT_PATH := "user://screenshots.cfg"
 
+## Deletes one screenshot of a save.
 func delete_screenshot(save: String, id: String) -> void:
 	var config = ConfigFile.new()
 	config.load(SCREENSHOT_PATH)
@@ -41,27 +42,52 @@ func delete_screenshot(save: String, id: String) -> void:
 
 	config.save(SCREENSHOT_PATH)
 
+	delete_file_if_empty()
+
+## Removes all the screenshots of a save.
 func delete_all_screenshots(save: String) -> void:
 	var config = ConfigFile.new()
 	config.load(SCREENSHOT_PATH)
 
-	config.erase_section(save)
+	if config.has_section(save):
+		config.erase_section(save)
 
 	config.save(SCREENSHOT_PATH)
+	var dir = Directory.new()
+	dir.remove(SCREENSHOT_PATH)
 
+	delete_file_if_empty()
+
+## Removes the screenshot file if it is empty.
+func delete_file_if_empty() -> void:
+	var file := File.new()
+
+	if file.open(SCREENSHOT_PATH, File.READ) != OK:
+		return
+
+	if file.get_len() == 0:
+		var dir := Directory.new()
+		# warning-ignore:return_value_discarded
+		dir.remove(SCREENSHOT_PATH)
+
+## Returns true if the save has a screenshot of the room
 func has_screenshot(save: String, id: String) -> bool:
 	var config = ConfigFile.new()
-	config.load(SCREENSHOT_PATH)
+	var err: int = config.load(SCREENSHOT_PATH)
+
+	if err != OK:
+		return false
 
 	return config.has_section_key(save, id)
 
+## Loads, decompress and return an ImageTexture of the desired screenshot
 ## Kind of a mess. To fix.
 func get_screenshot(save: String, id: String) -> ImageTexture:
 	var config = ConfigFile.new()
 	var err = config.load(SCREENSHOT_PATH)
 
 	if err != OK:
-		push_error("ConfigFile error " + str(err))
+		push_error("Screenshots.gd: ConfigFile error " + str(err))
 		return null
 
 	var image = config.get_value(save, id, null)
@@ -79,7 +105,7 @@ func get_screenshot(save: String, id: String) -> ImageTexture:
 
 	return image_texture
 
-
+## Takes screenshot, resizes and compresses it, and then saves it.
 func take_screenshot() -> void:
 	var capture: Image = get_viewport().get_texture().get_data()
 	var id: String = get_tree().current_scene.filename

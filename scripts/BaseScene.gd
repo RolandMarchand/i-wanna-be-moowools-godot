@@ -70,7 +70,7 @@ func _connect_kid() -> void:
 		kid.xscale = save.get("xscale", kid.xscale)
 
 func _on_Kid_death() -> void:
-	ui.game_over()
+	$GameOverTimer.start()
 	Music.pause()
 
 func _set_difficulty() -> void:
@@ -100,5 +100,10 @@ func _play_music() -> void:
 ## Taking a screenshot inside of the _ready function causes a bug
 ## where the menu is captured, because of the nature of change_scene
 func _on_Timer_timeout() -> void:
-	if not Screenshots.has_screenshot(Save.current_save, filename):
-		Screenshots.call_deferred("take_screenshot")
+	if not Screenshots.has_screenshot(Save.current_save, filename)\
+			and Save.current_save != Save.TMP:
+		Screenshots.take_screenshot()
+
+
+func _on_GameOverTimer_timeout():
+	ui.game_over()

@@ -51,6 +51,11 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	Shortcuts.connect("fullscreen", self, "_refresh_settings")
 
+	if OS.get_name() == "HTML5":
+		_quiet_bg.queue_free()
+		Music.set_quiet(false)
+		_fs.queue_free()
+
 	_refresh_settings()
 
 func game_over() -> void:
@@ -164,8 +169,3 @@ func _on_Default_pressed() -> void:
 	Save.default_settings()
 
 	_refresh_settings()
-
-
-func _on_Menu_visibility_changed():
-	if $Menu.visible:
-		$Menu/MenuSound.play()

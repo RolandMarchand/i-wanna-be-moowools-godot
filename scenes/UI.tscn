@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprGameOver_0.png" type="Texture" id=2]
 [ext_resource path="res://audio/sndJump.wav" type="AudioStream" id=3]
 [ext_resource path="res://res/UI.tres" type="Theme" id=4]
 [ext_resource path="res://sprites/panel.png" type="Texture" id=5]
-[ext_resource path="res://audio/sndBlockChange.wav" type="AudioStream" id=6]
 
 [node name="UI" type="CanvasLayer"]
 pause_mode = 2
@@ -266,11 +265,6 @@ margin_bottom = 60.0
 mouse_default_cursor_shape = 2
 text = "Default"
 
-[node name="MenuSound" type="AudioStreamPlayer" parent="Menu"]
-stream = ExtResource( 6 )
-volume_db = -30.0
-bus = "Sound"
-
 [node name="Show" type="Button" parent="."]
 visible = false
 margin_right = 12.0
@@ -281,7 +275,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="visibility_changed" from="Menu" to="." method="_on_Menu_visibility_changed"]
 [connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer/Master" to="." method="_on_Master_value_changed"]
 [connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer/Sound" to="." method="_on_Sound_value_changed"]
 [connection signal="value_changed" from="Menu/NinePatchRect/MarginContainer/VBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer/Music" to="." method="_on_Music_value_changed"]

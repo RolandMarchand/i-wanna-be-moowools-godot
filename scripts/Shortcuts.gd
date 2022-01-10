@@ -43,8 +43,13 @@ func _unhandled_key_input(_event):
 	if Input.is_action_just_pressed("pause"):
 		if get_tree().current_scene.name != "Menu":
 			var pause := not get_tree().is_paused()
+			var mus_paused: bool = Music.is_paused()
 
 			get_tree().set_pause(pause)
+			# Little hack
+			# Music's player gets affected by previous line
+			Music.pause(mus_paused)
+
 			emit_signal("paused", pause)
 
 	if Input.is_action_just_pressed("reset"):
@@ -53,7 +58,8 @@ func _unhandled_key_input(_event):
 			_reset()
 
 	if Input.is_action_just_pressed("quit"):
-		get_tree().quit(0)
+		if OS.get_name() != "HTML5":
+			get_tree().quit(0)
 
 	if Input.is_action_just_pressed("fullscreen"):
 		OS.set_window_fullscreen(not OS.is_window_fullscreen())

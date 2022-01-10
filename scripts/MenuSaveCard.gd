@@ -109,6 +109,9 @@ func _set_image() -> void:
 	if not _filename:
 		return
 
+	if not Screenshots.has_screenshot(_save, _filename):
+		return
+
 	img = Screenshots.get_screenshot(_save, _filename)
 	if img:
 		_capture.texture = img

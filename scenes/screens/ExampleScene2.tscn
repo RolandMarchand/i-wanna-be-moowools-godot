@@ -1,16 +1,16 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://scripts/scenes/exampleScene/ExampleScene.gd" type="Script" id=1]
+[ext_resource path="res://scripts/scenes/ExampleScene/ExampleScene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/BaseScene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/ExampleScene2/Trap.gd" type="Script" id=3]
+[ext_resource path="res://scripts/scenes/ExampleScene2/Trap.gd" type="Script" id=3]
 [ext_resource path="res://res/Spikes.tres" type="TileSet" id=4]
 [ext_resource path="res://scenes/Warp.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Kid.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/Platform.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Cherry.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scripts/ExampleScene2/Trap2.gd" type="Script" id=9]
+[ext_resource path="res://scripts/scenes/ExampleScene2/Trap2.gd" type="Script" id=9]
 [ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/screens/TurningCherries.gd" type="Script" id=11]
+[ext_resource path="res://scripts/scenes/ExampleScene2/TurningCherries.gd" type="Script" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 20 )

@@ -31,6 +31,7 @@ Screenshots="*res://scripts/Screenshots.gd"
 [debug]
 
 settings/fps/force_fps=50
+shapes/collision/shape_color=Color( 0.701961, 0, 0, 0.419608 )
 
 [display]
 
