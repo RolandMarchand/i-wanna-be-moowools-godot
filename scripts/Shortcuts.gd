@@ -83,8 +83,7 @@ func _reset() -> void:
 		GameStats.deaths += 1
 
 		var data = Save.load_game(Save.current_save)
-
-		#GameStats.time = data.get("time", GameStats.time)
+		GameStats.state = data.get("state", {})
 
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene(data["scene"])
