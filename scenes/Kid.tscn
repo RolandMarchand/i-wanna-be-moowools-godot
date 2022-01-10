@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scripts/Kid.gd" type="Script" id=1]
 [ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=2]
@@ -13,18 +13,35 @@
 [ext_resource path="res://sprites/sprPlayerJump_0.png" type="Texture" id=11]
 [ext_resource path="res://sprites/sprPlayerFall_0.png" type="Texture" id=12]
 [ext_resource path="res://sprites/sprPlayerFall_1.png" type="Texture" id=13]
+[ext_resource path="res://audio/sndJump.wav" type="AudioStream" id=14]
+[ext_resource path="res://audio/sndDeath.wav" type="AudioStream" id=15]
+[ext_resource path="res://audio/sndDJump.wav" type="AudioStream" id=16]
+[ext_resource path="res://audio/sndShoot.wav" type="AudioStream" id=17]
+[ext_resource path="res://audio/musOnDeath.mp3" type="AudioStream" id=18]
+[ext_resource path="res://sprites/sprBow_0.png" type="Texture" id=19]
+[ext_resource path="res://audio/sndWallJump.wav" type="AudioStream" id=20]
+[ext_resource path="res://sprites/sprPlayerSliding_1.png" type="Texture" id=21]
+[ext_resource path="res://sprites/sprPlayerSliding_0.png" type="Texture" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 10.5 )
 
-[sub_resource type="SegmentShape2D" id=2]
-a = Vector2( 5.5, 10.9 )
-b = Vector2( -5.5, 10.9 )
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 3.25, 10.5 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 3.25, 10.5 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 5.5, 0.2 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 5.5, 1 )
 
 [sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("Kid:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -35,13 +52,37 @@ tracks/0/keys = {
 "update": 0,
 "values": [ ExtResource( 2 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Kid:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1.5, -7.5 ) ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "fall"
 length = 0.08
 step = 0.04
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("Kid:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -52,12 +93,25 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 12 ), ExtResource( 13 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.5, -7.5 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "idle"
 length = 0.4
+loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("Kid:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -68,13 +122,25 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 0, 0, 0 ),
+"update": 0,
+"values": [ Vector2( -0.5, -8.5 ), Vector2( -0.5, -7.5 ), Vector2( -0.5, -8.5 ) ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "jump"
 length = 0.08
 step = 0.04
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("Kid:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -85,13 +151,26 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 11 ), ExtResource( 10 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1.5, -10.5 ) ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "run"
 length = 0.16
+loop = true
 step = 0.04
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
+tracks/0/path = NodePath("Kid:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -102,45 +181,125 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, -8.5 ) ]
+}
 
-[node name="Kid" type="KinematicBody2D"]
-collision_mask = 2
+[sub_resource type="Animation" id=12]
+resource_name = "wall"
+length = 0.08
+step = 0.04
+tracks/0/type = "value"
+tracks/0/path = NodePath("Kid:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 22 ), ExtResource( 21 ) ]
+}
+
+[node name="Kid" type="KinematicBody2D" groups=["kid"]]
+collision_mask = 18
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_horizontal_guides_": [ 9.0 ]
 }
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -17.5, -21.5 )
+[node name="Kid" type="Sprite" parent="."]
+position = Vector2( -1.5, -7.5 )
 texture = ExtResource( 2 )
-centered = false
+
+[node name="Bow" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -9 )
+texture = ExtResource( 19 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -2 )
 shape = SubResource( 1 )
 
-[node name="Bullets" type="Node2D" parent="."]
+[node name="LVines" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 64
 
-[node name="SpikeHitbox" type="Area2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LVines"]
+position = Vector2( -3.25, -2 )
+shape = SubResource( 10 )
+
+[node name="RVines" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RVines"]
+position = Vector2( 3.25, -2 )
+shape = SubResource( 11 )
+
+[node name="Hazards" type="Area2D" parent="."]
+visible = false
+position = Vector2( 0, -2 )
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards"]
 shape = SubResource( 1 )
 
-[node name="FloorDetectArea" type="Area2D" parent="."]
+[node name="Floor" type="Area2D" parent="."]
+visible = false
+position = Vector2( 0, -2 )
 collision_layer = 0
-collision_mask = 2
+collision_mask = 18
 __meta__ = {
 "_editor_description_": " The kid hovers 0.4 pixels above the ground, so is_on_floor() does not work."
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorDetectArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2( 0, 10.7 )
+shape = SubResource( 8 )
+
+[node name="PlatformSnap" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformSnap"]
+position = Vector2( 0, 7.5 )
+shape = SubResource( 9 )
+
+[node name="Water" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+position = Vector2( 0, -2 )
+shape = SubResource( 1 )
+
+[node name="Slope" type="RayCast2D" parent="."]
 visible = false
-shape = SubResource( 2 )
+enabled = true
+cast_to = Vector2( 0, 9 )
+collision_mask = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2( 0.3, 0.3 )
+limit_left = 0
+limit_top = 0
+limit_right = 800
+limit_bottom = 608
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
@@ -148,9 +307,36 @@ anims/fall = SubResource( 6 )
 anims/idle = SubResource( 4 )
 anims/jump = SubResource( 7 )
 anims/run = SubResource( 5 )
+anims/wall = SubResource( 12 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Sounds" type="Node" parent="."]
 
-[connection signal="body_entered" from="SpikeHitbox" to="." method="_on_SpikeHitbox_body_entered"]
-[connection signal="body_entered" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_entered"]
-[connection signal="body_exited" from="FloorDetectArea" to="." method="_on_FloorDetectArea_body_exited"]
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 14 )
+bus = "Sound"
+
+[node name="DJump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 16 )
+bus = "Sound"
+
+[node name="Death" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 15 )
+bus = "Sound"
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 17 )
+bus = "Sound"
+
+[node name="DeathMus" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 18 )
+bus = "Music"
+
+[node name="WallJump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 20 )
+bus = "Sound"
+
+[node name="AutoFireTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="Hazards" to="." method="_on_Hazards_body_entered"]

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# 
+#
 # Copyright (c) 2021 moowool195@gmail.com.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -13,7 +13,7 @@
 # 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Blood droplet from the player's death.
 
 extends KinematicBody2D
 
@@ -34,10 +37,11 @@ var _stuck := false
 var _grav: float
 var _coll: bool = false
 
-var _blood0 = preload("res://sprites/sprBlood_0.png")
-var _blood1 = preload("res://sprites/sprBlood_1.png")
-var _blood2 = preload("res://sprites/sprBlood_2.png")
-var _blood_array: Array = [_blood0, _blood1, _blood2]
+var _blood_array: Array = [
+		preload("res://sprites/sprBlood_0.png"),
+		preload("res://sprites/sprBlood_1.png"),
+		preload("res://sprites/sprBlood_2.png"),
+		]
 
 onready var sprite: Sprite = $Sprite
 
@@ -46,20 +50,21 @@ func _ready() -> void:
 	_set_grav()
 
 	# Chooses random blood texture
-	var blood = randi() % _blood_array.size()
-	sprite.texture = _blood_array[blood]
+	sprite.texture = _blood_array[floor(randf() * 3)]
 
-func _physics_process(delta) -> void:
+func _physics_process(_delta) -> void:
 	_vspeed += _grav
-
-	if not _stuck:
-		# warning-ignore:return_value_discarded
-		move_and_slide(Vector2(_hspeed, _vspeed) / delta)
-	else:
-		set_physics_process(false)
 
 	if _coll and randf() > 0.5:
 		_stuck = true
+
+	# Stops the droplet
+	if not _stuck:
+		# warning-ignore:return_value_discarded
+		if move_and_collide(Vector2(_hspeed, _vspeed)):
+			_stuck = true
+	else:
+		set_physics_process(false)
 
 func _set_speed() -> void:
 	var d = floor(randf() * 36) * 10
@@ -71,8 +76,11 @@ func _set_speed() -> void:
 func _set_grav() -> void:
 	_grav = 0.1 + randf() * 0.2
 
-func _on_Hitbox_body_entered(_body) -> void:
+func _on_Hitbox_body_entered(_body: Node) -> void:
 	_coll = true
+
+	if randf() > 0.5:
+		_stuck = true
 
 func _on_Hitbox_body_exited(_body) -> void:
 	_coll = false

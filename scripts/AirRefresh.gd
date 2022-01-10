@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# 
+#
 # Copyright (c) 2021 moowool195@gmail.com.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -13,7 +13,7 @@
 # 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,35 +25,22 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Entity that refreshes the player's double jump.
 
-extends Node2D
-
-var mus_death: AudioStream = preload("res://audio/musOnDeath.mp3")
+extends Area2D
 
 func _ready() -> void:
-	for kid in get_tree().get_nodes_in_group("kid"):
-		kid.connect("death", self, "_on_Kid_death")
-		
-		# Load save
-		if Save.pos:
-			kid.global_position = Save.pos
-		if Save.xscale:
-			kid.xscale = Save.xscale
+	$AnimationPlayer.seek(randf() * $AnimationPlayer.get_current_animation_length())
 
-func _on_Kid_death() -> void:
-	$GameOver/MarginContainer.show()
-	
-	Music.audio_player.stop()
-	$DeathMusic.play()
-
-func _unhandled_key_input(_event) -> void:
-	if Input.is_action_just_pressed("reset"):
-	# warning-ignore:return_value_discarded
-		if not Music.audio_player.playing:
-			Music.audio_player.play()
-			
-		get_tree().reload_current_scene()
+func _on_AirJump_body_entered(player: KinematicBody2D) -> void:
+	player.djump = true
+	$CollisionShape2D.set_deferred("disabled", true)
+	hide()
+	$Timer.start()
 
 
-func _on_Warp_body_entered(_body) -> void:
-	get_tree().quit(0)
+func _on_Timer_timeout():
+	$CollisionShape2D.set_deferred("disabled", false)
+	show()

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# 
+#
 # Copyright (c) 2021 moowool195@gmail.com.  All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -13,7 +13,7 @@
 # 3. Neither the name of the University nor the names of its contributors
 #    may be used to endorse or promote products derived from this software
 #    without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,6 +25,9 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+#
+# Description:
+# Projectile shot by the kid.
 
 extends KinematicBody2D
 
@@ -34,7 +37,7 @@ const HSPEED := 16.0
 
 var dir := 1
 
-func _ready():
+func _ready() -> void:
 	scale.x *= dir
 
 func _physics_process(delta) -> void:
@@ -43,4 +46,8 @@ func _physics_process(delta) -> void:
 
 func _on_Hitbox_body_entered(body) -> void:
 	emit_signal("hit", body)
+	queue_free()
+
+func _on_VisibilityNotifier2D_screen_exited() -> void:
+	emit_signal("hit", null)
 	queue_free()

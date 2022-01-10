@@ -1,0 +1,89 @@
+[gd_resource type="Theme" load_steps=22 format=2]
+
+[ext_resource path="res://res/button.tres" type="StyleBox" id=2]
+[ext_resource path="res://sprites/button_pressed.png" type="Texture" id=3]
+[ext_resource path="res://sprites/button_disabled.png" type="Texture" id=4]
+[ext_resource path="res://fonts/LionelMicroNbp.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://sprites/panel.png" type="Texture" id=6]
+[ext_resource path="res://sprites/cherry_button.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 10, 10 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 10, 10 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 64, 96, 32 )
+margin_left = 32.0
+margin_right = 32.0
+margin_top = 32.0
+margin_bottom = 32.0
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = ExtResource( 5 )
+
+[resource]
+Button/colors/font_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+Button/colors/font_color_disabled = Color( 0.156863, 0.156863, 0.156863, 0.313726 )
+Button/colors/font_color_focus = Color( 0.156863, 0.156863, 0.156863, 1 )
+Button/colors/font_color_hover = Color( 0.376471, 0.376471, 0.376471, 1 )
+Button/colors/font_color_pressed = Color( 0.94902, 0.94902, 0.94902, 1 )
+Button/fonts/font = SubResource( 1 )
+Button/styles/disabled = SubResource( 6 )
+Button/styles/focus = SubResource( 7 )
+Button/styles/hover = ExtResource( 2 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = SubResource( 5 )
+CheckBox/styles/disabled = SubResource( 8 )
+CheckBox/styles/focus = SubResource( 9 )
+CheckBox/styles/hover = SubResource( 10 )
+CheckBox/styles/hover_pressed = SubResource( 11 )
+CheckBox/styles/normal = SubResource( 12 )
+CheckBox/styles/pressed = SubResource( 13 )
+HSeparator/styles/separator = SubResource( 14 )
+HSlider/icons/grabber = ExtResource( 7 )
+HSlider/icons/grabber_disabled = ExtResource( 7 )
+HSlider/icons/grabber_highlight = ExtResource( 7 )
+HSlider/icons/tick = null
+HSlider/styles/grabber_area = SubResource( 15 )
+HSlider/styles/grabber_area_highlight = SubResource( 16 )
+HSlider/styles/slider = SubResource( 17 )
+Label/colors/font_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+Label/fonts/font = SubResource( 2 )
+Label/styles/normal = ExtResource( 2 )
