@@ -320,10 +320,12 @@ func load_settings() -> void:
 	Music.set_quiet(config.get_value("settings", "quiet_bg", DEFAULT_QUIET_BG))
 	Music.original_volume = config.get_value("volume", "master", DEFAULT_MASTER_VOL)
 
+	# Sound
 	AudioServer.set_bus_volume_db(0, config.get_value("volume", "master", DEFAULT_MASTER_VOL))
 	AudioServer.set_bus_volume_db(1, config.get_value("volume", "sound", DEFAULT_SOUND_VOL))
 	AudioServer.set_bus_volume_db(2, config.get_value("volume", "music", DEFAULT_MUSIC_VOL))
 
+	# Controls
 	for action in config.get_section_keys("controls"):
 		InputMap.action_erase_events(action)
 		for event in config.get_value("controls", action):
@@ -335,10 +337,12 @@ func default_settings() -> void:
 	OS.set_use_vsync(DEFAULT_VSYNC)
 	Music.set_quiet(DEFAULT_QUIET_BG)
 
+	# Sound
 	AudioServer.set_bus_volume_db(0, DEFAULT_MASTER_VOL)
 	AudioServer.set_bus_volume_db(1, DEFAULT_SOUND_VOL)
 	AudioServer.set_bus_volume_db(2, DEFAULT_MUSIC_VOL)
 
+## Verifies if the save is allowed
 func _verify_save(save: String) -> bool:
 	match save:
 		"save1":
