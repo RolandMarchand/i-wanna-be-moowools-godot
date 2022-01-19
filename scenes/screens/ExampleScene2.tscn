@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scripts/scenes/ExampleScene/ExampleScene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/BaseScene.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scripts/scenes/ExampleScene2/Trap2.gd" type="Script" id=9]
 [ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scripts/scenes/ExampleScene2/TurningCherries.gd" type="Script" id=11]
+[ext_resource path="res://audio/iwbtg/musGuyRock.mp3" type="AudioStream" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 64, 20 )
@@ -292,6 +293,7 @@ tracks/2/keys = {
 
 [node name="ExampleScene2" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+background_music = ExtResource( 12 )
 location_name = "Example Scene 2"
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="0"]

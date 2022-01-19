@@ -13,13 +13,13 @@
 [ext_resource path="res://sprites/sprPlayerJump_0.png" type="Texture" id=11]
 [ext_resource path="res://sprites/sprPlayerFall_0.png" type="Texture" id=12]
 [ext_resource path="res://sprites/sprPlayerFall_1.png" type="Texture" id=13]
-[ext_resource path="res://audio/sndJump.wav" type="AudioStream" id=14]
-[ext_resource path="res://audio/sndDeath.wav" type="AudioStream" id=15]
-[ext_resource path="res://audio/sndDJump.wav" type="AudioStream" id=16]
-[ext_resource path="res://audio/sndShoot.wav" type="AudioStream" id=17]
-[ext_resource path="res://audio/musOnDeath.mp3" type="AudioStream" id=18]
+[ext_resource path="res://audio/iwbtg/sndJump.wav" type="AudioStream" id=14]
+[ext_resource path="res://audio/iwbtg/sndDeath.wav" type="AudioStream" id=15]
+[ext_resource path="res://audio/iwbtg/sndDJump.wav" type="AudioStream" id=16]
+[ext_resource path="res://audio/iwbtg/sndShoot.wav" type="AudioStream" id=17]
+[ext_resource path="res://audio/iwbtg/musOnDeath.mp3" type="AudioStream" id=18]
 [ext_resource path="res://sprites/sprBow_0.png" type="Texture" id=19]
-[ext_resource path="res://audio/sndWallJump.wav" type="AudioStream" id=20]
+[ext_resource path="res://audio/iwbtg/sndWallJump.wav" type="AudioStream" id=20]
 [ext_resource path="res://sprites/sprPlayerSliding_1.png" type="Texture" id=21]
 [ext_resource path="res://sprites/sprPlayerSliding_0.png" type="Texture" id=22]
 
@@ -215,8 +215,7 @@ tracks/0/keys = {
 collision_mask = 18
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_horizontal_guides_": [ 9.0 ]
+"_edit_group_": true
 }
 
 [node name="Kid" type="Sprite" parent="."]
@@ -295,11 +294,13 @@ cast_to = Vector2( 0, 9 )
 collision_mask = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2( 0.3, 0.3 )
-limit_left = 0
-limit_top = 0
-limit_right = 800
-limit_bottom = 608
+current = true
+drag_margin_h_enabled = true
+drag_margin_left = 0.08
+drag_margin_top = 0.08
+drag_margin_right = 0.08
+drag_margin_bottom = 0.08
+editor_draw_drag_margin = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )

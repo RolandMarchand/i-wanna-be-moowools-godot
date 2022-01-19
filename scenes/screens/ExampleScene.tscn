@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/scenes/ExampleScene/ExampleScene.gd" type="Script" id=1]
 [ext_resource path="res://scenes/BaseScene.tscn" type="PackedScene" id=2]
@@ -7,9 +7,11 @@
 [ext_resource path="res://scenes/Platform.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Kid.tscn" type="PackedScene" id=6]
 [ext_resource path="res://res/Spikes.tres" type="TileSet" id=7]
+[ext_resource path="res://audio/iwbtg/musGuyRock.mp3" type="AudioStream" id=8]
 
 [node name="ExampleScene" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+background_music = ExtResource( 8 )
 location_name = "Example Scene"
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="0"]

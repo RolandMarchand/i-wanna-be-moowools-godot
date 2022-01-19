@@ -1,0 +1,1265 @@
+[gd_scene load_steps=37 format=2]
+
+[ext_resource path="res://sprites/Modern tiles_Free/Interiors_free/32x32/Room_Builder_free_32x32.png" type="Texture" id=1]
+[ext_resource path="res://sprites/Modern tiles_Free/Interiors_free/32x32/Interiors_free_32x32.png" type="Texture" id=2]
+[ext_resource path="res://sprites/sprPlayerRunning_3.png" type="Texture" id=3]
+[ext_resource path="res://sprites/sprPlayerIdle_3.png" type="Texture" id=4]
+[ext_resource path="res://sprites/sprPlayerRunning_2.png" type="Texture" id=5]
+[ext_resource path="res://sprites/sprPlayerRunning_1.png" type="Texture" id=6]
+[ext_resource path="res://audio/i-wanna-be-the-monsieur/bienvenu.wav" type="AudioStream" id=7]
+[ext_resource path="res://sprites/sprPlayerIdle_2.png" type="Texture" id=8]
+[ext_resource path="res://sprites/sprPlayerRunning_0.png" type="Texture" id=9]
+[ext_resource path="res://sprites/sprPlayerIdle_1.png" type="Texture" id=10]
+[ext_resource path="res://sprites/sprPlayerIdle_0.png" type="Texture" id=11]
+[ext_resource path="res://sprites/explosions-pack-web/spritesheets/explosion-6.png" type="Texture" id=12]
+[ext_resource path="res://audio/iwbtg/explosion.wav" type="AudioStream" id=13]
+[ext_resource path="res://sprites/fire/fire3.png" type="Texture" id=14]
+[ext_resource path="res://sprites/fire/fire2.png" type="Texture" id=15]
+[ext_resource path="res://sprites/fire/fire1.png" type="Texture" id=16]
+[ext_resource path="res://sprites/fire/fire4.png" type="Texture" id=17]
+[ext_resource path="res://sprites/sprPlayerAngry_2.png" type="Texture" id=18]
+[ext_resource path="res://sprites/sprPlayerAngry_3.png" type="Texture" id=19]
+[ext_resource path="res://sprites/sprPlayerAngry_0.png" type="Texture" id=20]
+[ext_resource path="res://sprites/sprPlayerAngry_1.png" type="Texture" id=21]
+[ext_resource path="res://audio/i-wanna-be-the-monsieur/boom.wav" type="AudioStream" id=22]
+[ext_resource path="res://sprites/enemy/sprEnemyWalk_0.png" type="Texture" id=23]
+[ext_resource path="res://sprites/enemy/sprEnemyWalk_1.png" type="Texture" id=24]
+[ext_resource path="res://sprites/enemy/sprEnemyDrop_0.png" type="Texture" id=25]
+[ext_resource path="res://sprites/enemy/sprEnemyIdle_0.png" type="Texture" id=26]
+[ext_resource path="res://audio/iwbtg/sndBlockChange.wav" type="AudioStream" id=27]
+
+[sub_resource type="TileSet" id=1]
+0/name = "Room_Builder_free_32x32.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 544, 672 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="TileSet" id=2]
+0/name = "Interiors_free_32x32.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 512, 768 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "Interiors_free_32x32.png 1"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 768, 512, 352 )
+1/tile_mode = 2
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 32, 32 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "Interiors_free_32x32.png 2"
+2/texture = ExtResource( 2 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 1120, 512, 288 )
+2/tile_mode = 2
+2/autotile/icon_coordinate = Vector2( 0, 0 )
+2/autotile/tile_size = Vector2( 32, 32 )
+2/autotile/spacing = 0
+2/autotile/occluder_map = [  ]
+2/autotile/navpoly_map = [  ]
+2/autotile/priority_map = [  ]
+2/autotile/z_index_map = [  ]
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "Interiors_free_32x32.png 3"
+3/texture = ExtResource( 2 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 0, 1408, 512, 128 )
+3/tile_mode = 2
+3/autotile/icon_coordinate = Vector2( 0, 0 )
+3/autotile/tile_size = Vector2( 32, 32 )
+3/autotile/spacing = 0
+3/autotile/occluder_map = [  ]
+3/autotile/navpoly_map = [  ]
+3/autotile/priority_map = [  ]
+3/autotile/z_index_map = [  ]
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "Interiors_free_32x32.png 4"
+4/texture = ExtResource( 2 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 0, 1536, 512, 576 )
+4/tile_mode = 2
+4/autotile/icon_coordinate = Vector2( 0, 0 )
+4/autotile/tile_size = Vector2( 32, 32 )
+4/autotile/spacing = 0
+4/autotile/occluder_map = [  ]
+4/autotile/navpoly_map = [  ]
+4/autotile/priority_map = [  ]
+4/autotile/z_index_map = [  ]
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
+5/name = "Interiors_free_32x32.png 5"
+5/texture = ExtResource( 2 )
+5/tex_offset = Vector2( 0, 0 )
+5/modulate = Color( 1, 1, 1, 1 )
+5/region = Rect2( 0, 2112, 512, 416 )
+5/tile_mode = 2
+5/autotile/icon_coordinate = Vector2( 0, 0 )
+5/autotile/tile_size = Vector2( 32, 32 )
+5/autotile/spacing = 0
+5/autotile/occluder_map = [  ]
+5/autotile/navpoly_map = [  ]
+5/autotile/priority_map = [  ]
+5/autotile/z_index_map = [  ]
+5/occluder_offset = Vector2( 0, 0 )
+5/navigation_offset = Vector2( 0, 0 )
+5/shape_offset = Vector2( 0, 0 )
+5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+5/shape_one_way = false
+5/shape_one_way_margin = 0.0
+5/shapes = [  ]
+5/z_index = 0
+6/name = "Interiors_free_32x32.png 6"
+6/texture = ExtResource( 2 )
+6/tex_offset = Vector2( 0, 0 )
+6/modulate = Color( 1, 1, 1, 1 )
+6/region = Rect2( 0, 2528, 512, 320 )
+6/tile_mode = 2
+6/autotile/icon_coordinate = Vector2( 0, 0 )
+6/autotile/tile_size = Vector2( 32, 32 )
+6/autotile/spacing = 0
+6/autotile/occluder_map = [  ]
+6/autotile/navpoly_map = [  ]
+6/autotile/priority_map = [  ]
+6/autotile/z_index_map = [  ]
+6/occluder_offset = Vector2( 0, 0 )
+6/navigation_offset = Vector2( 0, 0 )
+6/shape_offset = Vector2( 0, 0 )
+6/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+6/shape_one_way = false
+6/shape_one_way_margin = 0.0
+6/shapes = [  ]
+6/z_index = 0
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "running",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "angry",
+"speed": 10.0
+} ]
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 26 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "drop",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "walk",
+"speed": 15.0
+} ]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 15 ), ExtResource( 14 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=8]
+resource_name = "New Anim"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2, 2, 3.8, 4.6, 5.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 257, 195 ), Vector2( 86, 195 ), Vector2( 86, 92 ), Vector2( 86, 92 ), Vector2( 86, 195 ), Vector2( 257, 195 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Enemy:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2, 2.5, 3.3, 3.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "walk", "idle", "drop", "idle", "walk" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Enemy:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Drop:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "animation"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": PoolStringArray( "willong" ),
+"times": PoolRealArray( 8 )
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 257, 195 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Enemy:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "walk" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Enemy:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Drop:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Willong:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 256, 192 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Willong:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Willong:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "running" ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Hey:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ExplosionSound:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ExplosionSound2:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ExplosionSound3:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Explosion:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( -0.0285259 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Explosion2:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( -0.0285259 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Explosion3:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Explosion:frame")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Explosion2:frame")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Explosion3:frame")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Polygon2D2:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Polygon2D2:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.2 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("bg2:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("furniture:modulate")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("chair:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("furniture2:modulate")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("bg:modulate")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Polygon2D:color")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.227451, 0.227451, 0.313726, 1 ) ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Fire2:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Fire3:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Fire4:visible")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Fire5:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Fire1:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Polygon2D3:color")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.227451, 0.227451, 0.313726, 1 ) ]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Camera2D:zoom")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Camera2D:position")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 128, 160 ) ]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Boom:playing")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "willong"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Willong:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 256, 192 ), Vector2( 176, 192 ), Vector2( 176, 96 ), Vector2( 208, 96 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Willong:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Willong:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3, 6.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "running", "idle", "angry" ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Hey:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 3.5, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ExplosionSound:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("ExplosionSound2:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 6.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ExplosionSound3:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 6.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Explosion:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 6, 6.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Explosion2:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 6.1, 6.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Explosion3:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 6.2, 7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Explosion:frame")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 6, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Explosion2:frame")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Explosion3:frame")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Polygon2D2:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Polygon2D2:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 6, 6.1, 6.2, 6.3, 6.4, 8, 9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 2, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.2 ), Color( 1, 1, 1, 0.333333 ), Color( 1, 1, 1, 0.498039 ), Color( 1, 1, 1, 0.835294 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("bg2:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.231373, 0.231373, 0.231373, 1 ) ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("furniture:modulate")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.231373, 0.231373, 0.231373, 1 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("chair:modulate")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.231373, 0.231373, 0.231373, 1 ) ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("furniture2:modulate")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.231373, 0.231373, 0.231373, 1 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("bg:modulate")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.231373, 0.231373, 0.231373, 1 ) ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Polygon2D:color")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 0.227451, 0.227451, 0.313726, 1 ), Color( 0.0627451, 0.0627451, 0.0627451, 1 ) ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Fire2:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Fire3:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Fire4:visible")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Fire5:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Fire1:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Polygon2D3:color")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"times": PoolRealArray( 0, 6.4 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 0.227451, 0.227451, 0.313726, 1 ), Color( 0.0627451, 0.0627451, 0.0627451, 1 ) ]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Camera2D:zoom")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/keys = {
+"times": PoolRealArray( 0, 11, 12 ),
+"transitions": PoolRealArray( 1, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ), Vector2( 0.6, 0.6 ), Vector2( 0.1, 0.1 ) ]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Camera2D:position")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/keys = {
+"times": PoolRealArray( 0, 11, 12 ),
+"transitions": PoolRealArray( 1, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 128, 160 ), Vector2( 128, 160 ), Vector2( 209, 104 ) ]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Boom:playing")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/keys = {
+"times": PoolRealArray( 0, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[node name="Cinematic" type="Node2D"]
+__meta__ = {
+"_edit_vertical_guides_": [ 128.0 ]
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.227451, 0.227451, 0.313726, 1 )
+polygon = PoolVector2Array( -288, -160, 544, -160, 544, 480, -288, 480 )
+
+[node name="bg" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 1, 0, 131087, 2, 0, 131087, 3, 0, 131087, 4, 0, 131087, 5, 0, 131087, 6, 0, 131087, 65537, 1073741824, 196623, 65538, 1073741824, 196623, 65539, 1073741824, 196623, 65540, 1073741824, 196623, 65541, 1073741824, 196623, 65542, 1073741824, 196623, 131073, 0, 720896, 131074, 0, 720897, 131075, 0, 720897, 131076, 0, 720897, 131077, 0, 720897, 131078, 0, 720898, 196609, 0, 720900, 196610, 0, 720901, 196611, 0, 720901, 196612, 0, 720901, 196613, 0, 720901, 196614, 0, 720902, 262145, 0, 720900, 262146, 0, 720901, 262147, 0, 720901, 262148, 0, 720901, 262149, 0, 720901, 262150, 0, 720902, 327681, 0, 720900, 327682, 0, 720901, 327683, 0, 720901, 327684, 0, 720901, 327685, 0, 720901, 327686, 0, 720902, 393217, 0, 720900, 393218, 0, 720901, 393219, 0, 720901, 393220, 0, 720901, 393221, 0, 720901, 393222, 0, 720902, 458753, 0, 720900, 458754, 0, 720901, 458755, 0, 720901, 458756, 0, 720901, 458757, 0, 720901, 458758, 0, 720902, 524289, 0, 786432, 524290, 0, 786433, 524291, 0, 786433, 524292, 0, 786433, 524293, 0, 786433, 524294, 0, 786434 )
+
+[node name="furniture2" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 65541, 0, 1048581, 65542, 0, 1048582, 131073, 5, 0, 131077, 0, 1114117, 131078, 0, 1114118, 196609, 5, 65536, 327681, 1, 589825, 393217, 1, 589825, 458753, 1, 655361 )
+
+[node name="chair" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 131078, 0, 1376260, 196614, 0, 1441796 )
+
+[node name="Willong" type="AnimatedSprite" parent="."]
+position = Vector2( 256, 192 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 3 )
+animation = "running"
+frame = 2
+playing = true
+flip_h = true
+
+[node name="furniture" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 2, 1, 4, 3, 536870913, 5, 4, 1, 6, 65538, 1, 65540, 65539, 536870913, 65541, 65540, 1, 65542, 131074, 0, 851974, 131076, 4, 327692, 196612, 4, 393228, 196614, 0, 524291, 262146, -1610612734, 524288, 262147, -1610612734, 458752, 262148, 4, 458764, 262150, 0, 589827, 327681, 4, 65536, 327682, -1610612734, 524289, 327683, -1610612734, 458753, 393217, 4, 131072, 393218, -1610612734, 524290, 393219, -1610612734, 458754, 458755, 0, 851975, 458756, 0, 851976, 458757, 0, 851976, 458758, 0, 851977, 524291, 0, 917511, 524292, 0, 917512, 524293, 0, 917512, 524294, 0, 917513 )
+
+[node name="Enemy" type="AnimatedSprite" parent="."]
+position = Vector2( 257, 195 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 7 )
+animation = "walk"
+frame = 1
+playing = true
+
+[node name="door" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 327686, 0, 524295, 393222, 0, 589831 )
+
+[node name="bg2" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 0, 536870912, 65549, 1, 536870912, 196620, 2, 536870912, 196620, 3, 536870912, 196620, 4, 536870912, 196620, 5, 536870912, 196620, 6, 536870912, 196620, 7, 536870912, 65547, 65536, 0, 131083, 65543, 536870912, 131083, 131072, 0, 131083, 131079, 536870912, 131083, 196608, 0, 131083, 196615, 536870912, 131083, 262144, 0, 131083, 262151, 536870912, 131083, 327680, 0, 131083, 327687, 536870912, 131083, 393216, 0, 131083, 393223, 536870912, 131083, 458752, 0, 131083, 458759, 536870912, 131083, 524288, 0, 131083, 524295, 536870912, 131083, 589824, 536870912, 196621, 589825, 536870912, 196620, 589826, 536870912, 196620, 589827, 536870912, 196620, 589828, 536870912, 196620, 589829, 536870912, 196620, 589830, 536870912, 196620, 589831, 0, 196621 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="."]
+position = Vector2( 342.615, 0 )
+scale = Vector2( 0.370192, 1 )
+color = Color( 0.227451, 0.227451, 0.313726, 1 )
+polygon = PoolVector2Array( -288, -160, 544, -160, 544, 480, -288, 480, -288, 160 )
+
+[node name="Fire1" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 160, -32 )
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 6 )
+frame = 3
+playing = true
+
+[node name="Fire2" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 32, 32 )
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 6 )
+frame = 1
+playing = true
+
+[node name="Fire3" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 160, 160 )
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Fire4" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 72, 104 )
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 6 )
+playing = true
+
+[node name="Fire5" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 32, 200 )
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 6 )
+frame = 3
+playing = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 128, 160 )
+current = true
+zoom = Vector2( 0.6, 0.6 )
+
+[node name="Scene1" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Scene2")
+autoplay = "New Anim"
+"anims/New Anim" = SubResource( 8 )
+anims/RESET = SubResource( 9 )
+
+[node name="Scene2" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+anims/willong = SubResource( 5 )
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="ExplosionSound2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+pitch_scale = 0.57
+
+[node name="ExplosionSound3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+pitch_scale = 1.33
+
+[node name="Hey" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Boom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 22 )
+
+[node name="Drop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 27 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.2 )
+color = Color( 1, 0.235294, 0, 1 )
+polygon = PoolVector2Array( -288, -160, 544, -160, 544, 480, -288, 480 )
+
+[node name="Explosion" type="Sprite" parent="."]
+visible = false
+position = Vector2( 80, 168 )
+scale = Vector2( 8, 8 )
+texture = ExtResource( 12 )
+hframes = 8
+
+[node name="Explosion2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 184, 96 )
+scale = Vector2( 8, 8 )
+texture = ExtResource( 12 )
+hframes = 8
+
+[node name="Explosion3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 192, 216 )
+scale = Vector2( 8, 8 )
+texture = ExtResource( 12 )
+hframes = 8

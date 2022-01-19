@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://res/bAllTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://sprites/sprWater_0.png" type="Texture" id=2]
@@ -166,6 +166,9 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 } ]
 0/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 400, 304 )
+
 [node name="Scene" type="Node2D"]
 script = ExtResource( 3 )
 
@@ -280,6 +283,20 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Camera" type="Node2D" parent="."]
+
+[node name="Map" type="TileMap" parent="Camera"]
+cell_size = Vector2( 800, 608 )
+format = 1
+
+[node name="Area2D" type="Area2D" parent="Camera"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Area2D"]
+visible = false
+position = Vector2( 400, 304 )
+shape = SubResource( 16 )
+
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
 [node name="Screenshot" type="Timer" parent="."]
@@ -294,5 +311,6 @@ __meta__ = {
 wait_time = 0.6
 one_shot = true
 
+[connection signal="body_exited" from="Camera/Area2D" to="." method="_on_Area2D_body_exited"]
 [connection signal="timeout" from="Screenshot" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
