@@ -89,7 +89,7 @@ position = Vector2( 496, 456 )
 position = Vector2( 256, 0 )
 
 [node name="Kid" parent="Kid" index="0" instance=ExtResource( 6 )]
-position = Vector2( 80, 136 )
+position = Vector2( 64, 128 )
 
 [node name="Water" parent="ForeGround" index="0"]
 tile_data = PoolIntArray( 458775, 0, 0, 524311, 0, 0, 1048581, 0, 0, 1048583, 0, 0, 1114117, 0, 0, 1114118, 0, 0, 1114119, 0, 0 )

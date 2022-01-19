@@ -31,14 +31,16 @@
 
 extends Node2D
 
+var _script = get_script().get_path()
+
 func _ready():
-	if GameStats.state.get(filename):
+	if GameStats.state.get(_script):
 		$Spikes.position.y = 192
 		$Area2D/CollisionShape2D.disabled = true
 
 func _on_Area2D_body_entered(_body):
-	if not GameStats.state.get(filename):
+	if not GameStats.state.get(_script):
 		$AnimationPlayer.play("fall")
 		$Area2D/CollisionShape2D.set_deferred("disabled", true)
 
-	GameStats.state[filename] = true
+	GameStats.state[_script] = true

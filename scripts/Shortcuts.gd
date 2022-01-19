@@ -86,7 +86,7 @@ func _reset() -> void:
 		GameStats.state = data.get("state", {})
 
 		# warning-ignore:return_value_discarded
-		get_tree().change_scene(data["scene"])
+		get_tree().change_scene(data.get("scene", GameStats.START_SCENE))
 		get_tree().set_pause(false)
 
 		emit_signal("reset")

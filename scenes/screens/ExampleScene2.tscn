@@ -470,7 +470,7 @@ position = Vector2( 752, 48 )
 next_scene = "res://scenes/screens/ExampleScene3.tscn"
 
 [node name="Kid" parent="Kid" index="0" instance=ExtResource( 6 )]
-position = Vector2( 80, -16 )
+position = Vector2( 250, 62 )
 
 [connection signal="body_entered" from="Entities/Trap/Area2D" to="Entities/Trap" method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="Entities/Trap2/Area2D" to="Entities/Trap2" method="_on_Area2D_body_entered"]
