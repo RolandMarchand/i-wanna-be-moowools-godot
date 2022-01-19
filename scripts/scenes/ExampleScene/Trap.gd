@@ -35,7 +35,7 @@ var _script = get_script().get_path()
 
 func _ready():
 	if GameStats.state.get(_script):
-		$Spikes.position.y = 192
+		$Spikes.position = Vector2(0, 192)
 		$Area2D/CollisionShape2D.disabled = true
 
 func _on_Area2D_body_entered(_body):

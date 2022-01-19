@@ -33,14 +33,8 @@ extends Area2D
 
 export(String, FILE, "*.tscn") var next_scene: String
 
-func _on_Warp_body_entered(body: Node2D) -> void:
+func _on_Warp_body_entered(_kid: KinematicBody2D) -> void:
 	assert(next_scene, "Warp.gd: next_scene is not set.")
 
-	if body.is_in_group("kid"):
-		# warning-ignore:return_value_discarded
-		get_tree().change_scene(next_scene)
-	else:
-		push_warning(
-			"Warp.gd: Node affecting the kid layer entered the warp."
-			+ " Not changing scene."
-		)
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene(next_scene)
