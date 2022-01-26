@@ -207,15 +207,15 @@ animations = [ {
 "name": "idle",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "running",
-"speed": 20.0
-}, {
 "frames": [ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 19 ) ],
 "loop": true,
 "name": "angry",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "running",
+"speed": 20.0
 } ]
 
 [sub_resource type="SpriteFrames" id=7]
@@ -1122,7 +1122,6 @@ position = Vector2( 256, 192 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 3 )
 animation = "running"
-frame = 2
 playing = true
 flip_h = true
 
@@ -1139,7 +1138,6 @@ position = Vector2( 257, 195 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 7 )
 animation = "walk"
-frame = 1
 playing = true
 
 [node name="door" type="TileMap" parent="."]
@@ -1169,7 +1167,6 @@ visible = false
 position = Vector2( 160, -32 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 6 )
-frame = 3
 playing = true
 
 [node name="Fire2" type="AnimatedSprite" parent="."]
@@ -1177,7 +1174,7 @@ visible = false
 position = Vector2( 32, 32 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 6 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Fire3" type="AnimatedSprite" parent="."]
@@ -1185,6 +1182,7 @@ visible = false
 position = Vector2( 160, 160 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 6 )
+frame = 1
 playing = true
 
 [node name="Fire4" type="AnimatedSprite" parent="."]
@@ -1192,6 +1190,7 @@ visible = false
 position = Vector2( 72, 104 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 6 )
+frame = 1
 playing = true
 
 [node name="Fire5" type="AnimatedSprite" parent="."]
@@ -1199,7 +1198,6 @@ visible = false
 position = Vector2( 32, 200 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 6 )
-frame = 3
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

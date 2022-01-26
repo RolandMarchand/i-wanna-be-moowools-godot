@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="I Wanna Be The Monsieur"
+config/name="I Wanna Be Moowool's Godot"
 run/main_scene="res://scenes/menu/Menu.tscn"
 boot_splash/image="res://splash.png"
 boot_splash/fullsize=false
@@ -24,7 +24,6 @@ config/windows_native_icon="res://icon.ico"
 Save="*res://scripts/Save.gd"
 Music="*res://scripts/Music.gd"
 Shortcuts="*res://scripts/Shortcuts.gd"
-BlackBars="*res://scripts/BlackBars.gd"
 GameStats="*res://scripts/GameStats.gd"
 Screenshots="*res://scripts/Screenshots.gd"
 
