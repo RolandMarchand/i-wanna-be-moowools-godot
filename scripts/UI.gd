@@ -76,10 +76,10 @@ func _refresh_settings() -> void:
 	_music.value = db2linear(AudioServer.get_bus_volume_db(2))
 	_change_bg.disabled = not OS.is_window_fullscreen()
 
-	if _change_bg.disabled:
-		_change_bg.mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
-	else:
-		_change_bg.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+#	if _change_bg.disabled:
+#		_change_bg.mouse_default_cursor_shape = Control.CURSOR_FORBIDDEN
+#	else:
+#		_change_bg.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 	Save.save_settings()
 
@@ -159,8 +159,9 @@ func _on_QuietBG_toggled(button_pressed) -> void:
 	_refresh_settings()
 
 
+## Unused for now
 func _on_ChangeBG_pressed():
-	BlackBars.next_bg_img()
+	#BlackBars.next_bg_img()
 
 	_refresh_settings()
 

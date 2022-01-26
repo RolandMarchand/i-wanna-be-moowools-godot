@@ -28,12 +28,14 @@
 #
 # Description:
 # Sets images as black bars on fullscreen.
+# Unused.
 #
 # TODO:
 # Manipulate a single image to fit all resolutions instead of loading every
 # image at once.
 
 extends Node
+
 
 var brown_block: Dictionary = {
 		Vector2(1280,720):
