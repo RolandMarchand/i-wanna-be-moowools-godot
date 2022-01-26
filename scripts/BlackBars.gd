@@ -28,6 +28,7 @@
 #
 # Description:
 # Sets images as black bars on fullscreen.
+# Unused.
 #
 # TODO:
 # Manipulate a single image to fit all resolutions instead of loading every
@@ -35,7 +36,6 @@
 
 extends Node
 
-var brown_block_image: Image = preload("res://sprites/brown_block.png").get_data()
 
 var brown_block: Dictionary = {
 		Vector2(1280,720):
@@ -88,23 +88,6 @@ var _img_pos := -1
 
 func _ready():
 	next_bg_img()
-	
-	var sz: Vector2 = OS.get_screen_size()
-	var game_ratio: float = 800.0 / 608.0
-	var fs_game_size: Vector2
-	
-	if game_ratio > 1.0:
-		fs_game_size = Vector2(sz.x / game_ratio, sz.y)
-	else:
-		fs_game_size = Vector2(sz.x, sz.y / game_ratio)
-	
-	var new_image_size = int(fs_game_size.x / 25)
-	
-	brown_block_image.resize(new_image_size, new_image_size, Image.INTERPOLATE_NEAREST)
-	
-	#for i in range()
-	
-	var bar_size: Vector2 = (sz - fs_game_size) / 2
 
 func next_bg_img() -> void:
 	if OS.get_name() == "HTML5":
