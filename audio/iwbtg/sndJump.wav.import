@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sndJump.wav-8c76fd597111a0c77efc9b8f572c4cb1.sample"
+
+[deps]
+
+source_file="res://audio/iwbtg/sndJump.wav"
+dest_files=[ "res://.import/sndJump.wav-8c76fd597111a0c77efc9b8f572c4cb1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

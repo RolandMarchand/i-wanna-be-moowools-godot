@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/musOnDeath.mp3-9e9f082dd06cbf720b234bcb683646db.mp3str"
+
+[deps]
+
+source_file="res://audio/iwbtg/musOnDeath.mp3"
+dest_files=[ "res://.import/musOnDeath.mp3-9e9f082dd06cbf720b234bcb683646db.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

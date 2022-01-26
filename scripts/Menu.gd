@@ -32,7 +32,7 @@
 extends Control
 
 var _play_menu: PackedScene = preload("res://scenes/menu/Play.tscn")
-var mus_bg: AudioStream = preload("res://audio/musMegaman.mp3")
+export(AudioStream) var mus_bg: AudioStream
 
 func _ready() -> void:
 	Save.load_settings()

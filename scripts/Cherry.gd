@@ -34,14 +34,14 @@ extends KinematicBody2D
 export(bool) var fall := false
 export(Vector2) var _dir := Vector2.RIGHT
 export(float) var speed := 2.0
-export(float) var _len := 800
+export(float) var _len := 800.0
 
 var fallen := false
 
 func _ready() -> void:
 	set_physics_process(false)
-	$Area2D/CollisionShape2D.shape.extents.x = _len / 2
-	$Area2D/CollisionShape2D.position.x = _len / 2 - 16
+	$Area2D/CollisionShape2D.shape.extents.x = _len / 2.0
+	$Area2D/CollisionShape2D.position.x = _len / 2.0 - 16.0
 	$Area2D.rotate(_dir.angle())
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:

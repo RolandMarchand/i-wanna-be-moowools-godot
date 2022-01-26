@@ -1,480 +1,73 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scripts/scenes/ExampleScene/ExampleScene.gd" type="Script" id=1]
-[ext_resource path="res://scenes/BaseScene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/scenes/ExampleScene2/Trap.gd" type="Script" id=3]
-[ext_resource path="res://res/Spikes.tres" type="TileSet" id=4]
-[ext_resource path="res://scenes/Warp.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/Kid.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/Platform.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/Cherry.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scripts/scenes/ExampleScene2/Trap2.gd" type="Script" id=9]
-[ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scripts/scenes/ExampleScene2/TurningCherries.gd" type="Script" id=11]
+[ext_resource path="res://scenes/BaseScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://fonts/system_win10.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scenes/SaveButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Kid.tscn" type="PackedScene" id=4]
+[ext_resource path="res://audio/iwbtg/musGuyRock.mp3" type="AudioStream" id=12]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 20 )
+[sub_resource type="DynamicFont" id=1]
+size = 64
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=2]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Spikes:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
-}
+[sub_resource type="DynamicFont" id=2]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "fall"
-length = 0.5
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Spikes:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 0.5, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 192 ) ]
-}
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 80, 32 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 16, 96 )
-
-[sub_resource type="Animation" id=6]
-resource_name = "Circles"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("..:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 360.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Cherry:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, -360.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, -360.0 ]
-}
-
-[sub_resource type="Animation" id=7]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("..:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Cherry:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "Circles"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("..:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 360.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Cherry:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, -360.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, -360.0 ]
-}
-
-[sub_resource type="Animation" id=9]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("..:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Cherry:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-
-[sub_resource type="Animation" id=10]
-resource_name = "Circles"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("..:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 360.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Cherry:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, -360.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, -360.0 ]
-}
-
-[sub_resource type="Animation" id=11]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("..:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Cherry:rotation_degrees")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:rotation_degrees")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-
-[node name="ExampleScene2" instance=ExtResource( 2 )]
-script = ExtResource( 1 )
+[node name="Scene" instance=ExtResource( 1 )]
+background_music = ExtResource( 12 )
 location_name = "Example Scene 2"
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="0"]
 color = Color( 0.839216, 0.792157, 0.745098, 1 )
 polygon = PoolVector2Array( 0, 0, 800, 0, 800, 608, 0, 608 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Background" parent="Background" index="0"]
-tile_data = PoolIntArray( 2, 0, 0, 3, 0, 0, 12, 0, 0, 13, 0, 0, 65538, 0, 0, 65539, 0, 0, 65548, 0, 0, 65549, 0, 0, 131074, 0, 0, 131075, 0, 0, 131084, 0, 0, 131085, 0, 0, 196610, 0, 0, 196611, 0, 0, 196620, 0, 0, 196621, 0, 0, 262146, 0, 0, 262147, 0, 0, 262156, 0, 0, 262157, 0, 0, 327682, 0, 0, 327683, 0, 0, 327692, 0, 0, 327693, 0, 0, 393218, 0, 0, 393219, 0, 0, 393228, 0, 0, 393229, 0, 0, 458754, 0, 0, 458755, 0, 0, 458764, 0, 0, 458765, 0, 0, 524290, 0, 0, 524291, 0, 0, 524300, 0, 0, 524301, 0, 0, 589826, 0, 0, 589827, 0, 0, 589836, 0, 0, 589837, 0, 0, 655362, 0, 0, 655363, 0, 0, 655372, 0, 0, 655373, 0, 0, 720898, 0, 0, 720899, 0, 0, 720908, 0, 0, 720909, 0, 0, 786434, 0, 0, 786435, 0, 0, 786444, 0, 0, 786445, 0, 0, 851970, 0, 0, 851971, 0, 0, 851980, 0, 0, 851981, 0, 0, 917506, 0, 0, 917507, 0, 0, 917516, 0, 0, 917517, 0, 0, 983042, 0, 0, 983043, 0, 0, 983052, 0, 0, 983053, 0, 0, 1048578, 0, 0, 1048579, 0, 0, 1048588, 0, 0, 1048589, 0, 0, 1114114, 0, 0, 1114115, 0, 0, 1114124, 0, 0, 1114125, 0, 0, 1179650, 0, 0, 1179651, 0, 0, 1179660, 0, 0, 1179661, 0, 0, 1245186, 0, 0, 1245187, 0, 0, 1245196, 0, 0, 1245197, 0, 0, 1310722, 0, 0, 1310723, 0, 0, 1310732, 0, 0, 1310733, 0, 0, 1376258, 0, 0, 1376259, 0, 0, 1376268, 0, 0, 1376269, 0, 0, 1441794, 0, 0, 1441795, 0, 0, 1441804, 0, 0, 1441805, 0, 0, 1507330, 0, 0, 1507331, 0, 0, 1507340, 0, 0, 1507341, 0, 0, 1572866, 0, 0, 1572867, 0, 0, 1572876, 0, 0, 1572877, 0, 0, 1638402, 0, 0, 1638403, 0, 0, 1638412, 0, 0, 1638413, 0, 0, 1703938, 0, 0, 1703939, 0, 0, 1703948, 0, 0, 1703949, 0, 0, 1769474, 0, 0, 1769475, 0, 0, 1769484, 0, 0, 1769485, 0, 0, 1835010, 0, 0, 1835011, 0, 0, 1835020, 0, 0, 1835021, 0, 0, 1900546, 0, 0, 1900547, 0, 0, 1900556, 0, 0, 1900557, 0, 0, 1966082, 0, 0, 1966083, 0, 0, 1966092, 0, 0, 1966093, 0, 0, 2031618, 0, 0, 2031619, 0, 0, 2031628, 0, 0, 2031629, 0, 0, 2097154, 0, 0, 2097155, 0, 0, 2097164, 0, 0, 2097165, 0, 0, 2162690, 0, 0, 2162691, 0, 0, 2162700, 0, 0, 2162701, 0, 0, 2228226, 0, 0, 2228227, 0, 0, 2228236, 0, 0, 2228237, 0, 0, 2293762, 0, 0, 2293763, 0, 0, 2293772, 0, 0, 2293773, 0, 0, 2359298, 0, 0, 2359299, 0, 0, 2359308, 0, 0, 2359309, 0, 0, 2424834, 0, 0, 2424835, 0, 0, 2424844, 0, 0, 2424845, 0, 0, 2490370, 0, 0, 2490371, 0, 0, 2490380, 0, 0, 2490381, 0, 0, 2555906, 0, 0, 2555907, 0, 0, 2555916, 0, 0, 2555917, 0, 0, 2621442, 0, 0, 2621443, 0, 0, 2621452, 0, 0, 2621453, 0, 0, 2686978, 0, 0, 2686979, 0, 0, 2686988, 0, 0, 2686989, 0, 0, 2752514, 0, 0, 2752515, 0, 0, 2752524, 0, 0, 2752525, 0, 0, 2818050, 0, 0, 2818051, 0, 0, 2818060, 0, 0, 2818061, 0, 0, 2883586, 0, 0, 2883587, 0, 0, 2883596, 0, 0, 2883597, 0, 0, 2949122, 0, 0, 2949123, 0, 0, 2949132, 0, 0, 2949133, 0, 0, 3014658, 0, 0, 3014659, 0, 0, 3014668, 0, 0, 3014669, 0, 0 )
 
 [node name="Ground" parent="Midground" index="0"]
-rotation = 3.14159
-tile_data = PoolIntArray( -1179673, 0, 65539, -1179672, 0, 65538, -1179671, 0, 65538, -1179670, 0, 65538, -1179669, 0, 65538, -1179668, 0, 65538, -1179667, 0, 65538, -1179666, 0, 65538, -1179665, 0, 65538, -1179664, 0, 65538, -1179663, 0, 65538, -1179662, 0, 65539, -1179661, 0, 65539, -1179660, 0, 65538, -1179659, 0, 65538, -1179658, 0, 65538, -1179657, 0, 65538, -1179656, 0, 65538, -1179655, 0, 65538, -1179654, 0, 65538, -1179653, 0, 65538, -1179652, 0, 65538, -1179651, 0, 65538, -1179650, 0, 65538, -1179649, 0, 65539, -1114137, 0, 65539, -1114126, 0, 65539, -1114125, 0, 65539, -1114113, 0, 65539, -1048601, 0, 65539, -1048598, 0, 65538, -1048597, 0, 65538, -1048590, 0, 65538, -1048589, 0, 65538, -1048583, 0, 65539, -1048577, 0, 65539, -983065, 0, 65539, -983050, 0, 65539, -983047, 0, 65539, -983046, 0, 65538, -983045, 0, 65538, -983044, 0, 65538, -983043, 0, 65538, -983041, 0, 65539, -917529, 0, 65539, -917522, 0, 65538, -917521, 0, 65538, -917520, 0, 65538, -917519, 0, 65538, -917518, 0, 65538, -917517, 0, 65539, -917516, 0, 65538, -917515, 0, 65538, -917514, 0, 65538, -917513, 0, 65539, -917512, 0, 65538, -917511, 0, 65538, -917505, 0, 65539, -851993, 0, 65539, -851981, 0, 65539, -851977, 0, 65538, -851969, 0, 65539, -786457, 0, 65539, -786445, 0, 65539, -786433, 0, 65539, -720921, 0, 65539, -720909, 0, 65539, -720903, 0, 65539, -720901, 0, 65539, -720899, 0, 65539, -720897, 0, 65539, -655385, 0, 65539, -655373, 0, 65539, -655367, 0, 65539, -655365, 0, 65539, -655363, 0, 65539, -655361, 0, 65539, -589849, 0, 65539, -589837, 0, 65539, -589833, 0, 65539, -589831, 0, 65539, -589829, 0, 65539, -589828, 0, 65538, -589827, 0, 65538, -589826, 0, 65538, -589825, 0, 65539, -524313, 0, 65539, -524301, 0, 65539, -524297, 0, 65539, -524295, 0, 65539, -524294, 0, 65538, -524293, 0, 65538, -524289, 0, 65539, -458777, 0, 65539, -458765, 0, 65539, -458761, 0, 65538, -458760, 0, 65538, -458759, 0, 65538, -458753, 0, 65539, -393241, 0, 65539, -393229, 0, 65539, -393217, 0, 65539, -327705, 0, 65539, -327693, 0, 65539, -327681, 0, 65539, -262169, 0, 65539, -262157, 0, 65539, -262156, 0, 65539, -262155, 0, 65539, -262145, 0, 65539, -196633, 0, 65539, -196621, 0, 65539, -196620, 0, 65538, -196619, 0, 65538, -196618, 0, 65538, -196617, 0, 65538, -196616, 0, 65538, -196613, 0, 65538, -196612, 0, 65538, -196611, 0, 65538, -196610, 0, 65538, -196609, 0, 65539, -131097, 0, 65539, -131085, 0, 65539, -131073, 0, 65539, -65561, 0, 65539, -65549, 0, 65539, -65546, 0, 65539, -65537, 0, 65539, -25, 0, 65539, -24, 0, 65539, -23, 0, 65539, -22, 0, 65539, -21, 0, 65539, -20, 0, 65539, -19, 0, 65539, -18, 0, 65539, -17, 0, 65539, -16, 0, 65539, -15, 0, 65539, -14, 0, 65539, -13, 0, 65539, -12, 0, 65539, -11, 0, 65539, -10, 0, 65539, -9, 0, 65539, -8, 0, 65539, -7, 0, 65539, -6, 0, 65539, -5, 0, 65539, -1, 0, 65539, 65531, 0, 65539, 65535, 0, 65539, 131067, 0, 65539, 131071, 0, 65539, 196603, 0, 65539, 196607, 0, 65539, 262139, 0, 65539, 262143, 0, 65539, 327675, 0, 65539, 327679, 0, 65539, 393211, 0, 65539, 393215, 0, 65539 )
+tile_data = PoolIntArray( 0, 0, 65537, 1, 0, 65537, 2, 0, 65537, 3, 0, 65537, 4, 0, 65537, 5, 0, 65537, 6, 0, 65537, 7, 0, 65537, 8, 0, 65537, 9, 0, 65537, 10, 0, 65537, 11, 0, 65537, 12, 0, 65537, 13, 0, 65537, 14, 0, 65537, 15, 0, 65537, 16, 0, 65537, 17, 0, 65537, 18, 0, 65537, 19, 0, 65537, 20, 0, 65537, 21, 0, 65537, 22, 0, 65537, 23, 0, 65537, 24, 0, 65537, 65536, 0, 65537, 65560, 0, 65537, 131072, 0, 65537, 131096, 0, 65537, 196608, 0, 65537, 196632, 0, 65537, 262144, 0, 65537, 262168, 0, 65537, 327680, 0, 65537, 327704, 0, 65537, 393216, 0, 65537, 393240, 0, 65537, 458752, 0, 65537, 458776, 0, 65537, 524288, 0, 65537, 524312, 0, 65537, 589824, 0, 65537, 589848, 0, 65537, 655360, 0, 65537, 655384, 0, 65537, 720896, 0, 65537, 720920, 0, 65537, 786432, 0, 65537, 786456, 0, 65537, 851968, 0, 65537, 851992, 0, 65537, 917504, 0, 65537, 917528, 0, 65537, 983040, 0, 65537, 983064, 0, 65537, 1048576, 0, 65537, 1048600, 0, 65537, 1114112, 0, 65537, 1114136, 0, 65537, 1179648, 0, 65537, 1179649, 0, 65536, 1179650, 0, 65536, 1179651, 0, 65536, 1179652, 0, 65536, 1179653, 0, 65536, 1179654, 0, 65536, 1179655, 0, 65536, 1179656, 0, 65536, 1179657, 0, 65536, 1179658, 0, 65536, 1179659, 0, 65536, 1179660, 0, 65536, 1179661, 0, 65536, 1179662, 0, 65536, 1179663, 0, 65536, 1179664, 0, 65536, 1179665, 0, 65536, 1179666, 0, 65536, 1179667, 0, 65536, 1179668, 0, 65536, 1179669, 0, 65536, 1179670, 0, 65536, 1179671, 0, 65536, 1179672, 0, 65537 )
 
-[node name="Spikes" parent="Midground" index="2"]
-tile_data = PoolIntArray( 65549, 1, 0, 65550, 3, 0, 65551, 3, 0, 65552, 3, 0, 65553, 3, 0, 65554, 3, 0, 65555, 3, 0, 65556, 3, 0, 65557, 3, 0, 131085, 1, 0, 196621, 1, 0, 196631, 2, 0, 262145, 1, 0, 262146, 3, 0, 262147, 3, 0, 262148, 3, 0, 262157, 1, 0, 262167, 2, 0, 327681, 1, 0, 327691, 2, 0, 327693, 1, 0, 327703, 2, 0, 393217, 1, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393227, 2, 0, 393229, 1, 0, 393239, 2, 0, 458753, 1, 0, 458756, 0, 0, 458757, 0, 0, 458763, 2, 0, 458765, 1, 0, 458775, 2, 0, 524289, 1, 0, 524290, 0, 0, 524291, 0, 0, 524297, 1, 0, 524299, 2, 0, 524301, 1, 0, 524311, 2, 0, 589833, 1, 0, 589835, 2, 0, 589837, 1, 0, 589847, 2, 0, 655371, 2, 0, 655373, 1, 0, 655383, 2, 0, 720907, 2, 0, 720909, 1, 0, 720919, 2, 0, 786434, 3, 0, 786436, 3, 0, 786438, 3, 0, 786440, 0, 0, 786443, 2, 0, 786445, 1, 0, 786455, 2, 0, 851977, 0, 0, 851978, 0, 0, 851979, 0, 0, 851981, 1, 0, 851982, 0, 0, 851983, 0, 0, 851984, 0, 0, 851985, 0, 0, 851991, 2, 0, 1114122, 0, 0, 1114123, 0, 0 )
+[node name="SaveButton" parent="Entities" index="0" instance=ExtResource( 3 )]
+position = Vector2( 464, 528 )
 
-[node name="SpikesHard" type="TileMap" parent="Midground" index="3" groups=["difficulty", "hard", "impossible", "very hard"]]
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 32, 32 )
-collision_layer = 4
-collision_mask = 0
-format = 1
-tile_data = PoolIntArray( 458761, 1, 0, 983050, 1, 0 )
+[node name="Kid" parent="Kid" index="0" instance=ExtResource( 4 )]
+position = Vector2( 272, 560 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
+layer = 0
+
+[node name="Label" type="Label" parent="CanvasLayer" index="0"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -324.0
+margin_top = -57.5
+margin_right = 324.0
+margin_bottom = 57.5
+custom_fonts/font = SubResource( 1 )
+text = "THANK YOU!"
+align = 1
+valign = 1
 __meta__ = {
-"_edit_lock_": true
+"_edit_use_anchors_": false
 }
 
-[node name="SpikesMedium" type="TileMap" parent="Midground" index="4" groups=["difficulty", "medium"]]
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 32, 32 )
-collision_layer = 4
-collision_mask = 0
-format = 1
-tile_data = PoolIntArray( 458761, 6, 0, 983050, 6, 0 )
+[node name="Label2" type="Label" parent="CanvasLayer" index="1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -330.0
+margin_top = 16.0
+margin_right = 330.0
+margin_bottom = 131.0
+custom_fonts/font = SubResource( 2 )
+text = "------------------------------------------------------------------
+NOW GO MAKE GAMES!"
+align = 1
+valign = 1
 __meta__ = {
-"_edit_lock_": true
+"_edit_use_anchors_": false
 }
-
-[node name="Trap" type="Node2D" parent="Entities" index="0"]
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Spikes" type="TileMap" parent="Entities/Trap" index="0"]
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 32, 32 )
-collision_layer = 4
-collision_mask = 0
-format = 1
-tile_data = PoolIntArray( -393215, 3, 0, -393214, 3, 0, -393213, 3, 0 )
-
-[node name="Area2D" type="Area2D" parent="Entities/Trap" index="1"]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Trap/Area2D" index="0"]
-position = Vector2( 96, 76 )
-shape = SubResource( 1 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Entities/Trap" index="2"]
-anims/RESET = SubResource( 2 )
-anims/fall = SubResource( 3 )
-
-[node name="Cherry" parent="Entities" index="1" instance=ExtResource( 8 )]
-position = Vector2( 48, 336 )
-fall = true
-_dir = Vector2( 0, 1 )
-speed = 20.0
-
-[node name="Trap2" type="Node2D" parent="Entities" index="2"]
-script = ExtResource( 9 )
-
-[node name="Cherry" parent="Entities/Trap2" index="0" instance=ExtResource( 8 )]
-position = Vector2( 176, 304 )
-_dir = Vector2( 0, 1 )
-speed = 35.0
-
-[node name="Cherry2" parent="Entities/Trap2" index="1" instance=ExtResource( 8 )]
-position = Vector2( 112, 336 )
-_dir = Vector2( 0, 1 )
-speed = 35.0
-
-[node name="Area2D" type="Area2D" parent="Entities/Trap2" index="2"]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Trap2/Area2D" index="0"]
-position = Vector2( 112, 544 )
-shape = SubResource( 4 )
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Entities/Trap2/Area2D" index="1"]
-position = Vector2( 48, 416 )
-shape = SubResource( 5 )
-
-[node name="Platform" parent="Entities" index="3" instance=ExtResource( 7 )]
-position = Vector2( 336, 168 )
-
-[node name="1" parent="Entities/Platform/KinematicBody2D/Trajectory" index="0"]
-position = Vector2( 0, 80 )
-
-[node name="2" parent="Entities/Platform/KinematicBody2D/Trajectory" index="1"]
-position = Vector2( 0, 0 )
-
-[node name="3" type="Position2D" parent="Entities/Platform/KinematicBody2D/Trajectory" index="2"]
-position = Vector2( 0, 272 )
-
-[node name="SaveButton" parent="Entities" index="4" groups=["difficulty", "hard", "medium"] instance=ExtResource( 10 )]
-position = Vector2( 240, 496 )
-
-[node name="SaveButton2" parent="Entities" index="5" groups=["difficulty", "hard", "medium", "very hard"] instance=ExtResource( 10 )]
-position = Vector2( 336, 48 )
-
-[node name="TurningCherries" type="Node2D" parent="Entities" index="6"]
-script = ExtResource( 11 )
-
-[node name="Platform" parent="Entities/TurningCherries" index="0" instance=ExtResource( 7 )]
-position = Vector2( 592, 256 )
-
-[node name="Cherry" parent="Entities/TurningCherries/Platform" index="0" instance=ExtResource( 8 )]
-position = Vector2( 64, 64 )
-
-[node name="KinematicBody2D" parent="Entities/TurningCherries/Platform" index="1"]
-position = Vector2( -64, -64 )
-
-[node name="Trajectory" parent="Entities/TurningCherries/Platform/KinematicBody2D" index="2"]
-visible = false
-
-[node name="AnimationPlayer" parent="Entities/TurningCherries/Platform" index="2"]
-autoplay = "Circles"
-playback_speed = 0.38
-anims/Circles = SubResource( 6 )
-anims/RESET = SubResource( 7 )
-
-[node name="Platform2" parent="Entities/TurningCherries" index="1" instance=ExtResource( 7 )]
-position = Vector2( 632, 168 )
-
-[node name="Cherry" parent="Entities/TurningCherries/Platform2" index="0" instance=ExtResource( 8 )]
-position = Vector2( 64, 64 )
-
-[node name="KinematicBody2D" parent="Entities/TurningCherries/Platform2" index="1"]
-position = Vector2( -64, -64 )
-
-[node name="Trajectory" parent="Entities/TurningCherries/Platform2/KinematicBody2D" index="2"]
-visible = false
-
-[node name="AnimationPlayer" parent="Entities/TurningCherries/Platform2" index="2"]
-autoplay = "Circles"
-playback_speed = 0.38
-anims/Circles = SubResource( 8 )
-anims/RESET = SubResource( 9 )
-
-[node name="Platform3" parent="Entities/TurningCherries" index="2" instance=ExtResource( 7 )]
-position = Vector2( 576, 344 )
-
-[node name="Cherry" parent="Entities/TurningCherries/Platform3" index="0" instance=ExtResource( 8 )]
-position = Vector2( 64, 64 )
-
-[node name="KinematicBody2D" parent="Entities/TurningCherries/Platform3" index="1"]
-position = Vector2( -64, -64 )
-
-[node name="Trajectory" parent="Entities/TurningCherries/Platform3/KinematicBody2D" index="2"]
-visible = false
-
-[node name="AnimationPlayer" parent="Entities/TurningCherries/Platform3" index="2"]
-autoplay = "Circles"
-playback_speed = 0.38
-anims/Circles = SubResource( 10 )
-anims/RESET = SubResource( 11 )
-
-[node name="Warp" parent="." index="4" instance=ExtResource( 5 )]
-position = Vector2( 752, 48 )
-next_scene = "res://scenes/screens/ExampleScene3.tscn"
-
-[node name="Kid" parent="Kid" index="0" instance=ExtResource( 6 )]
-position = Vector2( 80, -16 )
-
-[connection signal="body_entered" from="Entities/Trap/Area2D" to="Entities/Trap" method="_on_Area2D_body_entered"]
-[connection signal="body_entered" from="Entities/Trap2/Area2D" to="Entities/Trap2" method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="Entities/Trap2/Area2D" to="Entities/Trap2" method="_on_Area2D_body_exited"]
-
-[editable path="Entities/Platform"]
-[editable path="Entities/TurningCherries/Platform"]
-[editable path="Entities/TurningCherries/Platform2"]
-[editable path="Entities/TurningCherries/Platform3"]

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sndCherry.wav-2a15c5c36fb725dc64635ef134c10296.sample"
+
+[deps]
+
+source_file="res://audio/iwbtg/sndCherry.wav"
+dest_files=[ "res://.import/sndCherry.wav-2a15c5c36fb725dc64635ef134c10296.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

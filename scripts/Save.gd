@@ -139,7 +139,7 @@ func save(save: String) -> void:
 			"difficulty": GameStats.difficulty,
 			"location": GameStats.location,
 			"scene": GameStats.scene,
-			"state": GameStats.state
+			"state": GameStats.state.duplicate(true)
 		}
 		return
 
@@ -219,7 +219,7 @@ func load_game(save: String) -> Dictionary:
 		return {}
 
 	if save == "tmp":
-		return tmp_save
+		return tmp_save.duplicate(true)
 
 	var config := ConfigFile.new()
 	# warning-ignore:return_value_discarded

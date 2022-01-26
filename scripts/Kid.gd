@@ -73,6 +73,8 @@ onready var _bow_sprite: Sprite = $Bow
 onready var _kid_sprite: Sprite = $Kid
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 
+onready var camera: Camera2D = $Camera2D
+
 
 func _ready() -> void:
 	if GameStats.difficulty == GameStats.DIFFICULTY_MEDIUM:

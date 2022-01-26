@@ -31,11 +31,8 @@
 
 extends Node2D
 
-export(AudioStream) var background_music: AudioStream = preload("res://audio/musGuyRock.mp3")
-
+export(AudioStream) var background_music: AudioStream
 export(String) var location_name := ""
-
-var kid: KinematicBody2D
 
 onready var ui: CanvasLayer = $UI
 
@@ -53,21 +50,21 @@ func _ready() -> void:
 	_set_title_bar()
 	_play_music()
 	_hide_invisible()
+	_set_camera()
 
 
 func _connect_kid() -> void:
-	assert(get_tree().get_nodes_in_group("kid"), "BaseScene.gd: No kid has been instanced.")
-	kid = get_tree().get_nodes_in_group("kid")[0]
+	for kid in get_tree().get_nodes_in_group("kid"):
 
-	# warning-ignore:return_value_discarded
-	kid.connect("death", self, "_on_Kid_death")
+		# warning-ignore:return_value_discarded
+		kid.connect("death", self, "_on_Kid_death")
 
-	# Load save
-	var save: Dictionary = Save.load_game(Save.current_save)
+		# Load save
+		var save: Dictionary = Save.load_game(Save.current_save)
 
-	if save.get("scene", "") == filename:
-		kid.global_position = save.get("position", kid.global_position)
-		kid.xscale = save.get("xscale", kid.xscale)
+		if save.get("scene", "") == filename:
+			kid.global_position = save.get("position", kid.global_position)
+			kid.xscale = save.get("xscale", kid.xscale)
 
 func _on_Kid_death() -> void:
 	$GameOverTimer.start()
@@ -91,10 +88,31 @@ func _set_title_bar() -> void:
 
 # Doesn't restart music if the player dies or if the scene is reloaded
 func _play_music() -> void:
+	if not background_music:
+		return
+
 	if Music.get_last_song() != background_music:
 		Music.play(background_music)
 	elif Music.player.stream_paused:
 		Music.player.stream_paused = false
+
+## Locates where the kid is on the screen map and moves the camera over to
+## the corresponding cell.
+func _set_camera() -> void:
+	for kid in get_tree().get_nodes_in_group("kid"):
+		var cam: Camera2D = kid.camera
+		var map: TileMap = $Camera/Map
+		var area: Area2D = $Camera/Area2D
+
+		var new_pos: Vector2 = map.map_to_world(
+				map.world_to_map(kid.global_position)
+			)
+		area.global_position = new_pos
+
+		cam.limit_top = int(new_pos.y)
+		cam.limit_right = int(new_pos.x + map.cell_size.x)
+		cam.limit_bottom = int(new_pos.y + map.cell_size.y)
+		cam.limit_left = int(new_pos.x)
 
 ## Takes a screenshot of the stage.
 ## Taking a screenshot inside of the _ready function causes a bug
@@ -105,5 +123,8 @@ func _on_Timer_timeout() -> void:
 		Screenshots.take_screenshot()
 
 
-func _on_GameOverTimer_timeout():
+func _on_GameOverTimer_timeout() -> void:
 	ui.game_over()
+
+func _on_Area2D_body_exited(_player: KinematicBody2D) -> void:
+	_set_camera()
